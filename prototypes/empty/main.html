@@ -6,6 +6,7 @@
 		<script type="text/javascript" src="../shared/underscore.js"></script>
 		<script type="text/javascript" src="../shared/backbone.js"></script>
 		<script type="text/javascript" src="../shared/bootstrap/js/bootstrap.js"></script>
+		<script type="text/javascript" src="js/main.js"></script>
 		<link href="../shared/bootstrap/css/bootstrap.css" rel="stylesheet">
 	</head>
 	<body>
@@ -19,9 +20,39 @@
 				<div class="span12">
 					<p>
              This page exists as a template for creating single-page apps for scenario-editor
-						 prototypes that use Twitter Bootstrap, Backbone, and jQuery. Any visual artifacts
-						 or non-working functions indicate an error in setup.
+						 prototypes that use CoffeeScript, Twitter Bootstrap, Backbone, and jQuery. 
+						 Any visual artifacts or non-working functions indicate an error in setup.
+						 <code>make</code> must be run in the base prototype directory to compile the CoffeeScript
+						 for the test item list.
 					</p>
+				</div>
+			</div>
+			<hr>
+			<div class="row">
+				<div class="span12">
+					<h2>Test Item List</h2>
+					<h6>Icons from Twitter Bootstrap - No Persistence</h6>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span12">
+					<div id="itemapp">
+						<div id="items">
+							<ul id="item-list">
+							</ul>
+						</div>
+
+						<div id="create-item">
+							<input id="new-item" type="text">
+							<button id="save-item" class="btn">Add Item</button>
+						</div>
+					</div>
+				</div>
+			</div>
+			<script type="text/template" id="item-template">
+				<span class="item-text"></span>
+				<i class="item-icon"></i>
+			</script>
 			<hr>
 			<div class="row">
 				<div class="span12">
