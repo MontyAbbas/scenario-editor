@@ -1,0 +1,40 @@
+class window.aurora.DirectionsCacheEntry extends Backbone.Model
+  ### $a = alias for aurora namespace ###
+  $a = window.aurora
+  @from_xml1: (xml, object_with_id) ->
+    deferred = []
+    obj = @from_xml2(xml, deferred, object_with_id)
+    fn() for fn in deferred
+    obj
+  
+  @from_xml2: (xml, deferred, object_with_id) ->
+    return null if not xml
+    obj = new window.aurora.DirectionsCacheEntry()
+    From = xml.find('From')
+    obj.set 'from', $a.From.from_xml2(From, deferred, object_with_id)
+    To = xml.find('To')
+    obj.set 'to', $a.To.from_xml2(To, deferred, object_with_id)
+    EncodedPolyline = xml.find('EncodedPolyline')
+    obj.set 'encodedpolyline', $a.EncodedPolyline.from_xml2(EncodedPolyline, deferred, object_with_id)
+    avoidHighways = xml.find('avoidHighways')
+    obj.set 'avoidHighways', (avoidHighways.toString().toLowerCase() == 'true')
+    road_name = xml.find('road_name')
+    obj.set 'road_name', xml.road_name
+    if obj.resolve_references
+      obj.resolve_references(deferred, object_with_id)
+    obj
+  
+  to_xml: (doc) ->
+    xml = doc.createElement('DirectionsCacheEntry')
+    if @encode_references
+      @encode_references()
+    xml.appendChild(@get('from').to_xml()) if @has('from')
+    xml.appendChild(@get('to').to_xml()) if @has('to')
+    xml.appendChild(@get('encodedpolyline').to_xml()) if @has('encodedpolyline')
+    xml.setAttribute('avoidHighways', @get('avoidHighways'))
+    xml.setAttribute('road_name', @get('road_name'))
+    xml
+  
+  deep_copy: -> DirectionsCacheEntry.from_xml1(@to_xml(), {})
+  inspect: (depth = 1, indent = false, orig_depth = -1) -> null
+  make_tree: -> null
