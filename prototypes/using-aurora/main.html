@@ -1,41 +1,43 @@
 <!DOCTYPE html>
 <html>
-	<head>
-		<title>Simple web page, loading Twitter Bootstrap, Backbone, and jQuery</title>
-		<script type="text/javascript" src="../shared/jquery-1.7.1.js"></script>
-		<script type="text/javascript" src="../shared/underscore.js"></script>
-		<script type="text/javascript" src="../shared/backbone.js"></script>
-		<script type="text/javascript" src="../shared/bootstrap/js/bootstrap.js"></script>
-		<script type="text/javascript" src="../shared/LAB.js"></script>
-                <script type="text/javascript" src="js/main.js"></script>
-		<link href="../shared/bootstrap/css/bootstrap.css" rel="stylesheet">
-	</head>
-	<body>
-		<div class="container">
-			<div class="row">
-				<div class="span12">
-					<h1>Aurora class loader prototype</h1>
-				</div>
-			</div>
-			<div class="row">
-				<div class="span12">
-				</div>
-			</div>
-			<hr>
-			<div class="row">
-				<div class="span12">
-				</div>
-			</div>
-			<div class="row">
-				<div class="span12">
-				</div>
-			</div>
-			<hr>
-			<div class="row">
-				<div class="span3">
-					<button id="log_cap_xml" class="btn">Log capacity as XML</button>
-				</div>
-			</div>
-		</div>
-	</body>
+  <head>
+    <title>Simple web page, loading Twitter Bootstrap, Backbone, and jQuery</title>
+    <script type="text/javascript" src="../shared/head.js"></script>
+    <script type="text/javascript">
+      head.js("js/main.js");
+    </script>
+    <link href="../shared/bootstrap/css/bootstrap.css" rel="stylesheet">
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+	<div class="span12">
+	  <h1>Aurora class loader prototype</h1>
+	</div>
+      </div>
+      <div class="row">
+	<div class="span12">     
+	</div>
+      </div>
+      <hr>
+      <div class="row">
+	<div class="span12">
+	  <h2>Load scenario</h2>
+	  <textarea style="width: 99%; height: 200px;"></textarea>
+	  <br />
+	  <button id="load_scenario" class="btn btn-primary">Load as XML</button>
+	</div>
+      </div>
+      <div class="row">
+	<div class="span12">
+	</div>
+      </div>
+      <hr>
+      <div class="row">
+	<div class="span3">
+	  <button id="log_cap_xml" class="btn">Log capacity as XML</button>
+	</div>
+      </div>
+    </div>
+  </body>
 </html>
