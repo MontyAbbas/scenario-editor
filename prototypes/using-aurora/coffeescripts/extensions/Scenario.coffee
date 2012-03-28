@@ -42,8 +42,8 @@ window.aurora.Scenario.from_xml = (xml) ->
 window.aurora.Scenario::initialize = ->
   @set('schemaVersion', window.aurora.SchemaVersion)
   @object_with_id = network: {}, node: {}, link: {}, path: {}, sensor: {}
-  @set('settings', new window.Aurora.Settings())
-  @set('network', new window.Aurora.Network())
+  @set('settings', new window.aurora.Settings())
+  @set('network', new window.aurora.Network())
 
 window.aurora.Scenario::network_with_id = (id) ->
   @object_with_id.network[id]

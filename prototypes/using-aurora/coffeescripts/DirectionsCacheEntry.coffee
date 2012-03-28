@@ -16,9 +16,9 @@ class window.aurora.DirectionsCacheEntry extends Backbone.Model
     obj.set 'to', $a.To.from_xml2(To, deferred, object_with_id)
     EncodedPolyline = xml.find('EncodedPolyline')
     obj.set 'encodedpolyline', $a.EncodedPolyline.from_xml2(EncodedPolyline, deferred, object_with_id)
-    avoidHighways = xml.find('avoidHighways')
+    avoidHighways = $(xml).attr('avoidHighways')
     obj.set 'avoidHighways', (avoidHighways.toString().toLowerCase() == 'true')
-    road_name = xml.find('road_name')
+    road_name = $(xml).attr('road_name')
     obj.set 'road_name', xml.road_name
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

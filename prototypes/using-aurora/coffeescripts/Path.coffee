@@ -13,11 +13,11 @@ class window.aurora.Path extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if not xml
     obj = new window.aurora.Path()
-    id = xml.find('id')
+    id = $(xml).attr('id')
     obj.set 'id', xml.id
-    name = xml.find('name')
+    name = $(xml).attr('name')
     obj.set 'name', xml.name
-    deferred.push(-> obj.set 'cells', $a.ArrayText.parse(xml.text(), delims, "link", object_with_id.link))
+    deferred.push(-> obj.set 'cells', $a.ArrayText.parse(xml.text(), @delims, "link", object_with_id.link))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

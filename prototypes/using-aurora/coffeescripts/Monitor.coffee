@@ -18,11 +18,11 @@ class window.aurora.Monitor extends Backbone.Model
     obj.set 'controller', $a.Controller.from_xml2(controller, deferred, object_with_id)
     LinkPairs = xml.find('LinkPairs')
     obj.set 'linkpairs', $a.LinkPairs.from_xml2(LinkPairs, deferred, object_with_id)
-    name = xml.find('name')
+    name = $(xml).attr('name')
     obj.set 'name', (name.length() == 0 ? "" : name)
-    type = xml.find('type')
+    type = $(xml).attr('type')
     obj.set 'type', xml.type
-    id = xml.find('id')
+    id = $(xml).attr('id')
     obj.set 'id', xml.id
     
     obj.set 'text', xml.text()

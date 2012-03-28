@@ -10,7 +10,7 @@ class window.aurora.Begin extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if not xml
     obj = new window.aurora.Begin()
-    node_id = xml.find('node_id')
+    node_id = $(xml).attr('node_id')
     obj.set 'node_id', xml.node_id
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

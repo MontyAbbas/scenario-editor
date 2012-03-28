@@ -10,15 +10,15 @@ class window.aurora.Onramp extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if not xml
     obj = new window.aurora.Onramp()
-    id = xml.find('id')
+    id = $(xml).attr('id')
     obj.set 'id', xml.id
-    gain_Alinea = xml.find('gain_Alinea')
+    gain_Alinea = $(xml).attr('gain_Alinea')
     obj.set 'gain_Alinea', Number(gain_Alinea)
-    gain_Hero = xml.find('gain_Hero')
+    gain_Hero = $(xml).attr('gain_Hero')
     obj.set 'gain_Hero', Number(gain_Hero)
-    activation_threshold = xml.find('activation_threshold')
+    activation_threshold = $(xml).attr('activation_threshold')
     obj.set 'activation_threshold', Number(activation_threshold)
-    deactivation_threshold = xml.find('deactivation_threshold')
+    deactivation_threshold = $(xml).attr('deactivation_threshold')
     obj.set 'deactivation_threshold', Number(deactivation_threshold)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

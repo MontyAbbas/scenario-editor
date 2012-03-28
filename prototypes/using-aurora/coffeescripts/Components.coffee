@@ -10,11 +10,11 @@ class window.aurora.Components extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if not xml
     obj = new window.aurora.Components()
-    swarm1 = xml.find('swarm1')
+    swarm1 = $(xml).attr('swarm1')
     obj.set 'swarm1', (swarm1.toString().toLowerCase() == 'true')
-    swarm2a = xml.find('swarm2a')
+    swarm2a = $(xml).attr('swarm2a')
     obj.set 'swarm2a', (swarm2a.toString().toLowerCase() == 'true')
-    swarm2b = xml.find('swarm2b')
+    swarm2b = $(xml).attr('swarm2b')
     obj.set 'swarm2b', (swarm2b.toString().toLowerCase() == 'true')
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

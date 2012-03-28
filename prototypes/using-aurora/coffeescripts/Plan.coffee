@@ -12,9 +12,9 @@ class window.aurora.Plan extends Backbone.Model
     obj = new window.aurora.Plan()
     intersection = xml.find('intersection')
     obj.set 'intersection', _.map(intersection, (intersection_i) -> $a.Intersection.from_xml2(intersection_i, deferred, object_with_id))
-    id = xml.find('id')
+    id = $(xml).attr('id')
     obj.set 'id', xml.id
-    cyclelength = xml.find('cyclelength')
+    cyclelength = $(xml).attr('cyclelength')
     obj.set 'cyclelength', Number(cyclelength)
     if object_with_id.plan
       object_with_id.plan[obj.id] = obj

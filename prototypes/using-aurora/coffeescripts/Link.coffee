@@ -24,21 +24,21 @@ class window.aurora.Link extends Backbone.Model
     obj.set 'qmax', $a.Qmax.from_xml2(qmax, deferred, object_with_id)
     LinkGeometry = xml.find('LinkGeometry')
     obj.set 'linkgeometry', $a.LinkGeometry.from_xml2(LinkGeometry, deferred, object_with_id)
-    name = xml.find('name')
+    name = $(xml).attr('name')
     obj.set 'name', xml.name
-    road_name = xml.find('road_name')
+    road_name = $(xml).attr('road_name')
     obj.set 'road_name', xml.road_name
-    lanes = xml.find('lanes')
+    lanes = $(xml).attr('lanes')
     obj.set 'lanes', Number(lanes)
-    lane_offset = xml.find('lane_offset')
+    lane_offset = $(xml).attr('lane_offset')
     obj.set 'lane_offset', Number(lane_offset)
-    length = xml.find('length')
+    length = $(xml).attr('length')
     obj.set 'length', Number(length)
-    type = xml.find('type')
+    type = $(xml).attr('type')
     obj.set 'type', xml.type
-    id = xml.find('id')
+    id = $(xml).attr('id')
     obj.set 'id', xml.id
-    record = xml.find('record')
+    record = $(xml).attr('record')
     obj.set 'record', (record.toString().toLowerCase() == 'true')
     if object_with_id.link
       object_with_id.link[obj.id] = obj

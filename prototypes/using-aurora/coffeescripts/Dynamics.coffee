@@ -10,7 +10,7 @@ class window.aurora.Dynamics extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if not xml
     obj = new window.aurora.Dynamics()
-    type = xml.find('type')
+    type = $(xml).attr('type')
     obj.set 'type', xml.type
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

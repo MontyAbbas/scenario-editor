@@ -10,9 +10,9 @@ class window.aurora.Pair extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if not xml
     obj = new window.aurora.Pair()
-    outlink = xml.find('outlink')
+    outlink = $(xml).attr('outlink')
     obj.set 'outlink', xml.outlink
-    inlink = xml.find('inlink')
+    inlink = $(xml).attr('inlink')
     obj.set 'inlink', xml.inlink
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

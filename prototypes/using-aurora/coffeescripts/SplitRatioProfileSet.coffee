@@ -14,9 +14,9 @@ class window.aurora.SplitRatioProfileSet extends Backbone.Model
     obj.set 'description', $a.Description.from_xml2(description, deferred, object_with_id)
     splitratios = xml.find('splitratios')
     obj.set 'splitratios', _.map(splitratios, (splitratios_i) -> $a.Splitratios.from_xml2(splitratios_i, deferred, object_with_id))
-    id = xml.find('id')
+    id = $(xml).attr('id')
     obj.set 'id', (id.length() == 0 ? "" : id)
-    name = xml.find('name')
+    name = $(xml).attr('name')
     obj.set 'name', (name.length() == 0 ? "" : name)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

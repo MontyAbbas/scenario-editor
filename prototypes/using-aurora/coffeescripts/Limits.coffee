@@ -10,9 +10,9 @@ class window.aurora.Limits extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if not xml
     obj = new window.aurora.Limits()
-    cmin = xml.find('cmin')
+    cmin = $(xml).attr('cmin')
     obj.set 'cmin', Number(cmin)
-    cmax = xml.find('cmax')
+    cmax = $(xml).attr('cmax')
     obj.set 'cmax', Number(cmax)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

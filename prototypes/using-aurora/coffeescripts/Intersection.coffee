@@ -12,9 +12,9 @@ class window.aurora.Intersection extends Backbone.Model
     obj = new window.aurora.Intersection()
     stage = xml.find('stage')
     obj.set 'stage', _.map(stage, (stage_i) -> $a.Stage.from_xml2(stage_i, deferred, object_with_id))
-    node_id = xml.find('node_id')
+    node_id = $(xml).attr('node_id')
     obj.set 'node_id', xml.node_id
-    offset = xml.find('offset')
+    offset = $(xml).attr('offset')
     obj.set 'offset', Number(offset)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

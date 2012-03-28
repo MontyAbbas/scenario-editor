@@ -12,11 +12,11 @@ class window.aurora.Splitratios extends Backbone.Model
     obj = new window.aurora.Splitratios()
     srm = xml.find('srm')
     obj.set 'srm', _.map(srm, (srm_i) -> $a.Srm.from_xml2(srm_i, deferred, object_with_id))
-    node_id = xml.find('node_id')
+    node_id = $(xml).attr('node_id')
     obj.set 'node_id', xml.node_id
-    start_time = xml.find('start_time')
+    start_time = $(xml).attr('start_time')
     obj.set 'start_time', Number(start_time)
-    dt = xml.find('dt')
+    dt = $(xml).attr('dt')
     obj.set 'dt', Number(dt)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

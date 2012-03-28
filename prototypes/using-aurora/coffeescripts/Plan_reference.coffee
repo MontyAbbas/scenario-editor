@@ -10,9 +10,9 @@ class window.aurora.Plan_reference extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if not xml
     obj = new window.aurora.Plan_reference()
-    plan_id = xml.find('plan_id')
+    plan_id = $(xml).attr('plan_id')
     obj.set 'plan_id', xml.plan_id
-    start_time = xml.find('start_time')
+    start_time = $(xml).attr('start_time')
     obj.set 'start_time', Number(start_time)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

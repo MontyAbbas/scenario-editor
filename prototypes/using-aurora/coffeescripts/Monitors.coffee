@@ -13,7 +13,7 @@ class window.aurora.Monitors extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if not xml
     obj = new window.aurora.Monitors()
-    deferred.push(-> obj.set 'cells', $a.ArrayText.parse(xml.text(), delims, "monitor", object_with_id.monitor))
+    deferred.push(-> obj.set 'cells', $a.ArrayText.parse(xml.text(), @delims, "monitor", object_with_id.monitor))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

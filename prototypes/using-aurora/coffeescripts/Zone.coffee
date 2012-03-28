@@ -10,11 +10,11 @@ class window.aurora.Zone extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if not xml
     obj = new window.aurora.Zone()
-    bottlenecklink = xml.find('bottlenecklink')
+    bottlenecklink = $(xml).attr('bottlenecklink')
     obj.set 'bottlenecklink', xml.bottlenecklink
-    onramplinks = xml.find('onramplinks')
+    onramplinks = $(xml).attr('onramplinks')
     obj.set 'onramplinks', xml.onramplinks
-    sat_den_multiplier = xml.find('sat_den_multiplier')
+    sat_den_multiplier = $(xml).attr('sat_den_multiplier')
     obj.set 'sat_den_multiplier', Number(sat_den_multiplier)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

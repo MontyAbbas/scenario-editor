@@ -20,13 +20,13 @@ class window.aurora.Node extends Backbone.Model
     obj.set 'inputs', $a.Inputs.from_xml2(inputs, deferred, object_with_id)
     position = xml.find('position')
     obj.set 'position', $a.Position.from_xml2(position, deferred, object_with_id)
-    name = xml.find('name')
+    name = $(xml).attr('name')
     obj.set 'name', xml.name
-    type = xml.find('type')
+    type = $(xml).attr('type')
     obj.set 'type', xml.type
-    id = xml.find('id')
+    id = $(xml).attr('id')
     obj.set 'id', xml.id
-    lock = xml.find('lock')
+    lock = $(xml).attr('lock')
     obj.set 'lock', (lock.toString().toLowerCase() == 'true')
     if object_with_id.node
       object_with_id.node[obj.id] = obj

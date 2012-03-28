@@ -10,11 +10,11 @@ class window.aurora.Point extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if not xml
     obj = new window.aurora.Point()
-    lat = xml.find('lat')
+    lat = $(xml).attr('lat')
     obj.set 'lat', Number(lat)
-    lng = xml.find('lng')
+    lng = $(xml).attr('lng')
     obj.set 'lng', Number(lng)
-    elevation = xml.find('elevation')
+    elevation = $(xml).attr('elevation')
     obj.set 'elevation', Number(elevation)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

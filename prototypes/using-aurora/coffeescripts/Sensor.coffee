@@ -27,11 +27,11 @@ class window.aurora.Sensor extends Backbone.Model
     )
     data_sources = xml.find('data_sources')
     obj.set 'data_sources', $a.Data_sources.from_xml2(data_sources, deferred, object_with_id)
-    id = xml.find('id')
+    id = $(xml).attr('id')
     obj.set 'id', xml.id
-    type = xml.find('type')
+    type = $(xml).attr('type')
     obj.set 'type', xml.type
-    link_type = xml.find('link_type')
+    link_type = $(xml).attr('link_type')
     obj.set 'link_type', xml.link_type
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

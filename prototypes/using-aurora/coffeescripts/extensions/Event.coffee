@@ -1,4 +1,4 @@
-window.aurora.Event::display_point ->
+window.aurora.Event::display_point = ->
   display_position = @get('display_position')
   if not display_position
     display_position = new window.aurora.Display_position()

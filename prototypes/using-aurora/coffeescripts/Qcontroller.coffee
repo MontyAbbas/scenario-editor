@@ -17,7 +17,7 @@ class window.aurora.Qcontroller extends Backbone.Model
             acc
           {}
     )
-    type = xml.find('type')
+    type = $(xml).attr('type')
     obj.set 'type', xml.type
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

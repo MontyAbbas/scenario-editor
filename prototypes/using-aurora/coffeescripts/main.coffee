@@ -27,6 +27,11 @@ aurora_classes_without_extensions = [
 load_aurora_classes = (after) ->
   head.js "js/Aurora.js", ->
     class_paths = _.map(aurora_classes_without_extensions, (cname) -> "js/#{cname}.js")
+    class_paths = class_paths.concat _.flatten(_.map(
+      aurora_classes_with_extensions,
+      (cname) -> ["js/#{cname}.js","js/extensions/#{cname}.js"]
+    ))
+    console.log class_paths
     class_paths.push after
     head.js.apply(@, class_paths)
 
@@ -36,10 +41,10 @@ head.js('../shared/jquery-1.7.1.js',
         '../shared/bootstrap/js/bootstrap.js', ->
             load_aurora_classes ->
               try
-                window.cap = new window.aurora.Capacity
+                null
               catch err
                 console.log(err)
-
-              $("#log_cap_xml").click ->
-                console.log window.cap.to_xml(document.implementation.createDocument('document:xml'))
+              $("#load_scenario").click ->
+                xml_text = $("#scenario_text").val()
+                scenario = window.aurora.Scenario.from_xml($(xml_text))
 )

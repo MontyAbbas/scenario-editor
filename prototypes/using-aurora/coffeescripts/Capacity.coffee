@@ -13,14 +13,14 @@ class window.aurora.Capacity extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if not xml
     obj = new window.aurora.Capacity()
-    link_id = xml.find('link_id')
+    link_id = $(xml).attr('link_id')
     obj.set 'link_id', xml.link_id
-    start_time = xml.find('start_time')
+    start_time = $(xml).attr('start_time')
     obj.set 'start_time', Number(start_time)
-    dt = xml.find('dt')
+    dt = $(xml).attr('dt')
     obj.set 'dt', Number(dt)
     
-    obj.set 'cells', $a.ArrayText.parse(xml.text(), delims, "Number", null)
+    obj.set 'cells', $a.ArrayText.parse(xml.text(), @delims, "Number", null)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

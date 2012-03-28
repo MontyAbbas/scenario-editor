@@ -10,9 +10,9 @@ class window.aurora.Lane_count_change extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if not xml
     obj = new window.aurora.Lane_count_change()
-    reset_to_nominal = xml.find('reset_to_nominal')
+    reset_to_nominal = $(xml).attr('reset_to_nominal')
     obj.set 'reset_to_nominal', (reset_to_nominal.toString().toLowerCase() == 'true')
-    delta = xml.find('delta')
+    delta = $(xml).attr('delta')
     obj.set 'delta', Number(delta)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

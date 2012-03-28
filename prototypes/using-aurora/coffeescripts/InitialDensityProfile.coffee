@@ -14,9 +14,9 @@ class window.aurora.InitialDensityProfile extends Backbone.Model
     obj.set 'description', $a.Description.from_xml2(description, deferred, object_with_id)
     density = xml.find('density')
     obj.set 'density', _.map(density, (density_i) -> $a.Density.from_xml2(density_i, deferred, object_with_id))
-    id = xml.find('id')
+    id = $(xml).attr('id')
     obj.set 'id', (id.length() == 0 ? "" : id)
-    name = xml.find('name')
+    name = $(xml).attr('name')
     obj.set 'name', (name.length() == 0 ? "" : name)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

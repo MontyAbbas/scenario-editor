@@ -32,15 +32,15 @@ class window.aurora.Network extends Backbone.Model
     obj.set 'directionscache', $a.DirectionsCache.from_xml2(DirectionsCache, deferred, object_with_id)
     IntersectionCache = xml.find('IntersectionCache')
     obj.set 'intersectioncache', $a.IntersectionCache.from_xml2(IntersectionCache, deferred, object_with_id)
-    name = xml.find('name')
+    name = $(xml).attr('name')
     obj.set 'name', xml.name
-    ml_control = xml.find('ml_control')
+    ml_control = $(xml).attr('ml_control')
     obj.set 'ml_control', (ml_control.toString().toLowerCase() == 'true')
-    q_control = xml.find('q_control')
+    q_control = $(xml).attr('q_control')
     obj.set 'q_control', (q_control.toString().toLowerCase() == 'true')
-    dt = xml.find('dt')
+    dt = $(xml).attr('dt')
     obj.set 'dt', Number(dt)
-    id = xml.find('id')
+    id = $(xml).attr('id')
     obj.set 'id', xml.id
     if object_with_id.network
       object_with_id.network[obj.id] = obj

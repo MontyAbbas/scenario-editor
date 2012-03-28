@@ -28,11 +28,11 @@ class window.aurora.Scenario extends Backbone.Model
     obj.set 'demandprofileset', $a.DemandProfileSet.from_xml2(DemandProfileSet, deferred, object_with_id)
     ControllerSet = xml.find('ControllerSet')
     obj.set 'controllerset', $a.ControllerSet.from_xml2(ControllerSet, deferred, object_with_id)
-    id = xml.find('id')
+    id = $(xml).attr('id')
     obj.set 'id', xml.id
-    name = xml.find('name')
+    name = $(xml).attr('name')
     obj.set 'name', xml.name
-    schemaVersion = xml.find('schemaVersion')
+    schemaVersion = $(xml).attr('schemaVersion')
     obj.set 'schemaVersion', xml.schemaVersion
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

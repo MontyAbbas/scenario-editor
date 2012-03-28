@@ -10,11 +10,11 @@ class window.aurora.Source extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if not xml
     obj = new window.aurora.Source()
-    url = xml.find('url')
+    url = $(xml).attr('url')
     obj.set 'url', xml.url
-    dt = xml.find('dt')
+    dt = $(xml).attr('dt')
     obj.set 'dt', Number(dt)
-    format = xml.find('format')
+    format = $(xml).attr('format')
     obj.set 'format', xml.format
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

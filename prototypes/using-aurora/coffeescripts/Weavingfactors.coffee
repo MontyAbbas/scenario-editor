@@ -14,7 +14,7 @@ class window.aurora.Weavingfactors extends Backbone.Model
     return null if not xml
     obj = new window.aurora.Weavingfactors()
     
-    obj.set 'cells', $a.ArrayText.parse(xml.text(), delims, "Number", null)
+    obj.set 'cells', $a.ArrayText.parse(xml.text(), @delims, "Number", null)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj
