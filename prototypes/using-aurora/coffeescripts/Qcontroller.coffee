@@ -8,17 +8,17 @@ class window.aurora.Qcontroller extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Qcontroller()
     parameters = xml.find('parameters')
-    obj.set 'parameters', _.reduce(parameters.find("parameter"),
+    obj.set('parameters', _.reduce(parameters.find("parameter"),
           (acc,par_xml) ->
             acc[par_xml.attr('name')] = par_xml.attr('value')
             acc
           {}
-    )
+    ))
     type = $(xml).attr('type')
-    obj.set 'type', xml.type
+    obj.set('type', type)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

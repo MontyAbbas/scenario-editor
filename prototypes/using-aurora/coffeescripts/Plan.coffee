@@ -8,14 +8,14 @@ class window.aurora.Plan extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Plan()
     intersection = xml.find('intersection')
-    obj.set 'intersection', _.map(intersection, (intersection_i) -> $a.Intersection.from_xml2(intersection_i, deferred, object_with_id))
+    obj.set('intersection', _.map($(intersection), (intersection_i) -> $a.Intersection.from_xml2($(intersection_i), deferred, object_with_id)))
     id = $(xml).attr('id')
-    obj.set 'id', xml.id
+    obj.set('id', id)
     cyclelength = $(xml).attr('cyclelength')
-    obj.set 'cyclelength', Number(cyclelength)
+    obj.set('cyclelength', Number(cyclelength))
     if object_with_id.plan
       object_with_id.plan[obj.id] = obj
     if obj.resolve_references

@@ -8,16 +8,16 @@ class window.aurora.Fd extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Fd()
     densityCritical = $(xml).attr('densityCritical')
-    obj.set 'densityCritical', xml.densityCritical
+    obj.set('densityCritical', densityCritical)
     flowMax = $(xml).attr('flowMax')
-    obj.set 'flowMax', xml.flowMax
+    obj.set('flowMax', flowMax)
     densityJam = $(xml).attr('densityJam')
-    obj.set 'densityJam', xml.densityJam
+    obj.set('densityJam', densityJam)
     capacityDrop = $(xml).attr('capacityDrop')
-    obj.set 'capacityDrop', Number(capacityDrop)
+    obj.set('capacityDrop', Number(capacityDrop))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

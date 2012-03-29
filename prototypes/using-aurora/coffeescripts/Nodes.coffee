@@ -11,9 +11,9 @@ class window.aurora.Nodes extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Nodes()
-    deferred.push(-> obj.set 'cells', $a.ArrayText.parse(xml.text(), @delims, "node", object_with_id.node))
+    deferred.push(-> obj.set('cells', $a.ArrayText.parse(xml.text(), @delims, "node", object_with_id.node)))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

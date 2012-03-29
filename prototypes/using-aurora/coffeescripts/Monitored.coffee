@@ -8,14 +8,14 @@ class window.aurora.Monitored extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Monitored()
     links = xml.find('links')
-    obj.set 'links', $a.Links.from_xml2(links, deferred, object_with_id)
+    obj.set('links', $a.Links.from_xml2(links, deferred, object_with_id))
     nodes = xml.find('nodes')
-    obj.set 'nodes', $a.Nodes.from_xml2(nodes, deferred, object_with_id)
+    obj.set('nodes', $a.Nodes.from_xml2(nodes, deferred, object_with_id))
     monitors = xml.find('monitors')
-    obj.set 'monitors', $a.Monitors.from_xml2(monitors, deferred, object_with_id)
+    obj.set('monitors', $a.Monitors.from_xml2(monitors, deferred, object_with_id))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

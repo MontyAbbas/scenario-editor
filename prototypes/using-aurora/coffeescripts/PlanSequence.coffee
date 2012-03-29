@@ -8,12 +8,12 @@ class window.aurora.PlanSequence extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.PlanSequence()
     plan_reference = xml.find('plan_reference')
-    obj.set 'plan_reference', _.map(plan_reference, (plan_reference_i) -> $a.Plan_reference.from_xml2(plan_reference_i, deferred, object_with_id))
+    obj.set('plan_reference', _.map($(plan_reference), (plan_reference_i) -> $a.Plan_reference.from_xml2($(plan_reference_i), deferred, object_with_id)))
     transition_delay = $(xml).attr('transition_delay')
-    obj.set 'transition_delay', Number(transition_delay)
+    obj.set('transition_delay', Number(transition_delay))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

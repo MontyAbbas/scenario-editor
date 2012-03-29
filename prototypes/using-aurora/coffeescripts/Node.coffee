@@ -8,26 +8,26 @@ class window.aurora.Node extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Node()
     description = xml.find('description')
-    obj.set 'description', $a.Description.from_xml2(description, deferred, object_with_id)
+    obj.set('description', $a.Description.from_xml2(description, deferred, object_with_id))
     postmile = xml.find('postmile')
-    obj.set 'postmile', $a.Postmile.from_xml2(postmile, deferred, object_with_id)
+    obj.set('postmile', $a.Postmile.from_xml2(postmile, deferred, object_with_id))
     outputs = xml.find('outputs')
-    obj.set 'outputs', $a.Outputs.from_xml2(outputs, deferred, object_with_id)
+    obj.set('outputs', $a.Outputs.from_xml2(outputs, deferred, object_with_id))
     inputs = xml.find('inputs')
-    obj.set 'inputs', $a.Inputs.from_xml2(inputs, deferred, object_with_id)
+    obj.set('inputs', $a.Inputs.from_xml2(inputs, deferred, object_with_id))
     position = xml.find('position')
-    obj.set 'position', $a.Position.from_xml2(position, deferred, object_with_id)
+    obj.set('position', $a.Position.from_xml2(position, deferred, object_with_id))
     name = $(xml).attr('name')
-    obj.set 'name', xml.name
+    obj.set('name', name)
     type = $(xml).attr('type')
-    obj.set 'type', xml.type
+    obj.set('type', type)
     id = $(xml).attr('id')
-    obj.set 'id', xml.id
+    obj.set('id', id)
     lock = $(xml).attr('lock')
-    obj.set 'lock', (lock.toString().toLowerCase() == 'true')
+    obj.set('lock', (lock.toString().toLowerCase() == 'true') if lock?)
     if object_with_id.node
       object_with_id.node[obj.id] = obj
     if obj.resolve_references

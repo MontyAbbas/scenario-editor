@@ -8,18 +8,18 @@ class window.aurora.DirectionsCacheEntry extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.DirectionsCacheEntry()
     From = xml.find('From')
-    obj.set 'from', $a.From.from_xml2(From, deferred, object_with_id)
+    obj.set('from', $a.From.from_xml2(From, deferred, object_with_id))
     To = xml.find('To')
-    obj.set 'to', $a.To.from_xml2(To, deferred, object_with_id)
+    obj.set('to', $a.To.from_xml2(To, deferred, object_with_id))
     EncodedPolyline = xml.find('EncodedPolyline')
-    obj.set 'encodedpolyline', $a.EncodedPolyline.from_xml2(EncodedPolyline, deferred, object_with_id)
+    obj.set('encodedpolyline', $a.EncodedPolyline.from_xml2(EncodedPolyline, deferred, object_with_id))
     avoidHighways = $(xml).attr('avoidHighways')
-    obj.set 'avoidHighways', (avoidHighways.toString().toLowerCase() == 'true')
+    obj.set('avoidHighways', (avoidHighways.toString().toLowerCase() == 'true') if avoidHighways?)
     road_name = $(xml).attr('road_name')
-    obj.set 'road_name', xml.road_name
+    obj.set('road_name', road_name)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

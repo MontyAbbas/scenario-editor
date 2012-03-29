@@ -8,14 +8,14 @@ class window.aurora.Settings extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Settings()
     display = xml.find('display')
-    obj.set 'display', $a.Display.from_xml2(display, deferred, object_with_id)
+    obj.set('display', $a.Display.from_xml2(display, deferred, object_with_id))
     VehicleTypes = xml.find('VehicleTypes')
-    obj.set 'vehicletypes', $a.VehicleTypes.from_xml2(VehicleTypes, deferred, object_with_id)
+    obj.set('vehicletypes', $a.VehicleTypes.from_xml2(VehicleTypes, deferred, object_with_id))
     units = xml.find('units')
-    obj.set 'units', $a.Units.from_xml2(units, deferred, object_with_id)
+    obj.set('units', $a.Units.from_xml2(units, deferred, object_with_id))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

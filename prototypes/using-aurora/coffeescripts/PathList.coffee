@@ -8,10 +8,10 @@ class window.aurora.PathList extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.PathList()
     path = xml.find('path')
-    obj.set 'path', _.map(path, (path_i) -> $a.Path.from_xml2(path_i, deferred, object_with_id))
+    obj.set('path', _.map($(path), (path_i) -> $a.Path.from_xml2($(path_i), deferred, object_with_id)))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

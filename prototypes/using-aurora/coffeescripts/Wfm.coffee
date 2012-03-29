@@ -8,10 +8,10 @@ class window.aurora.Wfm extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Wfm()
     weavingfactors = xml.find('weavingfactors')
-    obj.set 'weavingfactors', _.map(weavingfactors, (weavingfactors_i) -> $a.Weavingfactors.from_xml2(weavingfactors_i, deferred, object_with_id))
+    obj.set('weavingfactors', _.map($(weavingfactors), (weavingfactors_i) -> $a.Weavingfactors.from_xml2($(weavingfactors_i), deferred, object_with_id)))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

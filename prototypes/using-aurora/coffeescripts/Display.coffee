@@ -8,16 +8,16 @@ class window.aurora.Display extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Display()
     timeMax = $(xml).attr('timeMax')
-    obj.set 'timeMax', Number(timeMax)
+    obj.set('timeMax', Number(timeMax))
     timeout = $(xml).attr('timeout')
-    obj.set 'timeout', int(timeout)
+    obj.set('timeout', Number(timeout))
     dt = $(xml).attr('dt')
-    obj.set 'dt', Number(dt)
+    obj.set('dt', Number(dt))
     timeInitial = $(xml).attr('timeInitial')
-    obj.set 'timeInitial', Number(timeInitial)
+    obj.set('timeInitial', Number(timeInitial))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

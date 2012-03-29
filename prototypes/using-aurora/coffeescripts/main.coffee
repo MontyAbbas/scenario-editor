@@ -31,7 +31,6 @@ load_aurora_classes = (after) ->
       aurora_classes_with_extensions,
       (cname) -> ["js/#{cname}.js","js/extensions/#{cname}.js"]
     ))
-    console.log class_paths
     class_paths.push after
     head.js.apply(@, class_paths)
 
@@ -46,5 +45,5 @@ head.js('../shared/jquery-1.7.1.js',
                 console.log(err)
               $("#load_scenario").click ->
                 xml_text = $("#scenario_text").val()
-                scenario = window.aurora.Scenario.from_xml($(xml_text))
+                window.textarea_scenario = window.aurora.Scenario.from_xml($(xml_text))
 )

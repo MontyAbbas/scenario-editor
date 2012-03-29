@@ -8,12 +8,12 @@ class window.aurora.Control extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Control()
     mainline = $(xml).attr('mainline')
-    obj.set 'mainline', (mainline.toString().toLowerCase() == 'true')
+    obj.set('mainline', (mainline.toString().toLowerCase() == 'true') if mainline?)
     queue = $(xml).attr('queue')
-    obj.set 'queue', (queue.toString().toLowerCase() == 'true')
+    obj.set('queue', (queue.toString().toLowerCase() == 'true') if queue?)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

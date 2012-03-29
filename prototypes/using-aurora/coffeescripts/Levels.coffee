@@ -8,10 +8,10 @@ class window.aurora.Levels extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Levels()
     
-    obj.set 'text', xml.text()
+    obj.set('text', )
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

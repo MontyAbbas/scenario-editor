@@ -11,12 +11,12 @@ class window.aurora.Density extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Density()
     link_id = $(xml).attr('link_id')
-    obj.set 'link_id', xml.link_id
+    obj.set('link_id', link_id)
     
-    obj.set 'cells', $a.ArrayText.parse(xml.text(), @delims, "Number", null)
+    obj.set('cells', $a.ArrayText.parse(xml.text(), @delims, "Number", null))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

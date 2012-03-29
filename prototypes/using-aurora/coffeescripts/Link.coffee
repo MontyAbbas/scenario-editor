@@ -8,38 +8,38 @@ class window.aurora.Link extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Link()
     description = xml.find('description')
-    obj.set 'description', $a.Description.from_xml2(description, deferred, object_with_id)
+    obj.set('description', $a.Description.from_xml2(description, deferred, object_with_id))
     begin = xml.find('begin')
-    obj.set 'begin', $a.Begin.from_xml2(begin, deferred, object_with_id)
+    obj.set('begin', $a.Begin.from_xml2(begin, deferred, object_with_id))
     end = xml.find('end')
-    obj.set 'end', $a.End.from_xml2(end, deferred, object_with_id)
+    obj.set('end', $a.End.from_xml2(end, deferred, object_with_id))
     fd = xml.find('fd')
-    obj.set 'fd', $a.Fd.from_xml2(fd, deferred, object_with_id)
+    obj.set('fd', $a.Fd.from_xml2(fd, deferred, object_with_id))
     dynamics = xml.find('dynamics')
-    obj.set 'dynamics', $a.Dynamics.from_xml2(dynamics, deferred, object_with_id)
+    obj.set('dynamics', $a.Dynamics.from_xml2(dynamics, deferred, object_with_id))
     qmax = xml.find('qmax')
-    obj.set 'qmax', $a.Qmax.from_xml2(qmax, deferred, object_with_id)
+    obj.set('qmax', $a.Qmax.from_xml2(qmax, deferred, object_with_id))
     LinkGeometry = xml.find('LinkGeometry')
-    obj.set 'linkgeometry', $a.LinkGeometry.from_xml2(LinkGeometry, deferred, object_with_id)
+    obj.set('linkgeometry', $a.LinkGeometry.from_xml2(LinkGeometry, deferred, object_with_id))
     name = $(xml).attr('name')
-    obj.set 'name', xml.name
+    obj.set('name', name)
     road_name = $(xml).attr('road_name')
-    obj.set 'road_name', xml.road_name
+    obj.set('road_name', road_name)
     lanes = $(xml).attr('lanes')
-    obj.set 'lanes', Number(lanes)
+    obj.set('lanes', Number(lanes))
     lane_offset = $(xml).attr('lane_offset')
-    obj.set 'lane_offset', Number(lane_offset)
+    obj.set('lane_offset', Number(lane_offset))
     length = $(xml).attr('length')
-    obj.set 'length', Number(length)
+    obj.set('length', Number(length))
     type = $(xml).attr('type')
-    obj.set 'type', xml.type
+    obj.set('type', type)
     id = $(xml).attr('id')
-    obj.set 'id', xml.id
+    obj.set('id', id)
     record = $(xml).attr('record')
-    obj.set 'record', (record.toString().toLowerCase() == 'true')
+    obj.set('record', (record.toString().toLowerCase() == 'true') if record?)
     if object_with_id.link
       object_with_id.link[obj.id] = obj
     if obj.resolve_references

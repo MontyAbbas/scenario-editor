@@ -11,10 +11,10 @@ class window.aurora.Table extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Table()
     
-    obj.set 'cells', $a.ArrayText.parse(xml.text(), @delims, "String", null)
+    obj.set('cells', $a.ArrayText.parse(xml.text(), @delims, "String", null))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

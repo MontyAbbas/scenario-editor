@@ -8,10 +8,10 @@ class window.aurora.Zones extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Zones()
     zone = xml.find('zone')
-    obj.set 'zone', _.map(zone, (zone_i) -> $a.Zone.from_xml2(zone_i, deferred, object_with_id))
+    obj.set('zone', _.map($(zone), (zone_i) -> $a.Zone.from_xml2($(zone_i), deferred, object_with_id)))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

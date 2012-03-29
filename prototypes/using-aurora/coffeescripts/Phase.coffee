@@ -8,26 +8,26 @@ class window.aurora.Phase extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Phase()
     links = xml.find('links')
-    obj.set 'links', $a.Links.from_xml2(links, deferred, object_with_id)
+    obj.set('links', $a.Links.from_xml2(links, deferred, object_with_id))
     nema = $(xml).attr('nema')
-    obj.set 'nema', int(nema)
+    obj.set('nema', Number(nema))
     protected = $(xml).attr('protected')
-    obj.set 'protected', (protected.toString().toLowerCase() == 'true')
+    obj.set('protected', (protected.toString().toLowerCase() == 'true') if protected?)
     permissive = $(xml).attr('permissive')
-    obj.set 'permissive', (permissive.toString().toLowerCase() == 'true')
+    obj.set('permissive', (permissive.toString().toLowerCase() == 'true') if permissive?)
     yellow_time = $(xml).attr('yellow_time')
-    obj.set 'yellow_time', Number(yellow_time)
+    obj.set('yellow_time', Number(yellow_time))
     red_clear_time = $(xml).attr('red_clear_time')
-    obj.set 'red_clear_time', Number(red_clear_time)
+    obj.set('red_clear_time', Number(red_clear_time))
     min_green_time = $(xml).attr('min_green_time')
-    obj.set 'min_green_time', Number(min_green_time)
+    obj.set('min_green_time', Number(min_green_time))
     lag = $(xml).attr('lag')
-    obj.set 'lag', (lag.toString().toLowerCase() == 'true')
+    obj.set('lag', (lag.toString().toLowerCase() == 'true') if lag?)
     recall = $(xml).attr('recall')
-    obj.set 'recall', (recall.toString().toLowerCase() == 'true')
+    obj.set('recall', (recall.toString().toLowerCase() == 'true') if recall?)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

@@ -8,32 +8,32 @@ class window.aurora.Scenario extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Scenario()
     description = xml.find('description')
-    obj.set 'description', $a.Description.from_xml2(description, deferred, object_with_id)
+    obj.set('description', $a.Description.from_xml2(description, deferred, object_with_id))
     network = xml.find('network')
-    obj.set 'network', $a.Network.from_xml2(network, deferred, object_with_id)
+    obj.set('network', $a.Network.from_xml2(network, deferred, object_with_id))
     settings = xml.find('settings')
-    obj.set 'settings', $a.Settings.from_xml2(settings, deferred, object_with_id)
+    obj.set('settings', $a.Settings.from_xml2(settings, deferred, object_with_id))
     InitialDensityProfile = xml.find('InitialDensityProfile')
-    obj.set 'initialdensityprofile', $a.InitialDensityProfile.from_xml2(InitialDensityProfile, deferred, object_with_id)
+    obj.set('initialdensityprofile', $a.InitialDensityProfile.from_xml2(InitialDensityProfile, deferred, object_with_id))
     SplitRatioProfileSet = xml.find('SplitRatioProfileSet')
-    obj.set 'splitratioprofileset', $a.SplitRatioProfileSet.from_xml2(SplitRatioProfileSet, deferred, object_with_id)
+    obj.set('splitratioprofileset', $a.SplitRatioProfileSet.from_xml2(SplitRatioProfileSet, deferred, object_with_id))
     CapacityProfileSet = xml.find('CapacityProfileSet')
-    obj.set 'capacityprofileset', $a.CapacityProfileSet.from_xml2(CapacityProfileSet, deferred, object_with_id)
+    obj.set('capacityprofileset', $a.CapacityProfileSet.from_xml2(CapacityProfileSet, deferred, object_with_id))
     EventSet = xml.find('EventSet')
-    obj.set 'eventset', $a.EventSet.from_xml2(EventSet, deferred, object_with_id)
+    obj.set('eventset', $a.EventSet.from_xml2(EventSet, deferred, object_with_id))
     DemandProfileSet = xml.find('DemandProfileSet')
-    obj.set 'demandprofileset', $a.DemandProfileSet.from_xml2(DemandProfileSet, deferred, object_with_id)
+    obj.set('demandprofileset', $a.DemandProfileSet.from_xml2(DemandProfileSet, deferred, object_with_id))
     ControllerSet = xml.find('ControllerSet')
-    obj.set 'controllerset', $a.ControllerSet.from_xml2(ControllerSet, deferred, object_with_id)
+    obj.set('controllerset', $a.ControllerSet.from_xml2(ControllerSet, deferred, object_with_id))
     id = $(xml).attr('id')
-    obj.set 'id', xml.id
+    obj.set('id', id)
     name = $(xml).attr('name')
-    obj.set 'name', xml.name
+    obj.set('name', name)
     schemaVersion = $(xml).attr('schemaVersion')
-    obj.set 'schemaVersion', xml.schemaVersion
+    obj.set('schemaVersion', schemaVersion)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

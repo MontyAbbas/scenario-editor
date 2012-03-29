@@ -8,12 +8,12 @@ class window.aurora.Signal extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Signal()
     phase = xml.find('phase')
-    obj.set 'phase', _.map(phase, (phase_i) -> $a.Phase.from_xml2(phase_i, deferred, object_with_id))
+    obj.set('phase', _.map($(phase), (phase_i) -> $a.Phase.from_xml2($(phase_i), deferred, object_with_id)))
     node_id = $(xml).attr('node_id')
-    obj.set 'node_id', xml.node_id
+    obj.set('node_id', node_id)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

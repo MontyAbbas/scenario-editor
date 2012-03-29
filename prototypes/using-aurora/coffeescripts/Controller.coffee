@@ -8,47 +8,47 @@ class window.aurora.Controller extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Controller()
     components = xml.find('components')
-    obj.set 'components', $a.Components.from_xml2(components, deferred, object_with_id)
+    obj.set('components', $a.Components.from_xml2(components, deferred, object_with_id))
     zones = xml.find('zones')
-    obj.set 'zones', $a.Zones.from_xml2(zones, deferred, object_with_id)
+    obj.set('zones', $a.Zones.from_xml2(zones, deferred, object_with_id))
     onramps = xml.find('onramps')
-    obj.set 'onramps', $a.Onramps.from_xml2(onramps, deferred, object_with_id)
+    obj.set('onramps', $a.Onramps.from_xml2(onramps, deferred, object_with_id))
     parameters = xml.find('parameters')
-    obj.set 'parameters', _.reduce(parameters.find("parameter"),
+    obj.set('parameters', _.reduce(parameters.find("parameter"),
           (acc,par_xml) ->
             acc[par_xml.attr('name')] = par_xml.attr('value')
             acc
           {}
-    )
+    ))
     limits = xml.find('limits')
-    obj.set 'limits', $a.Limits.from_xml2(limits, deferred, object_with_id)
+    obj.set('limits', $a.Limits.from_xml2(limits, deferred, object_with_id))
     qcontroller = xml.find('qcontroller')
-    obj.set 'qcontroller', $a.Qcontroller.from_xml2(qcontroller, deferred, object_with_id)
+    obj.set('qcontroller', $a.Qcontroller.from_xml2(qcontroller, deferred, object_with_id))
     table = xml.find('table')
-    obj.set 'table', $a.Table.from_xml2(table, deferred, object_with_id)
+    obj.set('table', $a.Table.from_xml2(table, deferred, object_with_id))
     display_position = xml.find('display_position')
-    obj.set 'display_position', $a.Display_position.from_xml2(display_position, deferred, object_with_id)
+    obj.set('display_position', $a.Display_position.from_xml2(display_position, deferred, object_with_id))
     PlanSequence = xml.find('PlanSequence')
-    obj.set 'plansequence', $a.PlanSequence.from_xml2(PlanSequence, deferred, object_with_id)
+    obj.set('plansequence', $a.PlanSequence.from_xml2(PlanSequence, deferred, object_with_id))
     PlanList = xml.find('PlanList')
-    obj.set 'planlist', $a.PlanList.from_xml2(PlanList, deferred, object_with_id)
+    obj.set('planlist', $a.PlanList.from_xml2(PlanList, deferred, object_with_id))
     name = $(xml).attr('name')
-    obj.set 'name', xml.name
+    obj.set('name', name)
     type = $(xml).attr('type')
-    obj.set 'type', xml.type
+    obj.set('type', type)
     dt = $(xml).attr('dt')
-    obj.set 'dt', Number(dt)
+    obj.set('dt', Number(dt))
     usesensors = $(xml).attr('usesensors')
-    obj.set 'usesensors', (usesensors.toString().toLowerCase() == 'true')
+    obj.set('usesensors', (usesensors.toString().toLowerCase() == 'true') if usesensors?)
     node_id = $(xml).attr('node_id')
-    obj.set 'node_id', (node_id.length() == 0 ? "" : node_id)
+    obj.set('node_id', node_id)
     link_id = $(xml).attr('link_id')
-    obj.set 'link_id', (link_id.length() == 0 ? "" : link_id)
+    obj.set('link_id', link_id)
     network_id = $(xml).attr('network_id')
-    obj.set 'network_id', (network_id.length() == 0 ? "" : network_id)
+    obj.set('network_id', network_id)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

@@ -8,10 +8,10 @@ class window.aurora.PlanList extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.PlanList()
     plan = xml.find('plan')
-    obj.set 'plan', _.map(plan, (plan_i) -> $a.Plan.from_xml2(plan_i, deferred, object_with_id))
+    obj.set('plan', _.map($(plan), (plan_i) -> $a.Plan.from_xml2($(plan_i), deferred, object_with_id)))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

@@ -8,12 +8,12 @@ class window.aurora.Vtype extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Vtype()
     name = $(xml).attr('name')
-    obj.set 'name', xml.name
+    obj.set('name', name)
     weight = $(xml).attr('weight')
-    obj.set 'weight', Number(weight)
+    obj.set('weight', Number(weight))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

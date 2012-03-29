@@ -8,16 +8,16 @@ class window.aurora.Splitratios extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Splitratios()
     srm = xml.find('srm')
-    obj.set 'srm', _.map(srm, (srm_i) -> $a.Srm.from_xml2(srm_i, deferred, object_with_id))
+    obj.set('srm', _.map($(srm), (srm_i) -> $a.Srm.from_xml2($(srm_i), deferred, object_with_id)))
     node_id = $(xml).attr('node_id')
-    obj.set 'node_id', xml.node_id
+    obj.set('node_id', node_id)
     start_time = $(xml).attr('start_time')
-    obj.set 'start_time', Number(start_time)
+    obj.set('start_time', Number(start_time))
     dt = $(xml).attr('dt')
-    obj.set 'dt', Number(dt)
+    obj.set('dt', Number(dt))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

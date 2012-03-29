@@ -8,14 +8,14 @@ class window.aurora.Stage extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Stage()
     greentime = $(xml).attr('greentime')
-    obj.set 'greentime', Number(greentime)
+    obj.set('greentime', Number(greentime))
     movA = $(xml).attr('movA')
-    obj.set 'movA', xml.movA
+    obj.set('movA', movA)
     movB = $(xml).attr('movB')
-    obj.set 'movB', xml.movB
+    obj.set('movB', movB)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

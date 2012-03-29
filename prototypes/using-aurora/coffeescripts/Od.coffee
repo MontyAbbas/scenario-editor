@@ -8,14 +8,14 @@ class window.aurora.Od extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Od()
     PathList = xml.find('PathList')
-    obj.set 'pathlist', $a.PathList.from_xml2(PathList, deferred, object_with_id)
+    obj.set('pathlist', $a.PathList.from_xml2(PathList, deferred, object_with_id))
     begin = $(xml).attr('begin')
-    obj.set 'begin', xml.begin
+    obj.set('begin', begin)
     end = $(xml).attr('end')
-    obj.set 'end', xml.end
+    obj.set('end', end)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

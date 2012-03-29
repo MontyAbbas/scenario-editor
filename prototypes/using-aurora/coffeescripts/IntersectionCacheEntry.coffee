@@ -8,20 +8,20 @@ class window.aurora.IntersectionCacheEntry extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.IntersectionCacheEntry()
     qlat = $(xml).attr('qlat')
-    obj.set 'qlat', Number(qlat)
+    obj.set('qlat', Number(qlat))
     qlng = $(xml).attr('qlng')
-    obj.set 'qlng', Number(qlng)
+    obj.set('qlng', Number(qlng))
     lat = $(xml).attr('lat')
-    obj.set 'lat', Number(lat)
+    obj.set('lat', Number(lat))
     lng = $(xml).attr('lng')
-    obj.set 'lng', Number(lng)
+    obj.set('lng', Number(lng))
     street1 = $(xml).attr('street1')
-    obj.set 'street1', xml.street1
+    obj.set('street1', street1)
     street2 = $(xml).attr('street2')
-    obj.set 'street2', xml.street2
+    obj.set('street2', street2)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

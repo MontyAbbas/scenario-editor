@@ -8,24 +8,24 @@ class window.aurora.Monitor extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Monitor()
     monitored = xml.find('monitored')
-    obj.set 'monitored', $a.Monitored.from_xml2(monitored, deferred, object_with_id)
+    obj.set('monitored', $a.Monitored.from_xml2(monitored, deferred, object_with_id))
     controlled = xml.find('controlled')
-    obj.set 'controlled', $a.Controlled.from_xml2(controlled, deferred, object_with_id)
+    obj.set('controlled', $a.Controlled.from_xml2(controlled, deferred, object_with_id))
     controller = xml.find('controller')
-    obj.set 'controller', $a.Controller.from_xml2(controller, deferred, object_with_id)
+    obj.set('controller', $a.Controller.from_xml2(controller, deferred, object_with_id))
     LinkPairs = xml.find('LinkPairs')
-    obj.set 'linkpairs', $a.LinkPairs.from_xml2(LinkPairs, deferred, object_with_id)
+    obj.set('linkpairs', $a.LinkPairs.from_xml2(LinkPairs, deferred, object_with_id))
     name = $(xml).attr('name')
-    obj.set 'name', (name.length() == 0 ? "" : name)
+    obj.set('name', name)
     type = $(xml).attr('type')
-    obj.set 'type', xml.type
+    obj.set('type', type)
     id = $(xml).attr('id')
-    obj.set 'id', xml.id
+    obj.set('id', id)
     
-    obj.set 'text', xml.text()
+    obj.set('text', )
     if object_with_id.monitor
       object_with_id.monitor[obj.id] = obj
     if obj.resolve_references

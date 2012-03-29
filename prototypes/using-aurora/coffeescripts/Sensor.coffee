@@ -8,31 +8,31 @@ class window.aurora.Sensor extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Sensor()
     description = xml.find('description')
-    obj.set 'description', $a.Description.from_xml2(description, deferred, object_with_id)
+    obj.set('description', $a.Description.from_xml2(description, deferred, object_with_id))
     position = xml.find('position')
-    obj.set 'position', $a.Position.from_xml2(position, deferred, object_with_id)
+    obj.set('position', $a.Position.from_xml2(position, deferred, object_with_id))
     display_position = xml.find('display_position')
-    obj.set 'display_position', $a.Display_position.from_xml2(display_position, deferred, object_with_id)
+    obj.set('display_position', $a.Display_position.from_xml2(display_position, deferred, object_with_id))
     links = xml.find('links')
-    obj.set 'links', $a.Links.from_xml2(links, deferred, object_with_id)
+    obj.set('links', $a.Links.from_xml2(links, deferred, object_with_id))
     parameters = xml.find('parameters')
-    obj.set 'parameters', _.reduce(parameters.find("parameter"),
+    obj.set('parameters', _.reduce(parameters.find("parameter"),
           (acc,par_xml) ->
             acc[par_xml.attr('name')] = par_xml.attr('value')
             acc
           {}
-    )
+    ))
     data_sources = xml.find('data_sources')
-    obj.set 'data_sources', $a.Data_sources.from_xml2(data_sources, deferred, object_with_id)
+    obj.set('data_sources', $a.Data_sources.from_xml2(data_sources, deferred, object_with_id))
     id = $(xml).attr('id')
-    obj.set 'id', xml.id
+    obj.set('id', id)
     type = $(xml).attr('type')
-    obj.set 'type', xml.type
+    obj.set('type', type)
     link_type = $(xml).attr('link_type')
-    obj.set 'link_type', xml.link_type
+    obj.set('link_type', link_type)
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

@@ -8,14 +8,14 @@ class window.aurora.Zone extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Zone()
     bottlenecklink = $(xml).attr('bottlenecklink')
-    obj.set 'bottlenecklink', xml.bottlenecklink
+    obj.set('bottlenecklink', bottlenecklink)
     onramplinks = $(xml).attr('onramplinks')
-    obj.set 'onramplinks', xml.onramplinks
+    obj.set('onramplinks', onramplinks)
     sat_den_multiplier = $(xml).attr('sat_den_multiplier')
-    obj.set 'sat_den_multiplier', Number(sat_den_multiplier)
+    obj.set('sat_den_multiplier', Number(sat_den_multiplier))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

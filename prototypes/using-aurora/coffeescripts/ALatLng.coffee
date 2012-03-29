@@ -8,12 +8,12 @@ class window.aurora.ALatLng extends Backbone.Model
     obj
   
   @from_xml2: (xml, deferred, object_with_id) ->
-    return null if not xml
+    return null if (not xml? or xml.length == 0)
     obj = new window.aurora.ALatLng()
     lat = $(xml).attr('lat')
-    obj.set 'lat', Number(lat)
+    obj.set('lat', Number(lat))
     lng = $(xml).attr('lng')
-    obj.set 'lng', Number(lng)
+    obj.set('lng', Number(lng))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj
