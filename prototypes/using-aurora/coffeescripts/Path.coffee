@@ -17,7 +17,7 @@ class window.aurora.Path extends Backbone.Model
     obj.set('id', id)
     name = $(xml).attr('name')
     obj.set('name', name)
-    deferred.push(-> obj.set('cells', $a.ArrayText.parse(xml.text(), @delims, "link", object_with_id.link)))
+    deferred.push(=> obj.set('cells', $a.ArrayText.parse(xml.text(), @delims, "link", object_with_id.link)))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

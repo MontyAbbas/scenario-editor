@@ -12,12 +12,12 @@ class window.aurora.ArrayText
       else
         rest_delims = delims.slice(1,1000000)
         _.map(data.split(delims[0]),
-              (s) -> slice_and_dice(s, rest_delims, convert))
+              (s) => @slice_and_dice(s, rest_delims, convert))
 
   @convert_cell_to_number: (s) ->
     n = Number(s)
 
-    if isNan(s)
+    if isNaN(s)
       throw "Invalid numeric data in cell: #{s}"
     n
 

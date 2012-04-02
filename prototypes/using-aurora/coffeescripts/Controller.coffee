@@ -19,7 +19,8 @@ class window.aurora.Controller extends Backbone.Model
     parameters = xml.find('parameters')
     obj.set('parameters', _.reduce(parameters.find("parameter"),
           (acc,par_xml) ->
-            acc[par_xml.attr('name')] = par_xml.attr('value')
+            wrapped_xml = $(par_xml);
+            acc[wrapped_xml.attr('name')] = wrapped_xml.attr('value')
             acc
           {}
     ))
