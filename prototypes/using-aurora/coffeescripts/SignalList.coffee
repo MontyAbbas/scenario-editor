@@ -10,7 +10,7 @@ class window.aurora.SignalList extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.aurora.SignalList()
-    signal = xml.find('signal')
+    signal = xml.children('signal')
     obj.set('signal', _.map($(signal), (signal_i) -> $a.Signal.from_xml2($(signal_i), deferred, object_with_id)))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

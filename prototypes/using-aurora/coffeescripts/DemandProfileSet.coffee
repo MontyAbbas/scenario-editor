@@ -10,9 +10,9 @@ class window.aurora.DemandProfileSet extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.aurora.DemandProfileSet()
-    description = xml.find('description')
+    description = xml.children('description')
     obj.set('description', $a.Description.from_xml2(description, deferred, object_with_id))
-    demand = xml.find('demand')
+    demand = xml.children('demand')
     obj.set('demand', _.map($(demand), (demand_i) -> $a.Demand.from_xml2($(demand_i), deferred, object_with_id)))
     id = $(xml).attr('id')
     obj.set('id', id)

@@ -10,9 +10,9 @@ class window.aurora.ControllerSet extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.aurora.ControllerSet()
-    description = xml.find('description')
+    description = xml.children('description')
     obj.set('description', $a.Description.from_xml2(description, deferred, object_with_id))
-    controller = xml.find('controller')
+    controller = xml.children('controller')
     obj.set('controller', _.map($(controller), (controller_i) -> $a.Controller.from_xml2($(controller_i), deferred, object_with_id)))
     id = $(xml).attr('id')
     obj.set('id', id)

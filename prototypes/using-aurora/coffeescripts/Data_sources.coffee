@@ -10,7 +10,7 @@ class window.aurora.Data_sources extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Data_sources()
-    source = xml.find('source')
+    source = xml.children('source')
     obj.set('source', _.map($(source), (source_i) -> $a.Source.from_xml2($(source_i), deferred, object_with_id)))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

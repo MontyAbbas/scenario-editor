@@ -10,7 +10,7 @@ class window.aurora.NetworkList extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.aurora.NetworkList()
-    network = xml.find('network')
+    network = xml.children('network')
     obj.set('network', _.map($(network), (network_i) -> $a.Network.from_xml2($(network_i), deferred, object_with_id)))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

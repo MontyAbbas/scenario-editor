@@ -10,7 +10,7 @@ class window.aurora.Plan extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Plan()
-    intersection = xml.find('intersection')
+    intersection = xml.children('intersection')
     obj.set('intersection', _.map($(intersection), (intersection_i) -> $a.Intersection.from_xml2($(intersection_i), deferred, object_with_id)))
     id = $(xml).attr('id')
     obj.set('id', id)

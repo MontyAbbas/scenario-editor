@@ -10,7 +10,7 @@ class window.aurora.Phase extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Phase()
-    links = xml.find('links')
+    links = xml.children('links')
     obj.set('links', $a.Links.from_xml2(links, deferred, object_with_id))
     nema = $(xml).attr('nema')
     obj.set('nema', Number(nema))

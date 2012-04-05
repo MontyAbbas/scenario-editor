@@ -10,9 +10,9 @@ class window.aurora.EncodedPolyline extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.aurora.EncodedPolyline()
-    Points = xml.find('Points')
+    Points = xml.children('Points')
     obj.set('points', $a.Points.from_xml2(Points, deferred, object_with_id))
-    Levels = xml.find('Levels')
+    Levels = xml.children('Levels')
     obj.set('levels', $a.Levels.from_xml2(Levels, deferred, object_with_id))
     zoomFactor = $(xml).attr('zoomFactor')
     obj.set('zoomFactor', Number(zoomFactor))

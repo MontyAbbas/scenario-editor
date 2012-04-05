@@ -10,9 +10,9 @@ class window.aurora.CapacityProfileSet extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.aurora.CapacityProfileSet()
-    description = xml.find('description')
+    description = xml.children('description')
     obj.set('description', $a.Description.from_xml2(description, deferred, object_with_id))
-    capacity = xml.find('capacity')
+    capacity = xml.children('capacity')
     obj.set('capacity', _.map($(capacity), (capacity_i) -> $a.Capacity.from_xml2($(capacity_i), deferred, object_with_id)))
     id = $(xml).attr('id')
     obj.set('id', id)

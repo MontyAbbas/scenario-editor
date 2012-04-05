@@ -10,7 +10,7 @@ class window.aurora.LinkGeometry extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.aurora.LinkGeometry()
-    EncodedPolyline = xml.find('EncodedPolyline')
+    EncodedPolyline = xml.children('EncodedPolyline')
     obj.set('encodedpolyline', $a.EncodedPolyline.from_xml2(EncodedPolyline, deferred, object_with_id))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

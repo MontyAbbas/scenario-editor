@@ -10,9 +10,9 @@ class window.aurora.EventSet extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.aurora.EventSet()
-    description = xml.find('description')
+    description = xml.children('description')
     obj.set('description', $a.Description.from_xml2(description, deferred, object_with_id))
-    event = xml.find('event')
+    event = xml.children('event')
     obj.set('event', _.map($(event), (event_i) -> $a.Event.from_xml2($(event_i), deferred, object_with_id)))
     id = $(xml).attr('id')
     obj.set('id', id)

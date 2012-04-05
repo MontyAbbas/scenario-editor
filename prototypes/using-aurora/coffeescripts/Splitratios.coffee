@@ -10,7 +10,7 @@ class window.aurora.Splitratios extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Splitratios()
-    srm = xml.find('srm')
+    srm = xml.children('srm')
     obj.set('srm', _.map($(srm), (srm_i) -> $a.Srm.from_xml2($(srm_i), deferred, object_with_id)))
     node_id = $(xml).attr('node_id')
     obj.set('node_id', node_id)

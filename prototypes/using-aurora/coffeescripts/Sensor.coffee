@@ -10,15 +10,15 @@ class window.aurora.Sensor extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Sensor()
-    description = xml.find('description')
+    description = xml.children('description')
     obj.set('description', $a.Description.from_xml2(description, deferred, object_with_id))
-    position = xml.find('position')
+    position = xml.children('position')
     obj.set('position', $a.Position.from_xml2(position, deferred, object_with_id))
-    display_position = xml.find('display_position')
+    display_position = xml.children('display_position')
     obj.set('display_position', $a.Display_position.from_xml2(display_position, deferred, object_with_id))
-    links = xml.find('links')
+    links = xml.children('links')
     obj.set('links', $a.Links.from_xml2(links, deferred, object_with_id))
-    parameters = xml.find('parameters')
+    parameters = xml.children('parameters')
     obj.set('parameters', _.reduce(parameters.find("parameter"),
           (acc,par_xml) ->
             wrapped_xml = $(par_xml);
@@ -26,7 +26,7 @@ class window.aurora.Sensor extends Backbone.Model
             acc
           {}
     ))
-    data_sources = xml.find('data_sources')
+    data_sources = xml.children('data_sources')
     obj.set('data_sources', $a.Data_sources.from_xml2(data_sources, deferred, object_with_id))
     id = $(xml).attr('id')
     obj.set('id', id)

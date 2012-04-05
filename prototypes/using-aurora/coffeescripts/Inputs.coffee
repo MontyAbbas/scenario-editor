@@ -10,7 +10,7 @@ class window.aurora.Inputs extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Inputs()
-    input = xml.find('input')
+    input = xml.children('input')
     obj.set('input', _.map($(input), (input_i) -> $a.Input.from_xml2($(input_i), deferred, object_with_id)))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

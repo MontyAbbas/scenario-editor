@@ -10,8 +10,7 @@ class window.aurora.Lkid extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Lkid()
-    
-    obj.set('text', )
+    obj.set('text', xml.text())
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj

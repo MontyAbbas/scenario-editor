@@ -10,7 +10,7 @@ class window.aurora.Qcontroller extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Qcontroller()
-    parameters = xml.find('parameters')
+    parameters = xml.children('parameters')
     obj.set('parameters', _.reduce(parameters.find("parameter"),
           (acc,par_xml) ->
             wrapped_xml = $(par_xml);

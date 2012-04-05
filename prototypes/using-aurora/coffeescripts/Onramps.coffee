@@ -10,7 +10,7 @@ class window.aurora.Onramps extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Onramps()
-    onramp = xml.find('onramp')
+    onramp = xml.children('onramp')
     obj.set('onramp', _.map($(onramp), (onramp_i) -> $a.Onramp.from_xml2($(onramp_i), deferred, object_with_id)))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)

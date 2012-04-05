@@ -10,7 +10,7 @@ class window.aurora.Intersection extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Intersection()
-    stage = xml.find('stage')
+    stage = xml.children('stage')
     obj.set('stage', _.map($(stage), (stage_i) -> $a.Stage.from_xml2($(stage_i), deferred, object_with_id)))
     node_id = $(xml).attr('node_id')
     obj.set('node_id', node_id)

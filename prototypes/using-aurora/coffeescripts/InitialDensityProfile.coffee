@@ -10,9 +10,9 @@ class window.aurora.InitialDensityProfile extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.aurora.InitialDensityProfile()
-    description = xml.find('description')
+    description = xml.children('description')
     obj.set('description', $a.Description.from_xml2(description, deferred, object_with_id))
-    density = xml.find('density')
+    density = xml.children('density')
     obj.set('density', _.map($(density), (density_i) -> $a.Density.from_xml2($(density_i), deferred, object_with_id)))
     id = $(xml).attr('id')
     obj.set('id', id)

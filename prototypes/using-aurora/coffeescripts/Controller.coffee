@@ -10,13 +10,13 @@ class window.aurora.Controller extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Controller()
-    components = xml.find('components')
+    components = xml.children('components')
     obj.set('components', $a.Components.from_xml2(components, deferred, object_with_id))
-    zones = xml.find('zones')
+    zones = xml.children('zones')
     obj.set('zones', $a.Zones.from_xml2(zones, deferred, object_with_id))
-    onramps = xml.find('onramps')
+    onramps = xml.children('onramps')
     obj.set('onramps', $a.Onramps.from_xml2(onramps, deferred, object_with_id))
-    parameters = xml.find('parameters')
+    parameters = xml.children('parameters')
     obj.set('parameters', _.reduce(parameters.find("parameter"),
           (acc,par_xml) ->
             wrapped_xml = $(par_xml);
@@ -24,17 +24,17 @@ class window.aurora.Controller extends Backbone.Model
             acc
           {}
     ))
-    limits = xml.find('limits')
+    limits = xml.children('limits')
     obj.set('limits', $a.Limits.from_xml2(limits, deferred, object_with_id))
-    qcontroller = xml.find('qcontroller')
+    qcontroller = xml.children('qcontroller')
     obj.set('qcontroller', $a.Qcontroller.from_xml2(qcontroller, deferred, object_with_id))
-    table = xml.find('table')
+    table = xml.children('table')
     obj.set('table', $a.Table.from_xml2(table, deferred, object_with_id))
-    display_position = xml.find('display_position')
+    display_position = xml.children('display_position')
     obj.set('display_position', $a.Display_position.from_xml2(display_position, deferred, object_with_id))
-    PlanSequence = xml.find('PlanSequence')
+    PlanSequence = xml.children('PlanSequence')
     obj.set('plansequence', $a.PlanSequence.from_xml2(PlanSequence, deferred, object_with_id))
-    PlanList = xml.find('PlanList')
+    PlanList = xml.children('PlanList')
     obj.set('planlist', $a.PlanList.from_xml2(PlanList, deferred, object_with_id))
     name = $(xml).attr('name')
     obj.set('name', name)

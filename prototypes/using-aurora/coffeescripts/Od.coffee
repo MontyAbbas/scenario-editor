@@ -10,7 +10,7 @@ class window.aurora.Od extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Od()
-    PathList = xml.find('PathList')
+    PathList = xml.children('PathList')
     obj.set('pathlist', $a.PathList.from_xml2(PathList, deferred, object_with_id))
     begin = $(xml).attr('begin')
     obj.set('begin', begin)
