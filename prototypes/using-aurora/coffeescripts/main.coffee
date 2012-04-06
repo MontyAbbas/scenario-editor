@@ -39,10 +39,6 @@ head.js('../shared/jquery-1.7.1.js',
         '../shared/backbone.js',
         '../shared/bootstrap/js/bootstrap.js', ->
             load_aurora_classes ->
-              try
-                null
-              catch err
-                console.log(err)
               $("#load_scenario").click ->
                 xml_text = $("#scenario_text").val()
                 window.textarea_scenario = window.aurora.Scenario.from_xml($(xml_text))
