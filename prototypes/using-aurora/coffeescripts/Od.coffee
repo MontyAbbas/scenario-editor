@@ -24,7 +24,7 @@ class window.aurora.Od extends Backbone.Model
     xml = doc.createElement('od')
     if @encode_references
       @encode_references()
-    xml.appendChild(@get('pathlist').to_xml()) if @has('pathlist')
+    xml.appendChild(@get('pathlist').to_xml(doc)) if @has('pathlist')
     xml.setAttribute('begin', @get('begin'))
     xml.setAttribute('end', @get('end'))
     xml

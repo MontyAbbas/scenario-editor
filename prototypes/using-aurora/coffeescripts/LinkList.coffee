@@ -20,7 +20,7 @@ class window.aurora.LinkList extends Backbone.Model
     xml = doc.createElement('LinkList')
     if @encode_references
       @encode_references()
-    _.each(@get('link') || [], (a_link) -> xml.appendChild(a_link.to_xml()))
+    _.each(@get('link') || [], (a_link) -> xml.appendChild(a_link.to_xml(doc)))
     xml
   
   deep_copy: -> LinkList.from_xml1(@to_xml(), {})

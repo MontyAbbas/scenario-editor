@@ -20,7 +20,7 @@ class window.aurora.Data_sources extends Backbone.Model
     xml = doc.createElement('data_sources')
     if @encode_references
       @encode_references()
-    _.each(@get('source') || [], (a_source) -> xml.appendChild(a_source.to_xml()))
+    _.each(@get('source') || [], (a_source) -> xml.appendChild(a_source.to_xml(doc)))
     xml
   
   deep_copy: -> Data_sources.from_xml1(@to_xml(), {})

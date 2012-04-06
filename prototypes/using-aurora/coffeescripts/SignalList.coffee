@@ -20,7 +20,7 @@ class window.aurora.SignalList extends Backbone.Model
     xml = doc.createElement('SignalList')
     if @encode_references
       @encode_references()
-    _.each(@get('signal') || [], (a_signal) -> xml.appendChild(a_signal.to_xml()))
+    _.each(@get('signal') || [], (a_signal) -> xml.appendChild(a_signal.to_xml(doc)))
     xml
   
   deep_copy: -> SignalList.from_xml1(@to_xml(), {})

@@ -24,9 +24,9 @@ class window.aurora.Monitored extends Backbone.Model
     xml = doc.createElement('monitored')
     if @encode_references
       @encode_references()
-    xml.appendChild(@get('links').to_xml()) if @has('links')
-    xml.appendChild(@get('nodes').to_xml()) if @has('nodes')
-    xml.appendChild(@get('monitors').to_xml()) if @has('monitors')
+    xml.appendChild(@get('links').to_xml(doc)) if @has('links')
+    xml.appendChild(@get('nodes').to_xml(doc)) if @has('nodes')
+    xml.appendChild(@get('monitors').to_xml(doc)) if @has('monitors')
     xml
   
   deep_copy: -> Monitored.from_xml1(@to_xml(), {})

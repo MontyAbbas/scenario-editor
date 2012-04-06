@@ -20,7 +20,7 @@ class window.aurora.From extends Backbone.Model
     xml = doc.createElement('From')
     if @encode_references
       @encode_references()
-    xml.appendChild(@get('alatlng').to_xml()) if @has('alatlng')
+    xml.appendChild(@get('alatlng').to_xml(doc)) if @has('alatlng')
     xml
   
   deep_copy: -> From.from_xml1(@to_xml(), {})

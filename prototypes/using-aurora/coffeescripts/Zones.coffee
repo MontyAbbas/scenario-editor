@@ -20,7 +20,7 @@ class window.aurora.Zones extends Backbone.Model
     xml = doc.createElement('zones')
     if @encode_references
       @encode_references()
-    _.each(@get('zone') || [], (a_zone) -> xml.appendChild(a_zone.to_xml()))
+    _.each(@get('zone') || [], (a_zone) -> xml.appendChild(a_zone.to_xml(doc)))
     xml
   
   deep_copy: -> Zones.from_xml1(@to_xml(), {})

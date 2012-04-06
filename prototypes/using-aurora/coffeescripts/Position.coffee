@@ -20,7 +20,7 @@ class window.aurora.Position extends Backbone.Model
     xml = doc.createElement('position')
     if @encode_references
       @encode_references()
-    _.each(@get('point') || [], (a_point) -> xml.appendChild(a_point.to_xml()))
+    _.each(@get('point') || [], (a_point) -> xml.appendChild(a_point.to_xml(doc)))
     xml
   
   deep_copy: -> Position.from_xml1(@to_xml(), {})

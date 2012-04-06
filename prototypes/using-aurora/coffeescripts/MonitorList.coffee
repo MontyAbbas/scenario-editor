@@ -20,7 +20,7 @@ class window.aurora.MonitorList extends Backbone.Model
     xml = doc.createElement('MonitorList')
     if @encode_references
       @encode_references()
-    _.each(@get('monitor') || [], (a_monitor) -> xml.appendChild(a_monitor.to_xml()))
+    _.each(@get('monitor') || [], (a_monitor) -> xml.appendChild(a_monitor.to_xml(doc)))
     xml
   
   deep_copy: -> MonitorList.from_xml1(@to_xml(), {})

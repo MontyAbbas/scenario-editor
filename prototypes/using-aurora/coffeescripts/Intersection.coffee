@@ -24,7 +24,7 @@ class window.aurora.Intersection extends Backbone.Model
     xml = doc.createElement('intersection')
     if @encode_references
       @encode_references()
-    _.each(@get('stage') || [], (a_stage) -> xml.appendChild(a_stage.to_xml()))
+    _.each(@get('stage') || [], (a_stage) -> xml.appendChild(a_stage.to_xml(doc)))
     xml.setAttribute('node_id', @get('node_id'))
     xml.setAttribute('offset', @get('offset'))
     xml

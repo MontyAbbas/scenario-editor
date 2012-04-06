@@ -30,9 +30,9 @@ class window.aurora.Qcontroller extends Backbone.Model
       @encode_references()
     if @has('parameters')
       parameters_xml = doc.createElement('parameters')
-      _.each(@get('parameters'), (par_name) ->
+      _.each(@get('parameters'), (par_val, par_name) ->
           parameter_xml = doc.createElement('parameter')
-          parameter_xml.setAttribute(par_name, parameters[par_name])
+          parameter_xml.setAttribute(par_name, par_val)
           parameters_xml.appendChild(parameter_xml)
       )
       xml.appendChild(parameters_xml)

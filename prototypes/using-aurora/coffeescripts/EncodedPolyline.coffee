@@ -26,8 +26,8 @@ class window.aurora.EncodedPolyline extends Backbone.Model
     xml = doc.createElement('EncodedPolyline')
     if @encode_references
       @encode_references()
-    xml.appendChild(@get('points').to_xml()) if @has('points')
-    xml.appendChild(@get('levels').to_xml()) if @has('levels')
+    xml.appendChild(@get('points').to_xml(doc)) if @has('points')
+    xml.appendChild(@get('levels').to_xml(doc)) if @has('levels')
     xml.setAttribute('zoomFactor', @get('zoomFactor'))
     xml.setAttribute('numLevels', @get('numLevels'))
     xml

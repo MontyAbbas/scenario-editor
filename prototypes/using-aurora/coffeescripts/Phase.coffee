@@ -36,7 +36,7 @@ class window.aurora.Phase extends Backbone.Model
     xml = doc.createElement('phase')
     if @encode_references
       @encode_references()
-    xml.appendChild(@get('links').to_xml()) if @has('links')
+    xml.appendChild(@get('links').to_xml(doc)) if @has('links')
     xml.setAttribute('nema', @get('nema'))
     xml.setAttribute('protected', @get('protected'))
     xml.setAttribute('permissive', @get('permissive'))

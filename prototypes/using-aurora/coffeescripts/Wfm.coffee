@@ -20,7 +20,7 @@ class window.aurora.Wfm extends Backbone.Model
     xml = doc.createElement('wfm')
     if @encode_references
       @encode_references()
-    _.each(@get('weavingfactors') || [], (a_weavingfactors) -> xml.appendChild(a_weavingfactors.to_xml()))
+    _.each(@get('weavingfactors') || [], (a_weavingfactors) -> xml.appendChild(a_weavingfactors.to_xml(doc)))
     xml
   
   deep_copy: -> Wfm.from_xml1(@to_xml(), {})

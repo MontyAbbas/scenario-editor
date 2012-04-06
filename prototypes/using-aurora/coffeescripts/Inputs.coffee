@@ -20,7 +20,7 @@ class window.aurora.Inputs extends Backbone.Model
     xml = doc.createElement('inputs')
     if @encode_references
       @encode_references()
-    _.each(@get('input') || [], (a_input) -> xml.appendChild(a_input.to_xml()))
+    _.each(@get('input') || [], (a_input) -> xml.appendChild(a_input.to_xml(doc)))
     xml
   
   deep_copy: -> Inputs.from_xml1(@to_xml(), {})

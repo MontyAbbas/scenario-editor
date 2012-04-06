@@ -20,7 +20,7 @@ class window.aurora.SensorList extends Backbone.Model
     xml = doc.createElement('SensorList')
     if @encode_references
       @encode_references()
-    _.each(@get('sensor') || [], (a_sensor) -> xml.appendChild(a_sensor.to_xml()))
+    _.each(@get('sensor') || [], (a_sensor) -> xml.appendChild(a_sensor.to_xml(doc)))
     xml
   
   deep_copy: -> SensorList.from_xml1(@to_xml(), {})

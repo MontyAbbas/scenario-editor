@@ -20,7 +20,7 @@ class window.aurora.DirectionsCache extends Backbone.Model
     xml = doc.createElement('DirectionsCache')
     if @encode_references
       @encode_references()
-    _.each(@get('directionscacheentry') || [], (a_directionscacheentry) -> xml.appendChild(a_directionscacheentry.to_xml()))
+    _.each(@get('directionscacheentry') || [], (a_directionscacheentry) -> xml.appendChild(a_directionscacheentry.to_xml(doc)))
     xml
   
   deep_copy: -> DirectionsCache.from_xml1(@to_xml(), {})

@@ -20,7 +20,7 @@ class window.aurora.Onramps extends Backbone.Model
     xml = doc.createElement('onramps')
     if @encode_references
       @encode_references()
-    _.each(@get('onramp') || [], (a_onramp) -> xml.appendChild(a_onramp.to_xml()))
+    _.each(@get('onramp') || [], (a_onramp) -> xml.appendChild(a_onramp.to_xml(doc)))
     xml
   
   deep_copy: -> Onramps.from_xml1(@to_xml(), {})

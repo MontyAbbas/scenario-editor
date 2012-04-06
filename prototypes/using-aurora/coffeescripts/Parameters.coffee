@@ -20,7 +20,7 @@ class window.aurora.Parameters extends Backbone.Model
     xml = doc.createElement('parameters')
     if @encode_references
       @encode_references()
-    _.each(@get('parameter') || [], (a_parameter) -> xml.appendChild(a_parameter.to_xml()))
+    _.each(@get('parameter') || [], (a_parameter) -> xml.appendChild(a_parameter.to_xml(doc)))
     xml
   
   deep_copy: -> Parameters.from_xml1(@to_xml(), {})

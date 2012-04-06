@@ -42,20 +42,20 @@ class window.aurora.Sensor extends Backbone.Model
     xml = doc.createElement('sensor')
     if @encode_references
       @encode_references()
-    xml.appendChild(@get('description').to_xml()) if @has('description')
-    xml.appendChild(@get('position').to_xml()) if @has('position')
-    xml.appendChild(@get('display_position').to_xml()) if @has('display_position')
-    xml.appendChild(@get('links').to_xml()) if @has('links')
+    xml.appendChild(@get('description').to_xml(doc)) if @has('description')
+    xml.appendChild(@get('position').to_xml(doc)) if @has('position')
+    xml.appendChild(@get('display_position').to_xml(doc)) if @has('display_position')
+    xml.appendChild(@get('links').to_xml(doc)) if @has('links')
     if @has('parameters')
       parameters_xml = doc.createElement('parameters')
-      _.each(@get('parameters'), (par_name) ->
+      _.each(@get('parameters'), (par_val, par_name) ->
           parameter_xml = doc.createElement('parameter')
-          parameter_xml.setAttribute(par_name, parameters[par_name])
+          parameter_xml.setAttribute(par_name, par_val)
           parameters_xml.appendChild(parameter_xml)
       )
       xml.appendChild(parameters_xml)
     
-    xml.appendChild(@get('data_sources').to_xml()) if @has('data_sources')
+    xml.appendChild(@get('data_sources').to_xml(doc)) if @has('data_sources')
     xml.setAttribute('id', @get('id'))
     xml.setAttribute('type', @get('type'))
     xml.setAttribute('link_type', @get('link_type'))

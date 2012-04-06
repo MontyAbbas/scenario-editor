@@ -20,7 +20,7 @@ class window.aurora.PathList extends Backbone.Model
     xml = doc.createElement('PathList')
     if @encode_references
       @encode_references()
-    _.each(@get('path') || [], (a_path) -> xml.appendChild(a_path.to_xml()))
+    _.each(@get('path') || [], (a_path) -> xml.appendChild(a_path.to_xml(doc)))
     xml
   
   deep_copy: -> PathList.from_xml1(@to_xml(), {})

@@ -6,13 +6,13 @@ class window.aurora.Link extends Backbone.Model
     obj = @from_xml2(xml, deferred, object_with_id)
     fn() for fn in deferred
     obj
-  
+
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.aurora.Link()
     description = xml.children('description')
     obj.set('description', $a.Description.from_xml2(description, deferred, object_with_id))
-    begin = xml.children('begin')
+    begin = xml.find('begin')
     obj.set('begin', $a.Begin.from_xml2(begin, deferred, object_with_id))
     end = xml.children('end')
     obj.set('end', $a.End.from_xml2(end, deferred, object_with_id))
@@ -45,18 +45,18 @@ class window.aurora.Link extends Backbone.Model
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj
-  
+
   to_xml: (doc) ->
     xml = doc.createElement('link')
     if @encode_references
       @encode_references()
-    xml.appendChild(@get('description').to_xml()) if @has('description')
-    xml.appendChild(@get('begin').to_xml()) if @has('begin')
-    xml.appendChild(@get('end').to_xml()) if @has('end')
-    xml.appendChild(@get('fd').to_xml()) if @has('fd')
-    xml.appendChild(@get('dynamics').to_xml()) if @has('dynamics')
-    xml.appendChild(@get('qmax').to_xml()) if @has('qmax')
-    xml.appendChild(@get('linkgeometry').to_xml()) if @has('linkgeometry')
+    xml.appendChild(@get('description').to_xml(doc)) if @has('description')
+    xml.appendChild(@get('begin').to_xml(doc)) if @has('begin')
+    xml.appendChild(@get('end').to_xml(doc)) if @has('end')
+    xml.appendChild(@get('fd').to_xml(doc)) if @has('fd')
+    xml.appendChild(@get('dynamics').to_xml(doc)) if @has('dynamics')
+    xml.appendChild(@get('qmax').to_xml(doc)) if @has('qmax')
+    xml.appendChild(@get('linkgeometry').to_xml(doc)) if @has('linkgeometry')
     xml.setAttribute('name', @get('name'))
     xml.setAttribute('road_name', @get('road_name'))
     xml.setAttribute('lanes', @get('lanes'))
@@ -66,7 +66,7 @@ class window.aurora.Link extends Backbone.Model
     xml.setAttribute('id', @get('id'))
     if @has('record') && @record != true then xml.setAttribute('record', @get('record'))
     xml
-  
+
   deep_copy: -> Link.from_xml1(@to_xml(), {})
   inspect: (depth = 1, indent = false, orig_depth = -1) -> null
   make_tree: -> null

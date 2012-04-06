@@ -26,7 +26,7 @@ class window.aurora.Splitratios extends Backbone.Model
     xml = doc.createElement('splitratios')
     if @encode_references
       @encode_references()
-    _.each(@get('srm') || [], (a_srm) -> xml.appendChild(a_srm.to_xml()))
+    _.each(@get('srm') || [], (a_srm) -> xml.appendChild(a_srm.to_xml(doc)))
     xml.setAttribute('node_id', @get('node_id'))
     if @has('start_time') && @start_time != 0 then xml.setAttribute('start_time', @get('start_time'))
     xml.setAttribute('dt', @get('dt'))

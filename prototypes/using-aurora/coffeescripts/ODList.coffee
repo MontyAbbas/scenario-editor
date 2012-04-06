@@ -20,7 +20,7 @@ class window.aurora.ODList extends Backbone.Model
     xml = doc.createElement('ODList')
     if @encode_references
       @encode_references()
-    _.each(@get('od') || [], (a_od) -> xml.appendChild(a_od.to_xml()))
+    _.each(@get('od') || [], (a_od) -> xml.appendChild(a_od.to_xml(doc)))
     xml
   
   deep_copy: -> ODList.from_xml1(@to_xml(), {})

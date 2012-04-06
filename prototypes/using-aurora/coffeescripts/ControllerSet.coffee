@@ -26,8 +26,8 @@ class window.aurora.ControllerSet extends Backbone.Model
     xml = doc.createElement('ControllerSet')
     if @encode_references
       @encode_references()
-    xml.appendChild(@get('description').to_xml()) if @has('description')
-    _.each(@get('controller') || [], (a_controller) -> xml.appendChild(a_controller.to_xml()))
+    xml.appendChild(@get('description').to_xml(doc)) if @has('description')
+    _.each(@get('controller') || [], (a_controller) -> xml.appendChild(a_controller.to_xml(doc)))
     if @has('id') && @id != "" then xml.setAttribute('id', @get('id'))
     if @has('name') && @name != "" then xml.setAttribute('name', @get('name'))
     xml

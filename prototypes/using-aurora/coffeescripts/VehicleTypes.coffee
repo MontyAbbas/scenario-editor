@@ -20,7 +20,7 @@ class window.aurora.VehicleTypes extends Backbone.Model
     xml = doc.createElement('VehicleTypes')
     if @encode_references
       @encode_references()
-    _.each(@get('vtype') || [], (a_vtype) -> xml.appendChild(a_vtype.to_xml()))
+    _.each(@get('vtype') || [], (a_vtype) -> xml.appendChild(a_vtype.to_xml(doc)))
     xml
   
   deep_copy: -> VehicleTypes.from_xml1(@to_xml(), {})

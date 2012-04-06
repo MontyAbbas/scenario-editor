@@ -20,7 +20,7 @@ class window.aurora.PlanList extends Backbone.Model
     xml = doc.createElement('PlanList')
     if @encode_references
       @encode_references()
-    _.each(@get('plan') || [], (a_plan) -> xml.appendChild(a_plan.to_xml()))
+    _.each(@get('plan') || [], (a_plan) -> xml.appendChild(a_plan.to_xml(doc)))
     xml
   
   deep_copy: -> PlanList.from_xml1(@to_xml(), {})

@@ -20,7 +20,7 @@ class window.aurora.LinkPairs extends Backbone.Model
     xml = doc.createElement('LinkPairs')
     if @encode_references
       @encode_references()
-    _.each(@get('pair') || [], (a_pair) -> xml.appendChild(a_pair.to_xml()))
+    _.each(@get('pair') || [], (a_pair) -> xml.appendChild(a_pair.to_xml(doc)))
     xml
   
   deep_copy: -> LinkPairs.from_xml1(@to_xml(), {})

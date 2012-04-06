@@ -20,7 +20,7 @@ class window.aurora.NetworkList extends Backbone.Model
     xml = doc.createElement('NetworkList')
     if @encode_references
       @encode_references()
-    _.each(@get('network') || [], (a_network) -> xml.appendChild(a_network.to_xml()))
+    _.each(@get('network') || [], (a_network) -> xml.appendChild(a_network.to_xml(doc)))
     xml
   
   deep_copy: -> NetworkList.from_xml1(@to_xml(), {})

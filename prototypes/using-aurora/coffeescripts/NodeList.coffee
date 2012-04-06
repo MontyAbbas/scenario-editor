@@ -20,7 +20,7 @@ class window.aurora.NodeList extends Backbone.Model
     xml = doc.createElement('NodeList')
     if @encode_references
       @encode_references()
-    _.each(@get('node') || [], (a_node) -> xml.appendChild(a_node.to_xml()))
+    _.each(@get('node') || [], (a_node) -> xml.appendChild(a_node.to_xml(doc)))
     xml
   
   deep_copy: -> NodeList.from_xml1(@to_xml(), {})

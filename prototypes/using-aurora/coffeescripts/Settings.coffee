@@ -24,9 +24,9 @@ class window.aurora.Settings extends Backbone.Model
     xml = doc.createElement('settings')
     if @encode_references
       @encode_references()
-    xml.appendChild(@get('display').to_xml()) if @has('display')
-    xml.appendChild(@get('vehicletypes').to_xml()) if @has('vehicletypes')
-    xml.appendChild(@get('units').to_xml()) if @has('units')
+    xml.appendChild(@get('display').to_xml(doc)) if @has('display')
+    xml.appendChild(@get('vehicletypes').to_xml(doc)) if @has('vehicletypes')
+    xml.appendChild(@get('units').to_xml(doc)) if @has('units')
     xml
   
   deep_copy: -> Settings.from_xml1(@to_xml(), {})

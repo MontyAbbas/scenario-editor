@@ -20,7 +20,7 @@ class window.aurora.LinkGeometry extends Backbone.Model
     xml = doc.createElement('LinkGeometry')
     if @encode_references
       @encode_references()
-    xml.appendChild(@get('encodedpolyline').to_xml()) if @has('encodedpolyline')
+    xml.appendChild(@get('encodedpolyline').to_xml(doc)) if @has('encodedpolyline')
     xml
   
   deep_copy: -> LinkGeometry.from_xml1(@to_xml(), {})

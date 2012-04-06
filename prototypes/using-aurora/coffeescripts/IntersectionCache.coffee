@@ -20,7 +20,7 @@ class window.aurora.IntersectionCache extends Backbone.Model
     xml = doc.createElement('IntersectionCache')
     if @encode_references
       @encode_references()
-    _.each(@get('intersectioncacheentry') || [], (a_intersectioncacheentry) -> xml.appendChild(a_intersectioncacheentry.to_xml()))
+    _.each(@get('intersectioncacheentry') || [], (a_intersectioncacheentry) -> xml.appendChild(a_intersectioncacheentry.to_xml(doc)))
     xml
   
   deep_copy: -> IntersectionCache.from_xml1(@to_xml(), {})

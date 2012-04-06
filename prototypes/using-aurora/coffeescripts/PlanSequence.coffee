@@ -22,7 +22,7 @@ class window.aurora.PlanSequence extends Backbone.Model
     xml = doc.createElement('PlanSequence')
     if @encode_references
       @encode_references()
-    _.each(@get('plan_reference') || [], (a_plan_reference) -> xml.appendChild(a_plan_reference.to_xml()))
+    _.each(@get('plan_reference') || [], (a_plan_reference) -> xml.appendChild(a_plan_reference.to_xml(doc)))
     xml.setAttribute('transition_delay', @get('transition_delay'))
     xml
   

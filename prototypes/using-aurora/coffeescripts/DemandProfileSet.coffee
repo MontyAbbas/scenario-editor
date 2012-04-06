@@ -26,8 +26,8 @@ class window.aurora.DemandProfileSet extends Backbone.Model
     xml = doc.createElement('DemandProfileSet')
     if @encode_references
       @encode_references()
-    xml.appendChild(@get('description').to_xml()) if @has('description')
-    _.each(@get('demand') || [], (a_demand) -> xml.appendChild(a_demand.to_xml()))
+    xml.appendChild(@get('description').to_xml(doc)) if @has('description')
+    _.each(@get('demand') || [], (a_demand) -> xml.appendChild(a_demand.to_xml(doc)))
     if @has('id') && @id != "" then xml.setAttribute('id', @get('id'))
     if @has('name') && @name != "" then xml.setAttribute('name', @get('name'))
     xml

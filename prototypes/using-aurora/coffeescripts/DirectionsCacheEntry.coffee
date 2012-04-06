@@ -28,9 +28,9 @@ class window.aurora.DirectionsCacheEntry extends Backbone.Model
     xml = doc.createElement('DirectionsCacheEntry')
     if @encode_references
       @encode_references()
-    xml.appendChild(@get('from').to_xml()) if @has('from')
-    xml.appendChild(@get('to').to_xml()) if @has('to')
-    xml.appendChild(@get('encodedpolyline').to_xml()) if @has('encodedpolyline')
+    xml.appendChild(@get('from').to_xml(doc)) if @has('from')
+    xml.appendChild(@get('to').to_xml(doc)) if @has('to')
+    xml.appendChild(@get('encodedpolyline').to_xml(doc)) if @has('encodedpolyline')
     xml.setAttribute('avoidHighways', @get('avoidHighways'))
     xml.setAttribute('road_name', @get('road_name'))
     xml
