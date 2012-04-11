@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+	<head>
+			<title>Model to Maps</title>
+			<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+		
+	    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
+			<script type="text/javascript" src="../shared/head.js"></script>
+			
+			
+			<script type="text/javascript">
+			      window.main_stuff = {}
+		  </script>
+			
+			<script type="text/javascript">
+	      head.js("js/main.js");
+	    </script>
+	
+			 <script type="text/javascript">	
+		      google.load("maps", "3", {
+		        other_params: "libraries=geometry,drawing&sensor=false",
+		      });
+	    </script>
+	
+	
+	    <script type="text/javascript">
+	      google.maps.event.addDomListener(window, 'load', window.main_stuff.init);
+	    </script>
+	
+	    <style type="text/css">
+	      html { height: 100% }
+	      body { height: 100%; margin: 0; padding: 0 }
+	      #map_canvas { height: 80%; width:60%;float: left; }
+		  	#scenario_text { width: 30%; height: 200px;}
+		  	#header {width:100%}
+	    </style>
+
+		<link href="../shared/bootstrap/css/bootstrap.css" rel="stylesheet">
+	</head>
+	<body>
+	<div id="header">
+	  		<h1>Aurora class loader prototype</h1>
+	</div>
+  	<div id="map_canvas"></div>
+	<div id="scenario_import">
+  		<h2>Load scenario</h2>
+  		<textarea  id="scenario_text"></textarea>
+  		<br />
+  		<button id="load_scenario" class="btn btn-primary">Load XML into window.textarea_scenario</button>
+	</div>
+	</body>
+</html>
