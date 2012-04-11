@@ -41,5 +41,6 @@ head.js('../shared/jquery-1.7.1.js',
             load_aurora_classes ->
               $("#load_scenario").click ->
                 xml_text = $("#scenario_text").val()
-                window.textarea_scenario = window.aurora.Scenario.from_xml($(xml_text))
+                xml = $.parseXML(xml_text)
+                window.textarea_scenario = window.aurora.Scenario.from_xml($(xml).children())
 )
