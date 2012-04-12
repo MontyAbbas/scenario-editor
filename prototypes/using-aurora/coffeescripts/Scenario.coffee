@@ -51,9 +51,9 @@ class window.aurora.Scenario extends Backbone.Model
     xml.appendChild(@get('eventset').to_xml(doc)) if @has('eventset')
     xml.appendChild(@get('demandprofileset').to_xml(doc)) if @has('demandprofileset')
     xml.appendChild(@get('controllerset').to_xml(doc)) if @has('controllerset')
-    xml.setAttribute('id', @get('id'))
-    xml.setAttribute('name', @get('name'))
-    xml.setAttribute('schemaVersion', @get('schemaVersion'))
+    xml.setAttribute('id', @get('id')) if @has('id')
+    xml.setAttribute('name', @get('name')) if @has('name')
+    xml.setAttribute('schemaVersion', @get('schemaVersion')) if @has('schemaVersion')
     xml
   
   deep_copy: -> Scenario.from_xml1(@to_xml(), {})

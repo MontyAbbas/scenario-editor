@@ -22,8 +22,8 @@ class window.aurora.Vtype extends Backbone.Model
     xml = doc.createElement('vtype')
     if @encode_references
       @encode_references()
-    xml.setAttribute('name', @get('name'))
-    xml.setAttribute('weight', @get('weight'))
+    xml.setAttribute('name', @get('name')) if @has('name')
+    xml.setAttribute('weight', @get('weight')) if @has('weight')
     xml
   
   deep_copy: -> Vtype.from_xml1(@to_xml(), {})

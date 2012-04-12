@@ -24,9 +24,9 @@ class window.aurora.Zone extends Backbone.Model
     xml = doc.createElement('zone')
     if @encode_references
       @encode_references()
-    xml.setAttribute('bottlenecklink', @get('bottlenecklink'))
-    xml.setAttribute('onramplinks', @get('onramplinks'))
-    xml.setAttribute('sat_den_multiplier', @get('sat_den_multiplier'))
+    xml.setAttribute('bottlenecklink', @get('bottlenecklink')) if @has('bottlenecklink')
+    xml.setAttribute('onramplinks', @get('onramplinks')) if @has('onramplinks')
+    xml.setAttribute('sat_den_multiplier', @get('sat_den_multiplier')) if @has('sat_den_multiplier')
     xml
   
   deep_copy: -> Zone.from_xml1(@to_xml(), {})

@@ -27,8 +27,8 @@ class window.aurora.Plan extends Backbone.Model
     if @encode_references
       @encode_references()
     _.each(@get('intersection') || [], (a_intersection) -> xml.appendChild(a_intersection.to_xml(doc)))
-    xml.setAttribute('id', @get('id'))
-    xml.setAttribute('cyclelength', @get('cyclelength'))
+    xml.setAttribute('id', @get('id')) if @has('id')
+    xml.setAttribute('cyclelength', @get('cyclelength')) if @has('cyclelength')
     xml
   
   deep_copy: -> Plan.from_xml1(@to_xml(), {})

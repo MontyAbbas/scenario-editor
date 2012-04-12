@@ -30,12 +30,12 @@ class window.aurora.IntersectionCacheEntry extends Backbone.Model
     xml = doc.createElement('IntersectionCacheEntry')
     if @encode_references
       @encode_references()
-    xml.setAttribute('qlat', @get('qlat'))
-    xml.setAttribute('qlng', @get('qlng'))
-    xml.setAttribute('lat', @get('lat'))
-    xml.setAttribute('lng', @get('lng'))
-    xml.setAttribute('street1', @get('street1'))
-    xml.setAttribute('street2', @get('street2'))
+    xml.setAttribute('qlat', @get('qlat')) if @has('qlat')
+    xml.setAttribute('qlng', @get('qlng')) if @has('qlng')
+    xml.setAttribute('lat', @get('lat')) if @has('lat')
+    xml.setAttribute('lng', @get('lng')) if @has('lng')
+    xml.setAttribute('street1', @get('street1')) if @has('street1')
+    xml.setAttribute('street2', @get('street2')) if @has('street2')
     xml
   
   deep_copy: -> IntersectionCacheEntry.from_xml1(@to_xml(), {})

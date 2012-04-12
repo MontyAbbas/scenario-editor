@@ -22,8 +22,8 @@ class window.aurora.Limits extends Backbone.Model
     xml = doc.createElement('limits')
     if @encode_references
       @encode_references()
-    xml.setAttribute('cmin', @get('cmin'))
-    xml.setAttribute('cmax', @get('cmax'))
+    xml.setAttribute('cmin', @get('cmin')) if @has('cmin')
+    xml.setAttribute('cmax', @get('cmax')) if @has('cmax')
     xml
   
   deep_copy: -> Limits.from_xml1(@to_xml(), {})

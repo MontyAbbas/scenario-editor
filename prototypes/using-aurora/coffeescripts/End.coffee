@@ -20,7 +20,7 @@ class window.aurora.End extends Backbone.Model
     xml = doc.createElement('end')
     if @encode_references
       @encode_references()
-    xml.setAttribute('node_id', @get('node_id'))
+    xml.setAttribute('node_id', @get('node_id')) if @has('node_id')
     xml
   
   deep_copy: -> End.from_xml1(@to_xml(), {})

@@ -29,9 +29,9 @@ class window.aurora.Capacity extends Backbone.Model
     xml = doc.createElement('capacity')
     if @encode_references
       @encode_references()
-    xml.setAttribute('link_id', @get('link_id'))
+    xml.setAttribute('link_id', @get('link_id')) if @has('link_id')
     if @has('start_time') && @start_time != 0 then xml.setAttribute('start_time', @get('start_time'))
-    xml.setAttribute('dt', @get('dt'))
+    xml.setAttribute('dt', @get('dt')) if @has('dt')
     xml.appendChild(doc.createTextNode($a.ArrayText.emit(@get('cells') || [], @delims)))
     xml
   

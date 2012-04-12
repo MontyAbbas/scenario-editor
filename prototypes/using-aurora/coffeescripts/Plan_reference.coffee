@@ -22,8 +22,8 @@ class window.aurora.Plan_reference extends Backbone.Model
     xml = doc.createElement('plan_reference')
     if @encode_references
       @encode_references()
-    xml.setAttribute('plan_id', @get('plan_id'))
-    xml.setAttribute('start_time', @get('start_time'))
+    xml.setAttribute('plan_id', @get('plan_id')) if @has('plan_id')
+    xml.setAttribute('start_time', @get('start_time')) if @has('start_time')
     xml
   
   deep_copy: -> Plan_reference.from_xml1(@to_xml(), {})

@@ -22,8 +22,8 @@ class window.aurora.Control extends Backbone.Model
     xml = doc.createElement('control')
     if @encode_references
       @encode_references()
-    xml.setAttribute('mainline', @get('mainline'))
-    xml.setAttribute('queue', @get('queue'))
+    xml.setAttribute('mainline', @get('mainline')) if @has('mainline')
+    xml.setAttribute('queue', @get('queue')) if @has('queue')
     xml
   
   deep_copy: -> Control.from_xml1(@to_xml(), {})

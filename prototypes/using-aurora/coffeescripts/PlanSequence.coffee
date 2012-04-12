@@ -23,7 +23,7 @@ class window.aurora.PlanSequence extends Backbone.Model
     if @encode_references
       @encode_references()
     _.each(@get('plan_reference') || [], (a_plan_reference) -> xml.appendChild(a_plan_reference.to_xml(doc)))
-    xml.setAttribute('transition_delay', @get('transition_delay'))
+    xml.setAttribute('transition_delay', @get('transition_delay')) if @has('transition_delay')
     xml
   
   deep_copy: -> PlanSequence.from_xml1(@to_xml(), {})

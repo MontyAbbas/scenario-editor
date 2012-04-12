@@ -40,8 +40,8 @@ class window.aurora.Monitor extends Backbone.Model
     xml.appendChild(@get('controller').to_xml(doc)) if @has('controller')
     xml.appendChild(@get('linkpairs').to_xml(doc)) if @has('linkpairs')
     if @has('name') && @name != "" then xml.setAttribute('name', @get('name'))
-    xml.setAttribute('type', @get('type'))
-    xml.setAttribute('id', @get('id'))
+    xml.setAttribute('type', @get('type')) if @has('type')
+    xml.setAttribute('id', @get('id')) if @has('id')
     xml.appendChild(doc.createTextNode($a.ArrayText.emit(@get('text') || [])))
     xml
   

@@ -20,7 +20,7 @@ class window.aurora.Output extends Backbone.Model
     xml = doc.createElement('output')
     if @encode_references
       @encode_references()
-    xml.setAttribute('link_id', @get('link_id'))
+    xml.setAttribute('link_id', @get('link_id')) if @has('link_id')
     xml
   
   deep_copy: -> Output.from_xml1(@to_xml(), {})

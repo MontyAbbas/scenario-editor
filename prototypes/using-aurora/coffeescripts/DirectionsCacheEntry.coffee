@@ -31,8 +31,8 @@ class window.aurora.DirectionsCacheEntry extends Backbone.Model
     xml.appendChild(@get('from').to_xml(doc)) if @has('from')
     xml.appendChild(@get('to').to_xml(doc)) if @has('to')
     xml.appendChild(@get('encodedpolyline').to_xml(doc)) if @has('encodedpolyline')
-    xml.setAttribute('avoidHighways', @get('avoidHighways'))
-    xml.setAttribute('road_name', @get('road_name'))
+    xml.setAttribute('avoidHighways', @get('avoidHighways')) if @has('avoidHighways')
+    xml.setAttribute('road_name', @get('road_name')) if @has('road_name')
     xml
   
   deep_copy: -> DirectionsCacheEntry.from_xml1(@to_xml(), {})

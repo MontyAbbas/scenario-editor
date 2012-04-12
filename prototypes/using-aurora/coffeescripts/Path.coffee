@@ -26,8 +26,8 @@ class window.aurora.Path extends Backbone.Model
     xml = doc.createElement('path')
     if @encode_references
       @encode_references()
-    xml.setAttribute('id', @get('id'))
-    xml.setAttribute('name', @get('name'))
+    xml.setAttribute('id', @get('id')) if @has('id')
+    xml.setAttribute('name', @get('name')) if @has('name')
     xml.appendChild(doc.createTextNode($a.ArrayText.emit((@get('cells') || []).map((x) -> x.id), @delims)))
     xml
   

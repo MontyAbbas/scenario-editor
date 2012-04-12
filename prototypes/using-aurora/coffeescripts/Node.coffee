@@ -43,9 +43,9 @@ class window.aurora.Node extends Backbone.Model
     xml.appendChild(@get('outputs').to_xml(doc)) if @has('outputs')
     xml.appendChild(@get('inputs').to_xml(doc)) if @has('inputs')
     xml.appendChild(@get('position').to_xml(doc)) if @has('position')
-    xml.setAttribute('name', @get('name'))
-    xml.setAttribute('type', @get('type'))
-    xml.setAttribute('id', @get('id'))
+    xml.setAttribute('name', @get('name')) if @has('name')
+    xml.setAttribute('type', @get('type')) if @has('type')
+    xml.setAttribute('id', @get('id')) if @has('id')
     if @has('lock') && @lock != false then xml.setAttribute('lock', @get('lock'))
     xml
   

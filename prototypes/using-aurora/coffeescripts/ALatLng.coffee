@@ -22,8 +22,8 @@ class window.aurora.ALatLng extends Backbone.Model
     xml = doc.createElement('ALatLng')
     if @encode_references
       @encode_references()
-    xml.setAttribute('lat', @get('lat'))
-    xml.setAttribute('lng', @get('lng'))
+    xml.setAttribute('lat', @get('lat')) if @has('lat')
+    xml.setAttribute('lng', @get('lng')) if @has('lng')
     xml
   
   deep_copy: -> ALatLng.from_xml1(@to_xml(), {})
