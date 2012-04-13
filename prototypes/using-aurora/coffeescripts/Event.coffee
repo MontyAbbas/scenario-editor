@@ -63,12 +63,12 @@ class window.aurora.Event extends Backbone.Model
     xml.appendChild(@get('control').to_xml(doc)) if @has('control')
     xml.appendChild(@get('lane_count_change').to_xml(doc)) if @has('lane_count_change')
     xml.appendChild(@get('display_position').to_xml(doc)) if @has('display_position')
-    xml.setAttribute('tstamp', @get('tstamp'))
+    xml.setAttribute('tstamp', @get('tstamp')) if @has('tstamp')
     if @has('node_id') && @node_id != "" then xml.setAttribute('node_id', @get('node_id'))
     if @has('link_id') && @link_id != "" then xml.setAttribute('link_id', @get('link_id'))
     if @has('network_id') && @network_id != "" then xml.setAttribute('network_id', @get('network_id'))
-    xml.setAttribute('enabled', @get('enabled'))
-    xml.setAttribute('type', @get('type'))
+    xml.setAttribute('enabled', @get('enabled')) if @has('enabled')
+    xml.setAttribute('type', @get('type')) if @has('type')
     xml
   
   deep_copy: -> Event.from_xml1(@to_xml(), {})

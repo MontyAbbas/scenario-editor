@@ -24,9 +24,9 @@ class window.aurora.Source extends Backbone.Model
     xml = doc.createElement('source')
     if @encode_references
       @encode_references()
-    xml.setAttribute('url', @get('url'))
-    xml.setAttribute('dt', @get('dt'))
-    xml.setAttribute('format', @get('format'))
+    xml.setAttribute('url', @get('url')) if @has('url')
+    xml.setAttribute('dt', @get('dt')) if @has('dt')
+    xml.setAttribute('format', @get('format')) if @has('format')
     xml
   
   deep_copy: -> Source.from_xml1(@to_xml(), {})

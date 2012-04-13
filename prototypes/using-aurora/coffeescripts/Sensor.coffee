@@ -56,9 +56,9 @@ class window.aurora.Sensor extends Backbone.Model
       xml.appendChild(parameters_xml)
     
     xml.appendChild(@get('data_sources').to_xml(doc)) if @has('data_sources')
-    xml.setAttribute('id', @get('id'))
-    xml.setAttribute('type', @get('type'))
-    xml.setAttribute('link_type', @get('link_type'))
+    xml.setAttribute('id', @get('id')) if @has('id')
+    xml.setAttribute('type', @get('type')) if @has('type')
+    xml.setAttribute('link_type', @get('link_type')) if @has('link_type')
     xml
   
   deep_copy: -> Sensor.from_xml1(@to_xml(), {})

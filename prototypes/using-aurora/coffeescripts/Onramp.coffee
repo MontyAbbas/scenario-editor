@@ -28,11 +28,11 @@ class window.aurora.Onramp extends Backbone.Model
     xml = doc.createElement('onramp')
     if @encode_references
       @encode_references()
-    xml.setAttribute('id', @get('id'))
-    xml.setAttribute('gain_Alinea', @get('gain_Alinea'))
-    xml.setAttribute('gain_Hero', @get('gain_Hero'))
-    xml.setAttribute('activation_threshold', @get('activation_threshold'))
-    xml.setAttribute('deactivation_threshold', @get('deactivation_threshold'))
+    xml.setAttribute('id', @get('id')) if @has('id')
+    xml.setAttribute('gain_Alinea', @get('gain_Alinea')) if @has('gain_Alinea')
+    xml.setAttribute('gain_Hero', @get('gain_Hero')) if @has('gain_Hero')
+    xml.setAttribute('activation_threshold', @get('activation_threshold')) if @has('activation_threshold')
+    xml.setAttribute('deactivation_threshold', @get('deactivation_threshold')) if @has('deactivation_threshold')
     xml
   
   deep_copy: -> Onramp.from_xml1(@to_xml(), {})

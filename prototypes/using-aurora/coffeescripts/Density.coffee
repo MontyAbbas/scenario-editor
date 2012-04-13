@@ -25,7 +25,7 @@ class window.aurora.Density extends Backbone.Model
     xml = doc.createElement('density')
     if @encode_references
       @encode_references()
-    xml.setAttribute('link_id', @get('link_id'))
+    xml.setAttribute('link_id', @get('link_id')) if @has('link_id')
     xml.appendChild(doc.createTextNode($a.ArrayText.emit(@get('cells') || [], @delims)))
     xml
   

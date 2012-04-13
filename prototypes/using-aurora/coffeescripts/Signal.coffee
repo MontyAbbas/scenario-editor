@@ -23,7 +23,7 @@ class window.aurora.Signal extends Backbone.Model
     if @encode_references
       @encode_references()
     _.each(@get('phase') || [], (a_phase) -> xml.appendChild(a_phase.to_xml(doc)))
-    xml.setAttribute('node_id', @get('node_id'))
+    xml.setAttribute('node_id', @get('node_id')) if @has('node_id')
     xml
   
   deep_copy: -> Signal.from_xml1(@to_xml(), {})

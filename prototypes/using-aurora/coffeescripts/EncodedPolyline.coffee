@@ -28,8 +28,8 @@ class window.aurora.EncodedPolyline extends Backbone.Model
       @encode_references()
     xml.appendChild(@get('points').to_xml(doc)) if @has('points')
     xml.appendChild(@get('levels').to_xml(doc)) if @has('levels')
-    xml.setAttribute('zoomFactor', @get('zoomFactor'))
-    xml.setAttribute('numLevels', @get('numLevels'))
+    xml.setAttribute('zoomFactor', @get('zoomFactor')) if @has('zoomFactor')
+    xml.setAttribute('numLevels', @get('numLevels')) if @has('numLevels')
     xml
   
   deep_copy: -> EncodedPolyline.from_xml1(@to_xml(), {})

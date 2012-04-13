@@ -37,7 +37,7 @@ class window.aurora.Qcontroller extends Backbone.Model
       )
       xml.appendChild(parameters_xml)
     
-    xml.setAttribute('type', @get('type'))
+    xml.setAttribute('type', @get('type')) if @has('type')
     xml
   
   deep_copy: -> Qcontroller.from_xml1(@to_xml(), {})

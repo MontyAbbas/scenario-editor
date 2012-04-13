@@ -24,9 +24,9 @@ class window.aurora.Components extends Backbone.Model
     xml = doc.createElement('components')
     if @encode_references
       @encode_references()
-    xml.setAttribute('swarm1', @get('swarm1'))
-    xml.setAttribute('swarm2a', @get('swarm2a'))
-    xml.setAttribute('swarm2b', @get('swarm2b'))
+    xml.setAttribute('swarm1', @get('swarm1')) if @has('swarm1')
+    xml.setAttribute('swarm2a', @get('swarm2a')) if @has('swarm2a')
+    xml.setAttribute('swarm2b', @get('swarm2b')) if @has('swarm2b')
     xml
   
   deep_copy: -> Components.from_xml1(@to_xml(), {})

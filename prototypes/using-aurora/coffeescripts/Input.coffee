@@ -23,7 +23,7 @@ class window.aurora.Input extends Backbone.Model
     if @encode_references
       @encode_references()
     xml.appendChild(@get('weavingfactors').to_xml(doc)) if @has('weavingfactors')
-    xml.setAttribute('link_id', @get('link_id'))
+    xml.setAttribute('link_id', @get('link_id')) if @has('link_id')
     xml
   
   deep_copy: -> Input.from_xml1(@to_xml(), {})

@@ -63,11 +63,11 @@ class window.aurora.Network extends Backbone.Model
     xml.appendChild(@get('sensorlist').to_xml(doc)) if @has('sensorlist')
     xml.appendChild(@get('directionscache').to_xml(doc)) if @has('directionscache')
     xml.appendChild(@get('intersectioncache').to_xml(doc)) if @has('intersectioncache')
-    xml.setAttribute('name', @get('name'))
-    xml.setAttribute('ml_control', @get('ml_control'))
-    xml.setAttribute('q_control', @get('q_control'))
-    xml.setAttribute('dt', @get('dt'))
-    xml.setAttribute('id', @get('id'))
+    xml.setAttribute('name', @get('name')) if @has('name')
+    xml.setAttribute('ml_control', @get('ml_control')) if @has('ml_control')
+    xml.setAttribute('q_control', @get('q_control')) if @has('q_control')
+    xml.setAttribute('dt', @get('dt')) if @has('dt')
+    xml.setAttribute('id', @get('id')) if @has('id')
     xml
   
   deep_copy: -> Network.from_xml1(@to_xml(), {})

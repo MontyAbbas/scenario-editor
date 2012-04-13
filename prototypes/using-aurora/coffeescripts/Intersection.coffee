@@ -25,8 +25,8 @@ class window.aurora.Intersection extends Backbone.Model
     if @encode_references
       @encode_references()
     _.each(@get('stage') || [], (a_stage) -> xml.appendChild(a_stage.to_xml(doc)))
-    xml.setAttribute('node_id', @get('node_id'))
-    xml.setAttribute('offset', @get('offset'))
+    xml.setAttribute('node_id', @get('node_id')) if @has('node_id')
+    xml.setAttribute('offset', @get('offset')) if @has('offset')
     xml
   
   deep_copy: -> Intersection.from_xml1(@to_xml(), {})

@@ -26,9 +26,9 @@ class window.aurora.Fd extends Backbone.Model
     xml = doc.createElement('fd')
     if @encode_references
       @encode_references()
-    xml.setAttribute('densityCritical', @get('densityCritical'))
-    xml.setAttribute('flowMax', @get('flowMax'))
-    xml.setAttribute('densityJam', @get('densityJam'))
+    xml.setAttribute('densityCritical', @get('densityCritical')) if @has('densityCritical')
+    xml.setAttribute('flowMax', @get('flowMax')) if @has('flowMax')
+    xml.setAttribute('densityJam', @get('densityJam')) if @has('densityJam')
     if @has('capacityDrop') && @capacityDrop != 0.0 then xml.setAttribute('capacityDrop', @get('capacityDrop'))
     xml
   

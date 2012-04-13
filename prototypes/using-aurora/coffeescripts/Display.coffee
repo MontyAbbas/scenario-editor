@@ -26,9 +26,9 @@ class window.aurora.Display extends Backbone.Model
     xml = doc.createElement('display')
     if @encode_references
       @encode_references()
-    xml.setAttribute('timeMax', @get('timeMax'))
+    xml.setAttribute('timeMax', @get('timeMax')) if @has('timeMax')
     if @has('timeout') && @timeout != 50 then xml.setAttribute('timeout', @get('timeout'))
-    xml.setAttribute('dt', @get('dt'))
+    xml.setAttribute('dt', @get('dt')) if @has('dt')
     if @has('timeInitial') && @timeInitial != 0.0 then xml.setAttribute('timeInitial', @get('timeInitial'))
     xml
   

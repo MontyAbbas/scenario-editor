@@ -22,8 +22,8 @@ class window.aurora.Pair extends Backbone.Model
     xml = doc.createElement('pair')
     if @encode_references
       @encode_references()
-    xml.setAttribute('outlink', @get('outlink'))
-    xml.setAttribute('inlink', @get('inlink'))
+    xml.setAttribute('outlink', @get('outlink')) if @has('outlink')
+    xml.setAttribute('inlink', @get('inlink')) if @has('inlink')
     xml
   
   deep_copy: -> Pair.from_xml1(@to_xml(), {})

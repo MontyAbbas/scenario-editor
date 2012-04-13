@@ -24,9 +24,9 @@ class window.aurora.Stage extends Backbone.Model
     xml = doc.createElement('stage')
     if @encode_references
       @encode_references()
-    xml.setAttribute('greentime', @get('greentime'))
-    xml.setAttribute('movA', @get('movA'))
-    xml.setAttribute('movB', @get('movB'))
+    xml.setAttribute('greentime', @get('greentime')) if @has('greentime')
+    xml.setAttribute('movA', @get('movA')) if @has('movA')
+    xml.setAttribute('movB', @get('movB')) if @has('movB')
     xml
   
   deep_copy: -> Stage.from_xml1(@to_xml(), {})

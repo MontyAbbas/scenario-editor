@@ -24,8 +24,8 @@ class window.aurora.Point extends Backbone.Model
     xml = doc.createElement('point')
     if @encode_references
       @encode_references()
-    xml.setAttribute('lat', @get('lat'))
-    xml.setAttribute('lng', @get('lng'))
+    xml.setAttribute('lat', @get('lat')) if @has('lat')
+    xml.setAttribute('lng', @get('lng')) if @has('lng')
     if @has('elevation') && @elevation != 0 then xml.setAttribute('elevation', @get('elevation'))
     xml
   

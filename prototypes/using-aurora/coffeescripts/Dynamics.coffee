@@ -20,7 +20,7 @@ class window.aurora.Dynamics extends Backbone.Model
     xml = doc.createElement('dynamics')
     if @encode_references
       @encode_references()
-    xml.setAttribute('type', @get('type'))
+    xml.setAttribute('type', @get('type')) if @has('type')
     xml
   
   deep_copy: -> Dynamics.from_xml1(@to_xml(), {})

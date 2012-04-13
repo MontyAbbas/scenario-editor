@@ -37,14 +37,14 @@ class window.aurora.Phase extends Backbone.Model
     if @encode_references
       @encode_references()
     xml.appendChild(@get('links').to_xml(doc)) if @has('links')
-    xml.setAttribute('nema', @get('nema'))
-    xml.setAttribute('protected', @get('protected'))
-    xml.setAttribute('permissive', @get('permissive'))
-    xml.setAttribute('yellow_time', @get('yellow_time'))
-    xml.setAttribute('red_clear_time', @get('red_clear_time'))
-    xml.setAttribute('min_green_time', @get('min_green_time'))
-    xml.setAttribute('lag', @get('lag'))
-    xml.setAttribute('recall', @get('recall'))
+    xml.setAttribute('nema', @get('nema')) if @has('nema')
+    xml.setAttribute('protected', @get('protected')) if @has('protected')
+    xml.setAttribute('permissive', @get('permissive')) if @has('permissive')
+    xml.setAttribute('yellow_time', @get('yellow_time')) if @has('yellow_time')
+    xml.setAttribute('red_clear_time', @get('red_clear_time')) if @has('red_clear_time')
+    xml.setAttribute('min_green_time', @get('min_green_time')) if @has('min_green_time')
+    xml.setAttribute('lag', @get('lag')) if @has('lag')
+    xml.setAttribute('recall', @get('recall')) if @has('recall')
     xml
   
   deep_copy: -> Phase.from_xml1(@to_xml(), {})
