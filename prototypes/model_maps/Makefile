@@ -1,5 +1,3 @@
 all:
-	coffee -o js/ -c coffeescripts/
-
-watch:
-	coffee -o js/ --watch coffeescripts/
+	coffee -o js/ -c ../using-aurora/coffeescripts/
+	coffee -o js/ --watch -c coffeescripts/

@@ -15,6 +15,7 @@
 			<script type="text/javascript">
 	      head.js("js/main.js");
 	    </script>
+			<script type="text/javascript" src="js/load_map.js"></script>
 	
 			 <script type="text/javascript">	
 		      google.load("maps", "3", {
@@ -26,21 +27,42 @@
 	    <script type="text/javascript">
 	      google.maps.event.addDomListener(window, 'load', window.main_stuff.init);
 	    </script>
+			<link href="../shared/bootstrap/css/bootstrap.css" rel="stylesheet">
 	
 	    <style type="text/css">
 	      html { height: 100% }
-	      body { height: 100%; margin: 0; padding: 0 }
-	      #map_canvas { height: 80%; width:60%;float: left; }
+	      body { height: 100%; margin: 5px; padding: 0 }
+	      #map_canvas { height: 80%; width:100%; }
+				#map_canvas img { max-width:none; }
 		  	#scenario_text { width: 30%; height: 200px;}
 		  	#header {width:100%}
+				.navbar {margin-bottom: 0px}
+				.container {position:absolute; z-index:1;width: 200px; margin-top:5px;margin-left:80px; background-color: #444444;}
 	    </style>
 
-		<link href="../shared/bootstrap/css/bootstrap.css" rel="stylesheet">
 	</head>
 	<body>
-	<div id="header">
-	  		<h1>Aurora class loader prototype</h1>
-	</div>
+			<div class="navbar">
+			    <div class="container navbar-inner">
+			      <ul class="nav">
+						  <li class="dropdown active" id="menu1">
+							    <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
+							      File
+							      <b class="caret"></b>
+							    </a>
+							    <ul class="dropdown-menu">
+							      <li><a href="#">New</a></li>
+										<li class="divider"></li>
+										<li><a href="#">Open Local Network</a></li>
+							      <li><a href="#">Save Local Network</a></li>
+							      <li class="divider"></li>
+							      <li><a href="#">Import Local Network</a></li>
+							    </ul>
+							  </li>
+						</ul>
+			    </div>
+			</div>
+	
   	<div id="map_canvas"></div>
 	<div id="scenario_import">
   		<h2>Load scenario</h2>
