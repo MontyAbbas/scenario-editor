@@ -35,8 +35,8 @@ window.sirius.Event::resolve_references = (deferred, object_with_id) ->
     @set 'link', link
     @set 'network', network
 
-    if !node_id and !link_id and !network_id
-      throw "Event must have node_id, link_id, or network_id"
+    #if !node_id and !link_id and !network_id
+    #  throw "Event must have node_id, link_id, or network_id"
 
 window.sirius.Event::encode_references = ->
   @set('node_id', @get('node').id) if @has('node')
