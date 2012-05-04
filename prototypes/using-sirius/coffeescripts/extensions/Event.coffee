@@ -25,9 +25,7 @@ window.sirius.Event::display_point = ->
 
 window.sirius.Event::resolve_references = (deferred, object_with_id) ->
   deferred.push =>
-    console.log @attributes
-    scenario_elements = @get('targetelements').get('scenarioelement')
-    console.log scenario_elements
+    scenario_elements = @get('targetelements')?.get('scenarioelement')
     scenario_links = _.map( scenario_elements, (sel) -> [sel.get('type'), sel.id] )
     _.each(scenario_links, (sl) ->
       [type, sid] = sl
