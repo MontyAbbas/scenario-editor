@@ -3,13 +3,13 @@ directionsService = {}
 	
 window.main_stuff.init = ->
 	$("#load_scenario").click ->
-      xml_text = $("#scenario_text").val()
-      xml = $.parseXML(xml_text)
-      window.textarea_scenario = window.aurora.Scenario.from_xml($(xml).children())
-      window.main_stuff.display()
+		xml_text = $("#scenario_text").val()
+		xml = $.parseXML(xml_text)
+		window.textarea_scenario = window.aurora.Scenario.from_xml($(xml).children())
+		window.main_stuff.display()
 	
 	myOptions =
-		center: new google.maps.LatLng(37, -122)
+		center: new google.maps.LatLng(37.85794730789898, -122.29954719543457)
 		zoom: 14
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 		mapTypeControl: false
@@ -28,11 +28,14 @@ window.main_stuff.init = ->
 
 window.main_stuff.display = ->
 	node_markers = {}
+	broker = _.clone( Backbone.Events)
 	network = window.textarea_scenario.get('network')
 	window.map.setCenter(new google.maps.LatLng(getLat(network), getLng(network)))
-	#drawNodes(network.get('nodelist').get('node'))
-	drawSensors(network.get('sensorlist').get('sensor'))
-	drawLinks(network.get('linklist').get('link'))
+	drawNodes network.get('nodelist').get('node'), broker
+	broker.trigger('map:init')
+	#drawSensors(network.get('sensorlist').get('sensor'))
+	#drawLinks(network.get('linklist').get('link'))
+	#drawLinks(network.get('linklist').get('link'))
   # node.lat = window.textarea_scenario.get('network').get('nodelist').get('node')[0].get('position').get('point')[0].get('lat')
   # node.lng = window.textarea_scenario.get('network').get('nodelist').get('node')[0].get('position').get('point')[0].get('lng')
   # node1.lat = window.textarea_scenario.get('network').get('nodelist').get('node')[1].get('position').get('point')[0].get('lat')
@@ -48,13 +51,11 @@ drawLinks = (links) ->
 		marker_end = getMarker(link.get('end').get('node'),"Node")
 		drawRoute(marker_begin,marker_end)
 		
-drawNodes = (nodes) ->
-	for node in nodes 
-		getMarker(node,"Node")
+drawNodes = (nodes,broker) ->
+	_.each(nodes, (i) ->  new window.aurora.MapNodeView(i,broker,getLat(i), getLng(i)))
 
-drawSensors = (sensors) ->
-	for sensor in sensors
-		getMarker(sensor,"Sensor")
+drawSensors = (sensors,broker) ->
+	_.each(sensors, (i) ->  new window.aurora.MapSensorView(i,broker,getLat(i), getLng(i)))
 
 getLat = (elem) ->
 		elem.get('position').get('point')[0].get('lat')
@@ -105,5 +106,7 @@ getMarkerImage = (elem,type) ->
 				      new google.maps.Point(0,0),
 				      new google.maps.Point(16, 16));
 
-roundDec = (num,dec) ->
-		Math.round(num * Math.pow(10,dec)) / Math.pow(10,dec)
+
+	
+	
+	
