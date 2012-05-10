@@ -48,4 +48,8 @@ head.js('../shared/jquery-1.7.1.js',
                 xml_text = $("#scenario_text").val()
                 xml = $.parseXML(xml_text)
                 window.textarea_scenario = window.sirius.Scenario.from_xml($(xml).children())
+              $("#write_scenario_as_xml").click ->
+                doc = document.implementation.createDocument('document:xml','scenario',null)
+                the_xml = window.textarea_scenario.to_xml(doc)
+                console.log(the_xml)
 )

@@ -29,5 +29,7 @@ window.sirius.Od::resolve_references = (deferred, object_with_id) ->
       throw "Od instance can't find network for id == #{end}"
 
 window.sirius.Od::encode_references = ->
-  @set('begin', @get('begin_node').id)
-  @set('end', @get('end_node').id)
+  @set('network_id_origin', @get('network_origin').id)
+  @set('network_id_destination', @get('network_destination').id)
+  @set('link_id_origin', @get('link_origin').id)
+  @set('link_id_destination', @get('link_destination').id)
