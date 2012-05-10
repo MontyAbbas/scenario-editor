@@ -9,20 +9,26 @@ class window.aurora.MapMarkerView extends Backbone.View
 		this.longitude = lng
 
 	render: ->
+		self = this
 		this.latlng = new google.maps.LatLng(this.latitude, this.longitude);
 		this.marker = new google.maps.Marker({
 					map: window.map,
 					position: this.latlng, 
 					draggable: true,
-					icon: this.get_icon
+					icon: self.get_icon('dot')
 				});
-		self = this
 		google.maps.event.addListener(this.marker, "dragend", this.dragMarker());
 		google.maps.event.addListener(window.map, "dragend", this.dragMap());
 		this
 
-	get_icon: ->
-		Util.get_image("dot")
+	get_icon: (img) ->
+		get_marker(img)
+		
+	get_marker: (img) ->
+			new google.maps.MarkerImage('data/img/' + img + '.png',
+					new google.maps.Size(32, 32),
+					new google.maps.Point(0,0),
+					new google.maps.Point(16, 16));
 
 	dragMarker: ->
 		self.latlng = this.marker.getPosition();
