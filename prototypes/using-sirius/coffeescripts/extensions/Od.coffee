@@ -10,15 +10,14 @@ window.sirius.Od::resolve_references = (deferred, object_with_id) ->
       @get('link_id_origin'),
       @get('link_id_destination')
     ]
-#    [begin_node, end_node] = [object_with_id.node[begin], object_with_id.node[end]]
+
     [n_origin, n_destination, l_origin, l_destination] = [
       object_with_id.network[n_origin_id],
       object_with_id.network[n_destination_id],
       object_with_id.link[l_origin_id],
       object_with_id.link[l_destination_id]
     ]
-#    @set('begin_node', begin_node)
-#    @set('end_node', end_node)
+
     @set('network_origin', n_origin)
     @set('network_destination', n_destination)
     @set('link_origin', l_origin)
