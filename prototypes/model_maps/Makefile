@@ -1,2 +1,2 @@
 all:
-	coffee -o js/ --watch -c coffeescripts/
+	coffee -o js/ -c coffeescripts/
