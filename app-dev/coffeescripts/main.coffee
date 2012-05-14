@@ -35,10 +35,10 @@ load_aurora_classes = (after) ->
     class_paths.push after
     head.js.apply(@, class_paths)
 
-head.js('../shared/jquery-1.7.1.js',
-        '../shared/underscore.js',
-        '../shared/backbone.js',
-        '../shared/bootstrap/js/bootstrap.js', ->
+head.js('../libs/js/jquery-1.7.1.js',
+        '../libs/js/underscore.js',
+        '../libs/js/backbone.js',
+        '../libs/js/bootstrap/js/bootstrap.js', ->
             load_aurora_classes ->
               $("#load_scenario").click ->
                 xml_text = $("#scenario_text").val()
