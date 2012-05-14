@@ -1,1 +1,4 @@
 prototypes/*/js/**
+.DS_Store
+prototypes/.DS_Store
+prototypes/using-aurora/.DS_Store
