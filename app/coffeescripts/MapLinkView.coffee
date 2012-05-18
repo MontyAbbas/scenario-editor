@@ -1,52 +1,36 @@
 class window.aurora.MapLinkView extends Backbone.View
-	
-	# initialize: (model,broker) -> 
-	# 	_.bindAll(this, 'render','dragMarker', 'dragMap')
-	# 	this.model = model
-	# 	this.broker = broker
-	# 	this.broker.on('map:init', this.render, this)
-	# 	this.latitude =  lat
-	# 	this.longitude = lng
-	# 
-	#   directionDisplay;
-	#   directionsService = new google.maps.DirectionsService();
-	#   
-	#   function initialize() {
-	#     
-	#   function calcRoute() {
-	#     var start = document.getElementById("start").value;
-	#     var end = document.getElementById("end").value;
-	#     var waypts = [];
-	#     var checkboxArray = document.getElementById("waypoints");
-	#     for (var i = 0; i < checkboxArray.length; i++) {
-	#       if (checkboxArray.options[i].selected == true) {
-	#         waypts.push({
-	#             location:checkboxArray[i].value,
-	#             stopover:true});
-	#       }
-	#     }
-	# 
-	#     var request = {
-	#         origin: start, 
-	#         destination: end,
-	#         waypoints: waypts,
-	#         optimizeWaypoints: true,
-	#         travelMode: google.maps.DirectionsTravelMode.DRIVING
-	#     };
-	#     directionsService.route(request, function(response, status) {
-	#       if (status == google.maps.DirectionsStatus.OK) {
-	#         directionsDisplay.setDirections(response);
-	#         var route = response.routes[0];
-	#         var summaryPanel = document.getElementById("directions_panel");
-	#         summaryPanel.innerHTML = "";
-	#         // For each route, display summary information.
-	#         for (var i = 0; i < route.legs.length; i++) {
-	#           var routeSegment = i + 1;
-	#           summaryPanel.innerHTML += "<b>Route Segment: " + routeSegment + "</b><br />";
-	#           summaryPanel.innerHTML += route.legs[i].start_address + " to ";
-	#           summaryPanel.innerHTML += route.legs[i].end_address + "<br />";
-	#           summaryPanel.innerHTML += route.legs[i].distance.text + "<br /><br />";
-	#         }
-	#       }
-	#     });
-	#   }
+
+  initialize: (link, broker) -> 
+    #Instantiate a directions service.
+    this.directionsService = new google.maps.DirectionsService()
+    renderOptions = {
+      map: window.map,
+      markerOptions: {visible: false}
+    }
+    this.directionsDisplay = new google.maps.DirectionsRenderer(renderOptions)
+    this.begin =  window.aurora.Util.getLatLng link.get('begin').get('node')
+    this.end = window.aurora.Util.getLatLng link.get('end').get('node')
+    this.broker = broker
+    this.broker.on('map:init', this.render, this)
+
+  render: -> 
+    #Create DirectionsRequest using DRIVING directions.
+    request = {
+      origin: this.begin,
+      destination: this.end,
+      travelMode: google.maps.TravelMode.DRIVING
+    }
+  
+    #Route the directions and pass the response to a
+    #function to draw the full link for each step.
+    self = this
+    this.directionsService.route(request, (response, status) =>
+      if (status == google.maps.DirectionsStatus.OK)
+        warnings = $("#warnings_panel")
+        warnings.innerHTML = "" + response.routes[0].warnings + ""
+        self.directionsDisplay.setDirections(response)
+    )
+
+
+            
+ 

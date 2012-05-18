@@ -11,7 +11,7 @@ aurora_classes_with_extensions = [
 ]
 
 aurora_classes_without_extensions = [
-  'Util','MapMarkerView','MapSensorView','MapNodeView',
+  'Util','MapMarkerView','MapSensorView','MapNodeView','MapLinkView'
   'ALatLng', 'ArrayText', 'CapacityProfileSet', 'Components',
   'Control', 'Controlled', 'DemandProfileSet', 'Description',
   'DirectionsCacheEntry', 'DirectionsCache', 'Display', 'EncodedPolyline',
