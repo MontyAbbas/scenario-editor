@@ -22,13 +22,10 @@ class window.aurora.MapMarkerView extends Backbone.View
 		this
 
 	get_icon: (img) ->
-		get_marker(img)
-		
-	get_marker: (img) ->
-			new google.maps.MarkerImage('../libs/data/img/' + img + '.png',
-					new google.maps.Size(32, 32),
-					new google.maps.Point(0,0),
-					new google.maps.Point(16, 16));
+		new google.maps.MarkerImage('../libs/data/img/' + img + '.png',
+				new google.maps.Size(32, 32),
+				new google.maps.Point(0,0),
+				new google.maps.Point(16, 16));
 
 	dragMarker: ->
 		self.latlng = this.marker.getPosition();

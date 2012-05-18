@@ -27,13 +27,15 @@ window.main_stuff.init = ->
 	directionsService = new google.maps.DirectionsService();
 
 window.main_stuff.display = ->
-	node_markers = {}
-	broker = _.clone( Backbone.Events)
-	network = window.textarea_scenario.get('network')
-	window.map.setCenter(new google.maps.LatLng(getLat(network), getLng(network)))
-	drawNodes network.get('nodelist').get('node'), broker
-	broker.trigger('map:init')
-	#drawSensors(network.get('sensorlist').get('sensor'))
+  node_markers = {}
+  broker = _.clone( Backbone.Events)
+  network = window.textarea_scenario.get('network')
+  window.map.setCenter(new google.maps.LatLng(getLat(network), getLng(network)))
+  drawNodes network.get('nodelist').get('node'), broker
+  drawSensors network.get('sensorlist').get('sensor'), broker
+  drawLinks network.get('linklist').get('link'), broker
+  broker.trigger('map:init')
+	
 	#drawLinks(network.get('linklist').get('link'))
 	#drawLinks(network.get('linklist').get('link'))
   # node.lat = window.textarea_scenario.get('network').get('nodelist').get('node')[0].get('position').get('point')[0].get('lat')
@@ -45,23 +47,20 @@ window.main_stuff.display = ->
   # marker1 = getMarker(new google.maps.LatLng(node1.lat, node1.lng))
   # getPolyLine(marker,marker1)
 
-drawLinks = (links) ->
-	for link in links
-		marker_begin = getMarker(link.get('begin').get('node'),"Node")
-		marker_end = getMarker(link.get('end').get('node'),"Node")
-		drawRoute(marker_begin,marker_end)
-		
+drawLinks = (links, broker) ->
+  _.each(links, (i) ->  new window.aurora.MapLinkView(i,broker))
+
 drawNodes = (nodes,broker) ->
-	_.each(nodes, (i) ->  new window.aurora.MapNodeView(i,broker,getLat(i), getLng(i)))
+  _.each(nodes, (i) ->  new window.aurora.MapNodeView(i,broker,getLat(i), getLng(i)))
 
 drawSensors = (sensors,broker) ->
-	_.each(sensors, (i) ->  new window.aurora.MapSensorView(i,broker,getLat(i), getLng(i)))
+  _.each(sensors, (i) ->  new window.aurora.MapSensorView(i,broker,getLat(i), getLng(i)))
 
 getLat = (elem) ->
-		elem.get('position').get('point')[0].get('lat')
+  elem.get('position').get('point')[0].get('lat')
 
 getLng = (elem) ->
-		elem.get('position').get('point')[0].get('lng')
+  elem.get('position').get('point')[0].get('lng')
 
 drawPolyLine = (marker1, marker2) ->
 	new google.maps.Polyline({
