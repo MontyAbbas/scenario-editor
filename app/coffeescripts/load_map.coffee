@@ -35,7 +35,7 @@ window.main_stuff.display = ->
   drawSensors network.get('sensorlist').get('sensor'), broker
   drawLinks network.get('linklist').get('link'), broker
   broker.trigger('map:init')
-	
+
 	#drawLinks(network.get('linklist').get('link'))
 	#drawLinks(network.get('linklist').get('link'))
   # node.lat = window.textarea_scenario.get('network').get('nodelist').get('node')[0].get('position').get('point')[0].get('lat')
