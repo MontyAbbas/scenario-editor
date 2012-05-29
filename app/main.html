@@ -27,6 +27,15 @@
 	    <script type="text/javascript">
 	      google.maps.event.addDomListener(window, 'load', window.main_stuff.init);
 	    </script>
+	    
+	    <script type="text/javascript">
+	    $(document).ready(function() {
+	      $('#nb').click(function() {
+	      	<!-- load nodelist and create table -->
+	      	<!-- for now, sample list: -->
+	      });
+	    });
+	    </script>
 			<link href="../libs/js/bootstrap/css/bootstrap.css" rel="stylesheet">
 	
 	   	<style type="text/css">
@@ -37,7 +46,7 @@
 		  	#scenario_text { width: 30%; height: 200px;}
 		  	#header {width:100%}
 				.navbar {margin-bottom: 0px}
-				.container {position:absolute; z-index:1;width: 200px; margin-top:5px;margin-left:80px; background-color: #444444;}
+				.container {position:absolute; z-index:1;width: 278px; margin-top:5px;margin-left:80px; background-color: #444444;}
 	    </style>
 
 	</head>
@@ -59,11 +68,285 @@
 							      <li><a href="#">Import Local Network</a></li>
 							    </ul>
 							  </li>
+							  <li class="dropdown active" id="windows">
+							    <a class="dropdown-toggle" data-toggle="dropdown" href="#windows">
+							      Windows
+							      <b class="caret"></b>
+							    </a>
+							    <ul class="dropdown-menu">
+							      <li><a id="nb" data-toggle="modal" href="#nodebrowser">Node Browser</a></li>
+										<li><a data-toggle="modal" href="#linkbrowser">Link Browser</a></li>
+							      <li><a data-toggle="modal" href="#pathbrowser">Path Browser</a></li>
+										<li><a data-toggle="modal" href="#eventbrowser">Event Browser</a></li>
+							      <li><a data-toggle="modal" href="#controlbrowser">Controller Browser</a></li>
+										<li><a data-toggle="modal" href="#sensorbrowser">Sensor Browser</a></li>
+							      <li><a data-toggle="modal" href="#netprop">Network Properties</a></li>
+							      <li><a href="#">Map</a></li>
+							      <li class="divider"></li>
+							      <li><a href="#">Cascade</a></li>
+							      <li><a href="#">Tile</a></li>
+							      <li><a href="#">Tile + Fill Space</a></li>
+							      <li><a href="#">Show All</a></li>
+							    </ul>
+							  </li>
+							  <li class="dropdown active" id="tools">
+							    <a class="dropdown-toggle" data-toggle="dropdown" href="#tools">
+							      Tools
+							      <b class="caret"></b>
+							    </a>
+							    <ul class="dropdown-menu">
+							      <li><a href="#">Import PeMS data</a></li>
+										<li><a href="#">Calibrate</a></li>
+							      <li><a href="#">Simulate</a></li>
+							    </ul>
+							  </li>
+							  <li class="dropdown active" id="help">
+							    <a class="dropdown-toggle" data-toggle="dropdown" href="#help">
+							      Help
+							      <b class="caret"></b>
+							    </a>
+							    <ul class="dropdown-menu">
+							      <li><a data-toggle="modal" href="#about">About</a></li>
+										<li><a data-toggle="modal" href="#helpinfo">Help</a></li>
+										<li><a data-toggle="modal" href="#version">Version</a></li>
+							      <li><a data-toggle="modal" href="#identity">Identity</a></li>
+										<li><a data-toggle="modal" href="#contact">Contact</a></li>
+							      <li><a data-toggle="modal" href="#legal">Legal</a></li>
+							    </ul>
+							  </li>
 						</ul>
 			    </div>
 			</div>
+			
+		<!-- Menu Modals -->
+		<div id="nodebrowser" class="modal hide fade">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>Node Browser</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span6">
+						<table id="nodename">
+						</table>
+					</div>
+					<div class="span6">...</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal" >Close</a>
+			</div>
+		</div>
+		
+		<div id="linkbrowser" class="modal hide fade">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>Link Browser</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span6">
+					</div>
+					<div class="span6">...</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal" >Close</a>
+			</div>
+		</div>
+		
+		<div id="pathbrowser" class="modal hide fade">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>Path Browser</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span6">
+					</div>
+					<div class="span6">...</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal" >Close</a>
+			</div>
+		</div>
+		
+		<div id="eventbrowser" class="modal hide fade">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>Event Browser</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span6">
+					</div>
+					<div class="span6">...</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal" >Close</a>
+			</div>
+		</div>
+		
+		<div id="controlbrowser" class="modal hide fade">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>Controller Browser</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span6">
+					</div>
+					<div class="span6">...</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal" >Close</a>
+			</div>
+		</div>
+		
+		<div id="sensorbrowser" class="modal hide fade">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>Sensor Browser</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span6">
+					</div>
+					<div class="span6">...</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal" >Close</a>
+			</div>
+		</div>
+		
+		<div id="netprop" class="modal hide fade">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>Network Properties</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span6">
+					</div>
+					<div class="span6">...</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal" >Close</a>
+			</div>
+		</div>
+		
+		<!-- Help toolbar -->
+		<div id="about" class="modal hide fade">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>About</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span6">
+					</div>
+					<div class="span6">...</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal" >Close</a>
+			</div>
+		</div>
+		
+		<div id="helpinfo" class="modal hide fade">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>Help</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span6">
+					</div>
+					<div class="span6">...</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal" >Close</a>
+			</div>
+		</div>
+		
+		<div id="version" class="modal hide fade">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>Version</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span6">
+					</div>
+					<div class="span6">...</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal" >Close</a>
+			</div>
+		</div>
+		
+		<div id="identity" class="modal hide fade">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>Identity</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span6">
+					</div>
+					<div class="span6">...</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal" >Close</a>
+			</div>
+		</div>
+		
+		<div id="contact" class="modal hide fade">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>Contact</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span6">
+					</div>
+					<div class="span6">...</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal" >Close</a>
+			</div>
+		</div>
+		
+		<div id="legal" class="modal hide fade">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>Legal</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span6">
+					</div>
+					<div class="span6">...</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal" >Close</a>
+			</div>
+		</div>
+		
+		<!-- end modals -->
 	
-  	<div id="map_canvas"></div>
+  	<div id="map_canvas">
+  	</div>
 	<div id="scenario_import">
   		<h2>Load scenario</h2>
   		<textarea  id="scenario_text"><?xml version="1.0" encoding="UTF-8"?>
