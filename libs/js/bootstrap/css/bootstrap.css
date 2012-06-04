@@ -1551,6 +1551,7 @@ table .span12 {
   *border-right-width: 2px;
   *border-bottom-width: 2px;
 }
+
 .dropdown-menu.bottom-up {
   top: auto;
   bottom: 100%;

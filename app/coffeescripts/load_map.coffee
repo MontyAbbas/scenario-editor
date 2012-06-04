@@ -1,30 +1,52 @@
 directionsDisplay = {}
 directionsService = {}
 	
+	
 window.main_stuff.init = ->
 	$("#load_scenario").click ->
 		xml_text = $("#scenario_text").val()
 		xml = $.parseXML(xml_text)
 		window.textarea_scenario = window.aurora.Scenario.from_xml($(xml).children())
 		window.main_stuff.display()
-	
+		
 	myOptions =
 		center: new google.maps.LatLng(37.85794730789898, -122.29954719543457)
 		zoom: 14
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 		mapTypeControl: false
 		zoomControl: true
-		zoomControlOptions: {
+		zoomControlOptions:
 			style: google.maps.ZoomControlStyle.DEFAULT,
 			position: google.maps.ControlPosition.TOP_LEFT
-		}
+			
 	window.map = new google.maps.Map(document.getElementById("map_canvas"),myOptions)
+	contextMenuOptions={}
+	contextMenuOptions.classNames={menu:'context_menu', menuSeparator:'context_menu_separator'}
+	menuItems=[]
+	menuItems.push {className:'context_menu_item', eventName:'zoom_in_click', label:'Zoom in'}
+	menuItems.push {className:'context_menu_item', eventName:'zoom_out_click', label:'Zoom out'}
+	menuItems.push {}
+	menuItems.push {className:'context_menu_item', eventName:'center_map_click', label:'Center map here'}
+	contextMenuOptions.menuItems=menuItems
+	contextMenu= new ContextMenu(window.map, contextMenuOptions)
+	google.maps.event.addListener(window.map, 'rightclick', (mouseEvent) ->
+		contextMenu.show mouseEvent.latLng
+		null
+	)
+	
+	google.maps.event.addListener(contextMenu, 'menu_item_selected', (latLng, eventName) ->
+		switch eventName
+			when 'zoom_in_click' then window.map.setZoom map.getZoom()+1
+			when 'zoom_out_click' then window.map.setZoom map.getZoom()-1
+			when 'center_map_click' then window.map.panTo latLng
+		null
+	)
 	
 	renderer_options =
 		map: window.map
 
-	directionsDisplay = new google.maps.DirectionsRenderer(renderer_options);
-	directionsService = new google.maps.DirectionsService();
+	directionsDisplay = new google.maps.DirectionsRenderer(renderer_options)
+	directionsService = new google.maps.DirectionsService()
 
 window.main_stuff.display = ->
   node_markers = {}
@@ -104,7 +126,6 @@ getMarkerImage = (elem,type) ->
 				      new google.maps.Size(32, 32),
 				      new google.maps.Point(0,0),
 				      new google.maps.Point(16, 16));
-
 
 	
 	
