@@ -28,8 +28,9 @@ class window.aurora.MapLinkView extends Backbone.View
       if (status == google.maps.DirectionsStatus.OK)
         warnings = $("#warnings_panel")
         warnings.innerHTML = "" + response.routes[0].warnings + ""
-        self.directionsDisplay.setDirections(response)
         self.displayArrow()
+        self.directionsDisplay.setDirections(response)
+
     )
 
   displayArrow: ->
@@ -39,10 +40,10 @@ class window.aurora.MapLinkView extends Backbone.View
     new google.maps.Marker({
       position: self.getArrowPosition(),
       icon: new google.maps.MarkerImage('http://maps.google.com/mapfiles/dir_'+ico+'.png',
-                                 new google.maps.Size(24,24),
-                                 new google.maps.Point(0,0),
-                                 new google.maps.Point(12,12)
-                                ),
+                  new google.maps.Size(24,24),
+                  new google.maps.Point(0,0),
+                  new google.maps.Point(12,12)
+            ),
       map: window.map
     });
 
@@ -57,7 +58,8 @@ class window.aurora.MapLinkView extends Backbone.View
     theta = Math.atan2(-dy,dx)
 
     #just put one arrow in the middle of the line
-    x = this.begin.lng() + ((sl/2) * Math.cos(theta))
-    y = this.begin.lat() - ((sl/2) * Math.sin(theta))
-
+    x = this.end.lng() + ((sl/2) * Math.cos(theta))
+    y = this.end.lat() - ((sl/2) * Math.sin(theta))
+    console.log new google.maps.LatLng(x,y).toString()
     new google.maps.LatLng(x,y)
+  
