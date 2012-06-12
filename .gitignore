@@ -3,4 +3,5 @@ prototypes/*/js/**
 */.DS_Store
 */*/.DS_Store
 app/js/**
+!app/js/main.js
 prototypes/*/js/**
