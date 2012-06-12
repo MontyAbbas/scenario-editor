@@ -2,4 +2,5 @@ prototypes/*/js/**
 .DS_Store
 */.DS_Store
 */*/.DS_Store
-*/js/**
+app/js/**
+prototypes/*/js/**
