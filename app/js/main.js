@@ -20,7 +20,7 @@
     });
   };
 
-  head.js('../libs/js/jquery-1.7.1.js', '../libs/js/jquery-ui-1.8.18.min.js', '../libs/js/ContextMenu.js', '../libs/js/backbone.js', '../libs/js/bootstrap/js/bootstrap.js', function() {
+  head.js('../libs/js/jquery-1.7.1.js', '../libs/js/jquery-ui-1.8.18.min.js', '../libs/js/backbone.js', '../libs/js/bootstrap/js/bootstrap.js', function() {
     return load_aurora_classes(function() {
       return $("#load_scenario").click(function() {
         var xml, xml_text;
