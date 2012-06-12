@@ -4,11 +4,9 @@
 			<title>Model to Maps</title>
 			<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
 		
-	    <script type="text/javascript" src="https://www.google.com/jsapi"></script>
-			<script type="text/javascript" src="../libs/js/head.js"></script>
-			<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.3.2/jquery.min.js"></script>
-			<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.1/jquery-ui.min.js"></script>
-			
+	    <script src="https://www.google.com/jsapi"></script>
+			<script src="../libs/js/head.js"></script>
+
 			<script type="text/javascript">
 			      window.main_stuff = {}
 		  </script>
@@ -24,7 +22,8 @@
 		      });
 	    </script>
 			<script type="text/javascript" src="js/ContextMenu.js"></script>
-			
+			<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+			<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.18/jquery-ui.min.js"></script>
 	    <script type="text/javascript">
 	      google.maps.event.addDomListener(window, 'load', window.main_stuff.init);
 	    </script>
@@ -39,6 +38,17 @@
 		  	#header {width:100%}
 				.navbar {margin-bottom: 0px}
 				.container {position:absolute; z-index:1;width: 278px; margin-top:5px;margin-left:80px; background-color: #444444;}
+				.ui-dialog {
+					background-color: #fff;
+					border-color: #ccc;
+					border-color: rgba(0, 0, 0, 0.2);
+					border-style: solid;
+					border-width: 1px;
+					-webkit-border-radius: 5px;
+					-moz-border-radius: 5px;
+					border-radius: 5px;
+				}
+				
 				.context_menu {
 					background-color: #fff;
 					min-width: 160px;
@@ -51,9 +61,9 @@
 					border-color: rgba(0, 0, 0, 0.2);
 					border-style: solid;
 					border-width: 1px;
-					-webkit-border-radius: 0 0 5px 5px;
-					-moz-border-radius: 0 0 5px 5px;
-					border-radius: 0 0 5px 5px;
+					-webkit-border-radius: 5px;
+					-moz-border-radius: 5px;
+					border-radius: 5px;
 					-webkit-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 					-moz-box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
 					box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
@@ -86,8 +96,64 @@
 					text-decoration: none;
 					background-color: #0088cc;
 				}
+				hr {
+					margin:0;
+					padding:0 0 2px 0;
+				}
 	    </style>
-
+			
+			<script type="text/javascript">
+				$(function() {
+					$('.jdialog').dialog({
+						autoOpen: false,
+						show: {effect:'drop', direction: 'left', duration: 200},
+						hide: {effect:'drop', direction: 'right', duration: 200}
+					});
+					$('.ui-dialog-titlebar-close').ready(function() {
+						var titlebar = $('.ui-dialog-titlebar-close');
+						for(var i = 0; i < titlebar.length; i++) {
+							titlebar[i].innerHTML = '<i class="icon-remove"></i>';
+						}
+					});
+					$('ul > li > a.jmodal').click(function() {
+						var navId = this.id;
+						switch(navId) {
+							case 'nb':
+								$('#nodebrowser').dialog('open')
+								return true;
+							case 'lb':
+								$('#linkbrowser').dialog('open')
+								return true;
+							case 'pb':
+								$('#pathbrowser').dialog('open')
+								return true;
+							case 'eb':
+								$('#eventbrowser').dialog('open')
+								return true;
+							case 'cb':
+								$('#controlbrowser').dialog('open')
+								return true;
+							case 'sb':
+								$('#sensorbrowser').dialog('open')
+								return true;
+							case 'np':
+								$('#netprop').dialog('open')
+								return true;
+							default:
+								return true;
+						}
+					});
+				});
+			
+				$(function() {
+					$('#upload').click(function(e) {
+						$('#uploadField').click();
+						e.preventDefault();
+					});
+				});
+				
+			</script>
+			
 	</head>
 	<body>
 			<!--navbar -->
@@ -102,7 +168,8 @@
 							    <ul class="dropdown-menu">
 							      <li><a href="#">New</a></li>
 										<li class="divider"></li>
-										<li><a href="#">Open Local Network</a></li>
+										<input type="file" name="localNetwork" style="visibility:hidden; position:absolute" id="uploadField" />
+										<li><a href="" id="upload">Open Local Network</a></li>
 							      <li><a href="#">Save Local Network</a></li>
 							      <li class="divider"></li>
 							      <li><a href="#">Import Local Network</a></li>
@@ -114,13 +181,13 @@
 							      <b class="caret"></b>
 							    </a>
 							    <ul class="dropdown-menu">
-							      <li><a id="opener">Node Browser</a></li>
-										<li><a data-toggle="modal" href="#linkbrowser">Link Browser</a></li>
-							      <li><a data-toggle="modal" href="#pathbrowser">Path Browser</a></li>
-										<li><a data-toggle="modal" href="#eventbrowser">Event Browser</a></li>
-							      <li><a data-toggle="modal" href="#controlbrowser">Controller Browser</a></li>
-										<li><a data-toggle="modal" href="#sensorbrowser">Sensor Browser</a></li>
-							      <li><a data-toggle="modal" href="#netprop">Network Properties</a></li>
+							      <li><a id="nb" class="jmodal">Node Browser</a></li>
+										<li><a id="lb" class="jmodal">Link Browser</a></li>
+							      <li><a id="pb" class="jmodal">Path Browser</a></li>
+										<li><a id="eb" class="jmodal">Event Browser</a></li>
+							      <li><a id="cb" class="jmodal">Controller Browser</a></li>
+										<li><a id="sb" class="jmodal">Sensor Browser</a></li>
+							      <li><a id="np" class="jmodal">Network Properties</a></li>
 							      <li><a href="#">Map</a></li>
 							      <li class="divider"></li>
 							      <li><a href="#">Cascade</a></li>
@@ -159,124 +226,47 @@
 			</div>
 			
 		<!-- Menu Modals -->
-		<!--<div id="nodebrowser" class="modal hide fade">
-			<div class="modal-header">
-				<button class="close" data-dismiss="modal">&times;</button>
-				<h3>Node Browser</h3>
-			</div>
-			<div class="modal-body">
-				<div class="row-fluid">
-					<div class="span6">
-						<table id="nodename">
-						</table>
-					</div>
-					<div class="span6">...</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<a href="#" class="btn" data-dismiss="modal" >Close</a>
-			</div>
-		</div> -->
-		
-		<div id="linkbrowser" class="modal hide fade">
-			<div class="modal-header">
-				<button class="close" data-dismiss="modal">&times;</button>
-				<h3>Link Browser</h3>
-			</div>
-			<div class="modal-body">
-				<div class="row-fluid">
-					<div class="span6">
-					</div>
-					<div class="span6">...</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<a href="#" class="btn" data-dismiss="modal" >Close</a>
+		<div id="nodebrowser" class="jdialog">
+			<hr>
+			<div class="row-fluid">
+				<div class="span6">One</div>
+				<div class="span6">Two</div>
 			</div>
 		</div>
-		
-		<div id="pathbrowser" class="modal hide fade">
-			<div class="modal-header">
-				<button class="close" data-dismiss="modal">&times;</button>
-				<h3>Path Browser</h3>
-			</div>
-			<div class="modal-body">
-				<div class="row-fluid">
-					<div class="span6">
-					</div>
-					<div class="span6">...</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<a href="#" class="btn" data-dismiss="modal" >Close</a>
+		<div id="linkbrowser" class="jdialog">
+			<div class="row-fluid">
+				<div class="span6">One</div>
+				<div class="span6">Two</div>
 			</div>
 		</div>
-		
-		<div id="eventbrowser" class="modal hide fade">
-			<div class="modal-header">
-				<button class="close" data-dismiss="modal">&times;</button>
-				<h3>Event Browser</h3>
-			</div>
-			<div class="modal-body">
-				<div class="row-fluid">
-					<div class="span6">
-					</div>
-					<div class="span6">...</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<a href="#" class="btn" data-dismiss="modal" >Close</a>
+		<div id="pathbrowser" class="jdialog">
+			<div class="row-fluid">
+				<div class="span6">One</div>
+				<div class="span6">Two</div>
 			</div>
 		</div>
-		
-		<div id="controlbrowser" class="modal hide fade">
-			<div class="modal-header">
-				<button class="close" data-dismiss="modal">&times;</button>
-				<h3>Controller Browser</h3>
-			</div>
-			<div class="modal-body">
-				<div class="row-fluid">
-					<div class="span6">
-					</div>
-					<div class="span6">...</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<a href="#" class="btn" data-dismiss="modal" >Close</a>
+		<div id="eventbrowser" class="jdialog">
+			<div class="row-fluid">
+				<div class="span6">One</div>
+				<div class="span6">Two</div>
 			</div>
 		</div>
-		
-		<div id="sensorbrowser" class="modal hide fade">
-			<div class="modal-header">
-				<button class="close" data-dismiss="modal">&times;</button>
-				<h3>Sensor Browser</h3>
-			</div>
-			<div class="modal-body">
-				<div class="row-fluid">
-					<div class="span6">
-					</div>
-					<div class="span6">...</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<a href="#" class="btn" data-dismiss="modal" >Close</a>
+		<div id="controlbrowser" class="jdialog">
+			<div class="row-fluid">
+				<div class="span6">One</div>
+				<div class="span6">Two</div>
 			</div>
 		</div>
-		
-		<div id="netprop" class="modal hide fade">
-			<div class="modal-header">
-				<button class="close" data-dismiss="modal">&times;</button>
-				<h3>Network Properties</h3>
+		<div id="sensorbrowser" class="jdialog">
+			<div class="row-fluid">
+				<div class="span6">One</div>
+				<div class="span6">Two</div>
 			</div>
-			<div class="modal-body">
-				<div class="row-fluid">
-					<div class="span6">
-					</div>
-					<div class="span6">...</div>
-				</div>
-			</div>
-			<div class="modal-footer">
-				<a href="#" class="btn" data-dismiss="modal" >Close</a>
+		</div>
+		<div id="netprop" class="jdialog">
+			<div class="row-fluid">
+				<div class="span6">One</div>
+				<div class="span6">Two</div>
 			</div>
 		</div>
 		
