@@ -33,12 +33,25 @@ class window.aurora.MapLinkView extends Backbone.View
 
     )
 
+  #Arrow Positoning calcalctions involve the following functions:
+  #displayArrow, getArrowStep, getArrowPositionIndex
+  #displayArrow calcuates the angle of the arrow to display along the route
   displayArrow: (legs) ->
-    dir=((Math.atan2(this.end.lat()-this.begin.lat(),this.end.lng()-this.begin.lng())*180)/Math.PI)+360
+    #get the step along the route is about halfway
+    arrow_step = this.getArrowStep(legs)
+    #get the index of the latitude/longitude that is about halfway through the step
+    lat_lng_index = this.getArrowPositionIndex(arrow_step)
+    #get the arrows lat/lng from the path
+    arrow_lat_lng_pos = arrow_step.path[lat_lng_index]
+    #angle the arrow towards this lat_lng - even if one step on route you still have begin and end lat/lng
+    arrow_angle_to = arrow_step.path[lat_lng_index + 1]
+    
+    #calculate direction of arrow
+    dir=((Math.atan2(arrow_angle_to.lat()-arrow_lat_lng_pos.lat(),arrow_angle_to.lng()-arrow_lat_lng_pos.lng())*180)/Math.PI)+360
     ico=((dir-(dir%3))%120)
     self = this
     new google.maps.Marker({
-      position: self.getArrowPosition(legs),
+      position: arrow_lat_lng_pos,
       icon: new google.maps.MarkerImage('http://maps.google.com/mapfiles/dir_'+ico+'.png',
                   new google.maps.Size(24,24),
                   new google.maps.Point(0,0),
@@ -47,20 +60,21 @@ class window.aurora.MapLinkView extends Backbone.View
       map: window.map
     });
 
-  getArrowPosition: (legs) ->
+  #this moves through the steps array of the route to determine which step is about 
+  #halfway through the leg
+  getArrowStep: (legs) ->
     steps = legs[0].steps
-    total_miles = 0
-    for step, index in steps
-      console.log step
-      total_miles += step.lat_lng.distanceFrom(steps[index + 1].lat_lng)
-      if(total_miles > 300) 
+    total_meters = 0
+    for step,index in steps
+      total_meters += step.distance.value
+      arrow_step = step
+      if(total_meters >= legs[0].distance.value / 2)
         break
 
-    if (total_miles < 300)
-      v0 = steps[0]
-      v1 = steps[1]
-    
-    v0  
-   
-    
+    arrow_step
   
+  #for the step parameter get the index of the middle
+  #lat/lng
+  getArrowPositionIndex: (step) ->
+    Math.floor(step.path.length / 2) 
+    
