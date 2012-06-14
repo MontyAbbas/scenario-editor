@@ -24,7 +24,7 @@
 	    <script type="text/javascript">
 	      google.maps.event.addDomListener(window, 'load', window.main_stuff.init);
 	    </script>
-	    <script src="../libs/js/ContextMenu.js"></script>
+	    <script src="../libs/js/ContextMenu.js"></script>	    
 			<link href="../libs/js/bootstrap/css/bootstrap.css" rel="stylesheet">
 	
 	   	<style type="text/css">
@@ -36,6 +36,7 @@
 		  	#header {width:100%}
 				.navbar {margin-bottom: 0px}
 				.container {position:absolute; z-index:1;width: 278px; margin-top:5px;margin-left:80px; background-color: #444444;}
+
 				.ui-dialog {
 					background-color: #fff;
 					border-color: #ccc;
@@ -98,6 +99,7 @@
 					margin:0;
 					padding:0 0 2px 0;
 				}
+
 	    </style>
 			
 			<script type="text/javascript">
@@ -186,6 +188,7 @@
 							      <li><a id="cb" class="jmodal">Controller Browser</a></li>
 										<li><a id="sb" class="jmodal">Sensor Browser</a></li>
 							      <li><a id="np" class="jmodal">Network Properties</a></li>
+
 							      <li><a href="#">Map</a></li>
 							      <li class="divider"></li>
 							      <li><a href="#">Cascade</a></li>
@@ -224,47 +227,125 @@
 			</div>
 			
 		<!-- Menu Modals -->
-		<div id="nodebrowser" class="jdialog">
-			<hr>
-			<div class="row-fluid">
-				<div class="span6">One</div>
-				<div class="span6">Two</div>
+
+		<div id="nodebrowser" class="modal hide fade">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>Node Browser</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span6">
+						<table id="nodename">
+						</table>
+					</div>
+					<div class="span6">...</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal" >Close</a>
 			</div>
 		</div>
-		<div id="linkbrowser" class="jdialog">
-			<div class="row-fluid">
-				<div class="span6">One</div>
-				<div class="span6">Two</div>
+		
+		<div id="linkbrowser" class="modal hide fade">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>Link Browser</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span6">
+					</div>
+					<div class="span6">...</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal" >Close</a>
 			</div>
 		</div>
-		<div id="pathbrowser" class="jdialog">
-			<div class="row-fluid">
-				<div class="span6">One</div>
-				<div class="span6">Two</div>
+		
+		<div id="pathbrowser" class="modal hide fade">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>Path Browser</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span6">
+					</div>
+					<div class="span6">...</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal" >Close</a>
 			</div>
 		</div>
-		<div id="eventbrowser" class="jdialog">
-			<div class="row-fluid">
-				<div class="span6">One</div>
-				<div class="span6">Two</div>
+		
+		<div id="eventbrowser" class="modal hide fade">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>Event Browser</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span6">
+					</div>
+					<div class="span6">...</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal" >Close</a>
 			</div>
 		</div>
-		<div id="controlbrowser" class="jdialog">
-			<div class="row-fluid">
-				<div class="span6">One</div>
-				<div class="span6">Two</div>
+		
+		<div id="controlbrowser" class="modal hide fade">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>Controller Browser</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span6">
+					</div>
+					<div class="span6">...</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal" >Close</a>
 			</div>
 		</div>
-		<div id="sensorbrowser" class="jdialog">
-			<div class="row-fluid">
-				<div class="span6">One</div>
-				<div class="span6">Two</div>
+		
+		<div id="sensorbrowser" class="modal hide fade">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>Sensor Browser</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span6">
+					</div>
+					<div class="span6">...</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal" >Close</a>
 			</div>
 		</div>
-		<div id="netprop" class="jdialog">
-			<div class="row-fluid">
-				<div class="span6">One</div>
-				<div class="span6">Two</div>
+		
+		<div id="netprop" class="modal hide fade">
+			<div class="modal-header">
+				<button class="close" data-dismiss="modal">&times;</button>
+				<h3>Network Properties</h3>
+			</div>
+			<div class="modal-body">
+				<div class="row-fluid">
+					<div class="span6">
+					</div>
+					<div class="span6">...</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<a href="#" class="btn" data-dismiss="modal" >Close</a>
 			</div>
 		</div>
 		
