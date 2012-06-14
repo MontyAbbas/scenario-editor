@@ -16,6 +16,7 @@ class window.aurora.MapMarkerView extends Backbone.View
 					position: this.latlng, 
 					draggable: true,
 					icon: self.get_icon('dot')
+					title: "Latitude: " + this.latlng.lat() + "\nLongitude: " + this.latlng.lng()
 				});
 		google.maps.event.addListener(this.marker, "dragend", this.dragMarker());
 		google.maps.event.addListener(window.map, "dragend", this.dragMap());
