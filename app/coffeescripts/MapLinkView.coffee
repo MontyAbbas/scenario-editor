@@ -1,5 +1,7 @@
 class window.aurora.MapLinkView extends Backbone.View
-
+  @viewLinks = []
+  @viewArrows = []
+  
   initialize: (link, broker) -> 
     #Instantiate a directions service.
     renderOptions = {
@@ -30,6 +32,8 @@ class window.aurora.MapLinkView extends Backbone.View
         warnings.innerHTML = "" + response.routes[0].warnings + ""
         self.displayArrow(response.routes[0].legs)
         self.directionsDisplay.setDirections(response)
+        #add directionsDisplay object to static array of links for hiding/showing layers
+        MapLinkView.viewLinks.push self.directionsDisplay
 
     )
 
@@ -51,9 +55,9 @@ class window.aurora.MapLinkView extends Backbone.View
     arrow_angle_to = arrow_step.path[lat_lng_index + 1]
     
     #calculate direction of arrow
-    dir = this.getBearingOfArrow(arrow_lat_lng_pos,arrow_angle_to)
+    dir = this.getAngleOfArrow(arrow_lat_lng_pos,arrow_angle_to)
     self = this
-    new google.maps.Marker({
+    marker = new google.maps.Marker({
       position: arrow_lat_lng_pos,
       icon: new google.maps.MarkerImage('http://maps.google.com/mapfiles/dir_'+dir+'.png',
                   new google.maps.Size(24,24),
@@ -62,6 +66,9 @@ class window.aurora.MapLinkView extends Backbone.View
             ),
       map: window.map
     });
+    #add marker to static array of arrows for hiding/showing layers
+    MapLinkView.viewArrows.push marker
+    marker
 
   #this moves through the steps array of the route to determine which step is about 
   #halfway through the leg
@@ -82,7 +89,7 @@ class window.aurora.MapLinkView extends Backbone.View
     Math.floor(step.path.length / 2)
   
   #this uses google spherical geometry functions to calculate the heading if our arrow.
-  getBearingOfArrow: (pos, towards) ->
+  getAngleOfArrow: (pos, towards) ->
     dir = google.maps.geometry.spherical.computeHeading(pos, towards).toFixed(1);
     #round it to a multiple of 3 and correct unusable numbers
     dir = Math.round(dir/3) * 3;
@@ -91,3 +98,12 @@ class window.aurora.MapLinkView extends Backbone.View
     if (dir > 117) 
       dir -= 120
     dir
+  
+################# The following handles the show and hide of link layers including the arrow heads
+  @hideLinkOverlays: () ->
+    _.each(viewLinks, (i) -> i.setMap(null))
+    _.each(viewArrows, (i) -> i.setMap(null))
+  
+  @showLinkOverlays: () ->
+    _.each(viewLinks, (i) -> i.setMap(window.map))
+    _.each(viewArrows, (i) -> i.setMap(window.map))
