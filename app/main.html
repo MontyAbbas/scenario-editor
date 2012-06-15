@@ -107,6 +107,7 @@
 						show: {effect:'drop', direction: 'left', duration: 200},
 						hide: {effect:'drop', direction: 'right', duration: 200}
 					});
+					
 					$('.ui-dialog-titlebar-close').ready(function() {
 						var titlebar = $('.ui-dialog-titlebar-close');
 						for(var i = 0; i < titlebar.length; i++) {
@@ -148,20 +149,21 @@
 						$('#uploadField').click();
 						e.preventDefault();
 					});
+					
 				});
 				
 				var handleFiles = function(files) {
 					var reader = new FileReader();
 					
 					var xml_text;
-					
-					reader.onload= function(e) {
+					reader.onloadend= function(e) {
 						xml_text = e.target.result;
+						var xml = $.parseXML(xml_text);
+						window.textarea_scenario = window.aurora.Scenario.from_xml($(xml).children());
+						window.main_stuff.display();
 					};
 					
 					reader.readAsText(files[0]);
-          var xml = $.aurora.parseXML(xml_text);
-          window.textarea_scenario = window.aurora.Scenario.from_xml($(xml).children());
 				}
 				
 			</script>

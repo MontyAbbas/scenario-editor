@@ -8,7 +8,24 @@ window.main_stuff.init = ->
 		xml = $.parseXML(xml_text)
 		window.textarea_scenario = window.aurora.Scenario.from_xml($(xml).children())
 		window.main_stuff.display()
+	###	
+	$('#upload').click (e) ->
+		$('#uploadField').click()
+		e.preventDefault()
+	
+	handleFiles = (files) ->
+		reader = new FileReader()
 		
+		xml_text = ""
+		
+		reader.onload = (e) ->
+			xml_text = e.target.result
+		reader.onerror = (e) ->
+		
+		reader.readAsText files[0]
+		xml = $.parseXML(xml_text)
+		window.textarea_scenario = window.aurora.Scenario.from_xml($(xml).children())
+	###	
 	myOptions =
 		center: new google.maps.LatLng(37.85794730789898, -122.29954719543457)
 		zoom: 14
