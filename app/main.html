@@ -152,6 +152,20 @@
 					});
 				});
 				
+				var handleFiles = function(files) {
+					var reader = new FileReader();
+					
+					var xml_text;
+					
+					reader.onload= function(e) {
+						xml_text = e.target.result;
+					};
+					
+					reader.readAsText(files[0]);
+          var xml = $.aurora.parseXML(xml_text);
+          window.textarea_scenario = window.aurora.Scenario.from_xml($(xml).children());
+				}
+				
 			</script>
 			
 	</head>
@@ -168,8 +182,8 @@
 							    <ul class="dropdown-menu">
 							      <li><a href="#">New</a></li>
 										<li class="divider"></li>
-										<input type="file" name="localNetwork" style="visibility:hidden; position:absolute" id="uploadField" />
-										<li><a href="" id="upload">Open Local Network</a></li>
+										<input type="file" name="localNetwork" style="visibility:hidden; position:absolute" id="uploadField" onchange="handleFiles(this.files)" />
+										<li><a id="upload">Open Local Network</a></li>
 							      <li><a href="#">Save Local Network</a></li>
 							      <li class="divider"></li>
 							      <li><a href="#">Import Local Network</a></li>
