@@ -48,7 +48,7 @@ window.main_stuff.init = ->
 	directionsDisplay = new google.maps.DirectionsRenderer(renderer_options)
 	directionsService = new google.maps.DirectionsService()
 
-window.main_stuff.display = ->
+window.main_stuff.display = ->  
   node_markers = {}
   broker = _.clone( Backbone.Events)
   network = window.textarea_scenario.get('network')
@@ -56,6 +56,7 @@ window.main_stuff.display = ->
   drawNodes network.get('nodelist').get('node'), broker
   drawSensors network.get('sensorlist').get('sensor'), broker
   drawLinks network.get('linklist').get('link'), broker
+  renderMap()
   broker.trigger('map:init')
 
 	#drawLinks(network.get('linklist').get('link'))
@@ -77,6 +78,35 @@ drawNodes = (nodes,broker) ->
 
 drawSensors = (sensors,broker) ->
   _.each(sensors, (i) ->  new window.aurora.MapSensorView(i,broker,getLat(i), getLng(i)))
+
+# HERE I AM FOR MONDAY -- decide if arrow view makes sense or somehow tie back to Link View - it seems like it should be in the link view 
+drawArrows = (legs) -> 
+  _.each(legs, (i) ->  new window.aurora.MapArrowView(i,broker,getLat(i), getLng(i)))
+
+renderMap = () ->
+  renderOptions = {
+    map: window.map,
+    markerOptions: {visible: false},
+    preserveViewport: true
+  }
+  this.directionsService = new google.maps.DirectionsService()
+  this.directionsDisplay = new google.maps.DirectionsRenderer(renderOptions)
+  #Create DirectionsRequest using DRIVING directions.
+  request = {
+    origin: window.aurora.MapLinkView.network_begin_end[0],
+    destination: window.aurora.MapLinkView.network_begin_end[1],
+    waypoints: window.aurora.MapLinkView.wypnts,
+    travelMode: google.maps.TravelMode.DRIVING,
+  }
+  #Route the directions and pass the response to a
+  #function to draw the full link for each step.
+  self = this
+  this.directionsService.route(request, (response, status) =>
+    if (status == google.maps.DirectionsStatus.OK)
+      warnings = $("#warnings_panel")
+      warnings.innerHTML = "" + response.routes[0].warnings + ""
+      self.directionsDisplay.setDirections(response)
+  )
 
 getLat = (elem) ->
   elem.get('position').get('point')[0].get('lat')

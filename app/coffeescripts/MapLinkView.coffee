@@ -1,41 +1,28 @@
 class window.aurora.MapLinkView extends Backbone.View
   @viewLinks = []
   @viewArrows = []
+  @wypnts = []
+  @network_begin_end = []
   
   initialize: (link, broker) -> 
     #Instantiate a directions service.
-    renderOptions = {
-      map: window.map,
-      markerOptions: {visible: false},
-      preserveViewport: true
-    }
-    this.directionsService = new google.maps.DirectionsService()
-    this.directionsDisplay = new google.maps.DirectionsRenderer(renderOptions)
-    this.begin =  window.aurora.Util.getLatLng link.get('begin').get('node')
-    this.end = window.aurora.Util.getLatLng link.get('end').get('node')
+    this.begin =  link.get('begin').get('node')
+    this.end = link.get('end').get('node')
+    this.setUpWayPoints()
     this.broker = broker
     this.broker.on('map:init', this.render, this)
 
   render: -> 
-    #Create DirectionsRequest using DRIVING directions.
-    request = {
-      origin: this.begin,
-      destination: this.end,
-      travelMode: google.maps.TravelMode.DRIVING,
-    }
-    #Route the directions and pass the response to a
-    #function to draw the full link for each step.
-    self = this
-    this.directionsService.route(request, (response, status) =>
-      if (status == google.maps.DirectionsStatus.OK)
-        warnings = $("#warnings_panel")
-        warnings.innerHTML = "" + response.routes[0].warnings + ""
-        self.displayArrow(response.routes[0].legs)
-        self.directionsDisplay.setDirections(response)
-        #add directionsDisplay object to static array of links for hiding/showing layers
-        MapLinkView.viewLinks.push self.directionsDisplay
 
-    )
+  setUpWayPoints: ->
+    #if it is not a terminal node, I want it to make the directions request
+    if this.begin.get("type") != "T"
+      MapLinkView.wypnts.push { location:window.aurora.Util.getLatLng(this.begin) }
+    else
+      MapLinkView.network_begin_end.push window.aurora.Util.getLatLng(this.begin)
+
+    if this.end.get("type") == "T"
+      MapLinkView.network_begin_end.push window.aurora.Util.getLatLng(this.end)
 
   #Arrow Positoning calculations involve the following functions:
   #displayArrow, getArrowStep, getArrowPositionIndex, and getBearingOfArrow
