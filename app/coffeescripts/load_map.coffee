@@ -1,31 +1,8 @@
 directionsDisplay = {}
 directionsService = {}
 	
-	
 window.main_stuff.init = ->
-	$("#load_scenario").click ->
-		xml_text = $("#scenario_text").val()
-		xml = $.parseXML(xml_text)
-		window.textarea_scenario = window.aurora.Scenario.from_xml($(xml).children())
-		window.main_stuff.display()
-	###	
-	$('#upload').click (e) ->
-		$('#uploadField').click()
-		e.preventDefault()
 	
-	handleFiles = (files) ->
-		reader = new FileReader()
-		
-		xml_text = ""
-		
-		reader.onload = (e) ->
-			xml_text = e.target.result
-		reader.onerror = (e) ->
-		
-		reader.readAsText files[0]
-		xml = $.parseXML(xml_text)
-		window.textarea_scenario = window.aurora.Scenario.from_xml($(xml).children())
-	###	
 	myOptions =
 		center: new google.maps.LatLng(37.85794730789898, -122.29954719543457)
 		zoom: 14
@@ -37,6 +14,7 @@ window.main_stuff.init = ->
 			position: google.maps.ControlPosition.TOP_LEFT
 			
 	window.map = new google.maps.Map(document.getElementById("map_canvas"),myOptions)
+	
 	contextMenuOptions={}
 	contextMenuOptions.classNames={menu:'context_menu', menuSeparator:'context_menu_separator'}
 	menuItems=[]
@@ -50,6 +28,7 @@ window.main_stuff.init = ->
 		contextMenu.show mouseEvent.latLng
 		null
 	)
+	
 	
 	google.maps.event.addListener(contextMenu, 'menu_item_selected', (latLng, eventName) ->
 		switch eventName
@@ -85,7 +64,20 @@ window.main_stuff.display = ->
   # marker = getMarker(new google.maps.LatLng(node.lat, node.lng))
   # marker1 = getMarker(new google.maps.LatLng(node1.lat, node1.lng))
   # getPolyLine(marker,marker1)
-
+###  
+handleFiles = (files) ->
+	reader = new FileReader()
+	
+	xml_text = ""
+	
+	reader.onload = (e) ->
+		xml_text = e.target.result
+	reader.onerror = (e) ->
+	
+	reader.readAsText files[0]
+	xml = $.parseXML(xml_text)
+	window.textarea_scenario = window.aurora.Scenario.from_xml($(xml).children())
+###
 drawLinks = (links, broker) ->
   _.each(links, (i) ->  new window.aurora.MapLinkView(i,broker))
 
