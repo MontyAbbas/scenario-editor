@@ -36,6 +36,7 @@ load_aurora_classes = (after) ->
     head.js.apply(@, class_paths)
 
 head.js('../libs/js/jquery-1.7.1.js',
+				'../libs/js/jquery-ui-1.8.18.min.js',
         '../libs/js/underscore.js',
         '../libs/js/backbone.js',
         '../libs/js/bootstrap/js/bootstrap.js', ->
