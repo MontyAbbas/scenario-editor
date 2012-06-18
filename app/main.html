@@ -42,20 +42,6 @@
 					reader.readAsText(files[0]);
 				}
 				
-				var handleFiles = function(files) {
-					var reader = new FileReader();
-					
-					var xml_text;
-					
-					reader.onload= function(e) {
-						xml_text = e.target.result;
-					};
-					
-					reader.readAsText(files[0]);
-          var xml = $.aurora.parseXML(xml_text);
-          window.textarea_scenario = window.aurora.Scenario.from_xml($(xml).children());
-				}
-				
 			</script>
 			
 	</head>
