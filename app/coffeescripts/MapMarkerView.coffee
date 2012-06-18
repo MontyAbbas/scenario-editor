@@ -1,12 +1,12 @@
 class window.aurora.MapMarkerView extends Backbone.View
 	
-	initialize: (model,broker,lat,lng) -> 
+	initialize: (model,broker,lat_lng) -> 
 		_.bindAll(this, 'render','dragMarker', 'dragMap')
 		this.model = model
 		this.broker = broker
 		this.broker.on('map:init', this.render, this)
-		this.latitude =  lat
-		this.longitude = lng
+		this.latitude =  lat_lng.lat()
+		this.longitude = lat_lng.lng()
 
 	render: ->
 		self = this
