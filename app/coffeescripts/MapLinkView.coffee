@@ -1,45 +1,44 @@
 class window.aurora.MapLinkView extends Backbone.View
-
-  initialize: (link, broker) -> 
-    #Instantiate a directions service.
-    renderOptions = {
-      map: window.map,
-      markerOptions: {visible: false},
-      preserveViewport: true
-    }
-    this.directionsService = new google.maps.DirectionsService()
-    this.directionsDisplay = new google.maps.DirectionsRenderer(renderOptions)
-    this.begin =  window.aurora.Util.getLatLng link.get('begin').get('node')
-    this.end = window.aurora.Util.getLatLng link.get('end').get('node')
+  @view_links = []
+  
+  initialize: (leg, broker) ->
+    this.leg = leg
+    this.drawLink leg
+    this.drawArrow leg
     this.broker = broker
-    this.broker.on('map:init', this.render, this)
+    MapLinkView.view_links.push this
+    this.broker.on('map:init', this.render(), this)
+    this.broker.on('map:hide_link_layer',this.hide_link(),this)
+    this.broker.on('map:show_link_layer',this.show_link(),this)
+    
+  render: ->
+    this.link.setMap(window.map)
+    this.arrow.setMap(window.map)
 
-  render: -> 
-    #Create DirectionsRequest using DRIVING directions.
-    request = {
-      origin: this.begin,
-      destination: this.end,
-      travelMode: google.maps.TravelMode.DRIVING,
-    }
-    #Route the directions and pass the response to a
-    #function to draw the full link for each step.
-    self = this
-    this.directionsService.route(request, (response, status) =>
-      if (status == google.maps.DirectionsStatus.OK)
-        warnings = $("#warnings_panel")
-        warnings.innerHTML = "" + response.routes[0].warnings + ""
-        self.displayArrow(response.routes[0].legs)
-        self.directionsDisplay.setDirections(response)
+  #this method reads the path of points contained in the leg
+  #and converts it into a polyline object to be drawn on the map
+  #The Polyline map attribute will be null until render is called
+  drawLink: (leg) ->
+    sm_path = []
+    for step in this.leg.steps
+      for pt in step.path
+        if !(pt in sm_path)
+          sm_path.push pt
 
-    )
+    this.link = new google.maps.Polyline({
+      path: sm_path,
+      map: null,
+      strokeColor:  "blue",
+      strokeOpacity: 0.6,
+      strokeWeight: 6
+    }); 
 
   #Arrow Positoning calculations involve the following functions:
-  #displayArrow, getArrowStep, getArrowPositionIndex, and getBearingOfArrow
-  #displayArrow calcuates the angle of the arrow to display along the route
-  displayArrow: (legs) ->
-    
+  #displayArrow, getArrowStep, getArrowPositionIndex, and getAngleOfArrow
+  #setUprrow calcuates the position and angle of the arrow to display along the route
+  drawArrow: () ->
     #get the step along the route is about halfway
-    arrow_step = this.getArrowStep(legs)
+    arrow_step = this.getArrowStep(this.leg)
     #get the index of the latitude/longitude that is about halfway through the step
     lat_lng_index = this.getArrowPositionIndex(arrow_step)
     #get the arrows lat/lng from the path
@@ -51,27 +50,27 @@ class window.aurora.MapLinkView extends Backbone.View
     arrow_angle_to = arrow_step.path[lat_lng_index + 1]
     
     #calculate direction of arrow
-    dir = this.getBearingOfArrow(arrow_lat_lng_pos,arrow_angle_to)
+    dir = this.getAngleOfArrow(arrow_lat_lng_pos,arrow_angle_to)
     self = this
-    new google.maps.Marker({
+    this.arrow = new google.maps.Marker({
       position: arrow_lat_lng_pos,
       icon: new google.maps.MarkerImage('http://maps.google.com/mapfiles/dir_'+dir+'.png',
                   new google.maps.Size(24,24),
                   new google.maps.Point(0,0),
                   new google.maps.Point(12,12)
             ),
-      map: window.map
+      map: null
     });
 
   #this moves through the steps array of the route to determine which step is about 
   #halfway through the leg
-  getArrowStep: (legs) ->
-    steps = legs[0].steps
+  getArrowStep: (leg) ->
+    steps = leg.steps
     total_meters = 0
     for step,index in steps
       total_meters += step.distance.value
       arrow_step = step
-      if(total_meters >= legs[0].distance.value / 2)
+      if(total_meters >= leg.distance.value / 2)
         break
 
     arrow_step
@@ -82,7 +81,7 @@ class window.aurora.MapLinkView extends Backbone.View
     Math.floor(step.path.length / 2)
   
   #this uses google spherical geometry functions to calculate the heading if our arrow.
-  getBearingOfArrow: (pos, towards) ->
+  getAngleOfArrow: (pos, towards) ->
     dir = google.maps.geometry.spherical.computeHeading(pos, towards).toFixed(1);
     #round it to a multiple of 3 and correct unusable numbers
     dir = Math.round(dir/3) * 3;
@@ -91,3 +90,12 @@ class window.aurora.MapLinkView extends Backbone.View
     if (dir > 117) 
       dir -= 120
     dir
+  
+  ################# The following handles the show and hide of link layers including the arrow heads
+  hide_link: ->
+    this.link.setMap(null)
+    this.arrow.setMap(null)
+  
+  show_link: ->
+    this.link.setMap(window.map)
+    this.arrow.setMap(window.map)
