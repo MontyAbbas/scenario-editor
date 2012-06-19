@@ -3,6 +3,7 @@ class window.aurora.MapLinkView extends Backbone.View
   
   initialize: (leg,broker) ->
     this.leg = leg
+    console.log leg
     this.broker = broker
     MapLinkView.view_links.push this
     this.broker.on('map:init', this.render(), this)

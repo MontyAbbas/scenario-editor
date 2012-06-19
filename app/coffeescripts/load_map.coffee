@@ -72,6 +72,7 @@ setUpMap = (broker) ->
   }
   this.directionsService = new google.maps.DirectionsService()
   this.directionsDisplay = new google.maps.DirectionsRenderer(renderOptions)
+  console.log this.directionsDisplay
   #Create DirectionsRequest using DRIVING directions.
   request = {
     origin: network_begin_end[0],
@@ -87,6 +88,7 @@ setUpMap = (broker) ->
       warnings = $("#warnings_panel")
       warnings.innerHTML = "" + response.routes[0].warnings + ""
       self.directionsDisplay.setDirections(response)
+      console.log response.routes[0].legs
       drawLinks response.routes[0].legs, broker
   )
 
