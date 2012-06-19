@@ -72,7 +72,7 @@ setUpMap = (broker) ->
   }
   this.directionsService = new google.maps.DirectionsService()
   this.directionsDisplay = new google.maps.DirectionsRenderer(renderOptions)
-  console.log this.directionsDisplay
+  
   #Create DirectionsRequest using DRIVING directions.
   request = {
     origin: network_begin_end[0],
