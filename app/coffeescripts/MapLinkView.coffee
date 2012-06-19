@@ -1,37 +1,42 @@
 class window.aurora.MapLinkView extends Backbone.View
   @view_links = []
   
-  initialize: (leg,broker) ->
+  initialize: (leg, broker) ->
     this.leg = leg
-    console.log leg
+    this.setUpLink leg
+    this.setUpArrow leg
     this.broker = broker
     MapLinkView.view_links.push this
     this.broker.on('map:init', this.render(), this)
+    this.broker.on('map:hide_link_layer',this.hide_link(),this)
+    this.broker.on('map:show_link_layer',this.show_link(),this)
     
   render: ->
-    this.displayLink()
-    this.displayArrow()
+    this.link.setMap(window.map)
+    this.arrow.setMap(window.map)
 
-  displayLink: ->
+  #this method reads the path of points contained in the leg
+  #and converts it into a polyline object to be drawn on the map
+  #The Polyline map attribute will be null until render is called
+  setUpLink: (leg) ->
     sm_path = []
     for step in this.leg.steps
       for pt in step.path
         if !(pt in sm_path)
           sm_path.push pt
-    
-    #for step in this.leg.steps
-    new google.maps.Polyline({
+
+    this.link = new google.maps.Polyline({
       path: sm_path,
-      map: window.map,
+      map: null,
       strokeColor:  "blue",
       strokeOpacity: 0.6,
       strokeWeight: 6
     }); 
 
   #Arrow Positoning calculations involve the following functions:
-  #displayArrow, getArrowStep, getArrowPositionIndex, and getBearingOfArrow
-  #displayArrow calcuates the angle of the arrow to display along the route
-  displayArrow: () ->
+  #displayArrow, getArrowStep, getArrowPositionIndex, and getAngleOfArrow
+  #setUprrow calcuates the position and angle of the arrow to display along the route
+  setUpArrow: () ->
     #get the step along the route is about halfway
     arrow_step = this.getArrowStep(this.leg)
     #get the index of the latitude/longitude that is about halfway through the step
@@ -47,14 +52,14 @@ class window.aurora.MapLinkView extends Backbone.View
     #calculate direction of arrow
     dir = this.getAngleOfArrow(arrow_lat_lng_pos,arrow_angle_to)
     self = this
-    this.marker = new google.maps.Marker({
+    this.arrow = new google.maps.Marker({
       position: arrow_lat_lng_pos,
       icon: new google.maps.MarkerImage('http://maps.google.com/mapfiles/dir_'+dir+'.png',
                   new google.maps.Size(24,24),
                   new google.maps.Point(0,0),
                   new google.maps.Point(12,12)
             ),
-      map: window.map
+      map: null
     });
 
   #this moves through the steps array of the route to determine which step is about 
@@ -86,11 +91,11 @@ class window.aurora.MapLinkView extends Backbone.View
       dir -= 120
     dir
   
-################# The following handles the show and hide of link layers including the arrow heads
-  hide_link: () ->
-    this.leg.setMap(null)
-    this.marker.setMap(null)
+  ################# The following handles the show and hide of link layers including the arrow heads
+  hide_link: ->
+    this.link.setMap(null)
+    this.arrow.setMap(null)
   
-  show_link: () ->
-    this.leg.setMap(window.map)
-    this.marker.setMap(window.map)
+  show_link: ->
+    this.link.setMap(window.map)
+    this.arrow.setMap(window.map)
