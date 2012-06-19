@@ -3,8 +3,8 @@ class window.aurora.MapLinkView extends Backbone.View
   
   initialize: (leg, broker) ->
     this.leg = leg
-    this.setUpLink leg
-    this.setUpArrow leg
+    this.drawLink leg
+    this.drawArrow leg
     this.broker = broker
     MapLinkView.view_links.push this
     this.broker.on('map:init', this.render(), this)
@@ -18,7 +18,7 @@ class window.aurora.MapLinkView extends Backbone.View
   #this method reads the path of points contained in the leg
   #and converts it into a polyline object to be drawn on the map
   #The Polyline map attribute will be null until render is called
-  setUpLink: (leg) ->
+  drawLink: (leg) ->
     sm_path = []
     for step in this.leg.steps
       for pt in step.path
@@ -36,7 +36,7 @@ class window.aurora.MapLinkView extends Backbone.View
   #Arrow Positoning calculations involve the following functions:
   #displayArrow, getArrowStep, getArrowPositionIndex, and getAngleOfArrow
   #setUprrow calcuates the position and angle of the arrow to display along the route
-  setUpArrow: () ->
+  drawArrow: () ->
     #get the step along the route is about halfway
     arrow_step = this.getArrowStep(this.leg)
     #get the index of the latitude/longitude that is about halfway through the step
