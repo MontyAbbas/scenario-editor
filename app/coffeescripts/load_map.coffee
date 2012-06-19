@@ -48,19 +48,6 @@ window.main_stuff.display = ->
   setUpMap broker
   broker.trigger('map:init')
 
-# 
-# handleFiles = (files) ->
-#   reader = new FileReader()
-#   xml_text = ""
-# 
-#   reader.onload = (e) ->
-#     xml_text = e.target.result
-#   reader.onerror = (e) ->
-# 
-#   reader.readAsText files[0]
-#   xml = $.parseXML(xml_text)
-#   window.textarea_scenario = window.aurora.Scenario.from_xml($(xml).children())
-
 drawLinks = (links, broker) ->
   _.each(links, (i) ->  new window.aurora.MapLinkView(i,broker))
 
