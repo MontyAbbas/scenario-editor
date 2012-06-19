@@ -9,18 +9,24 @@ class window.aurora.MapLinkView extends Backbone.View
     this.broker.on('map:init', this.render(), this)
     
   render: ->
-   #this.displayLink()
+    this.displayLink()
     this.displayArrow()
 
   displayLink: ->
+    sm_path = []
     for step in this.leg.steps
-      new google.maps.Polyline({
-              path: step.path,
-              map: window.map,
-              strokeColor:  "blue",
-              strokeOpacity: 0.6,
-              strokeWeight: 6
-          }); 
+      for pt in step.path
+        if !(pt in sm_path)
+          sm_path.push pt
+    
+    #for step in this.leg.steps
+    new google.maps.Polyline({
+      path: sm_path,
+      map: window.map,
+      strokeColor:  "blue",
+      strokeOpacity: 0.6,
+      strokeWeight: 6
+    }); 
 
   #Arrow Positoning calculations involve the following functions:
   #displayArrow, getArrowStep, getArrowPositionIndex, and getBearingOfArrow

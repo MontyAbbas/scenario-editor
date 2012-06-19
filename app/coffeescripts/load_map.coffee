@@ -87,7 +87,7 @@ setUpMap = (broker) ->
     if (status == google.maps.DirectionsStatus.OK)
       warnings = $("#warnings_panel")
       warnings.innerHTML = "" + response.routes[0].warnings + ""
-      self.directionsDisplay.setDirections(response)
+      #self.directionsDisplay.setDirections(response)
       console.log response.routes[0].legs
       drawLinks response.routes[0].legs, broker
   )
