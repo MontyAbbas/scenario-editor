@@ -8,6 +8,7 @@ window.main_stuff.init = ->
 		zoom: 14
 		mapTypeId: google.maps.MapTypeId.ROADMAP
 		mapTypeControl: false
+		disableDoubleClickZoom: true
 		zoomControl: true
 		zoomControlOptions:
 			style: google.maps.ZoomControlStyle.DEFAULT,
@@ -26,9 +27,9 @@ window.main_stuff.init = ->
 	contextMenu= new ContextMenu(window.map, contextMenuOptions)
 	google.maps.event.addListener(window.map, 'rightclick', (mouseEvent) ->
 		contextMenu.show mouseEvent.latLng
+		
 		null
 	)
-	
 	
 	google.maps.event.addListener(contextMenu, 'menu_item_selected', (latLng, eventName) ->
 		switch eventName
@@ -53,7 +54,7 @@ window.main_stuff.display = ->
   drawSensors network.get('sensorlist').get('sensor'), broker
   drawLinks network.get('linklist').get('link'), broker
   broker.trigger('map:init')
-	
+
 	#drawLinks(network.get('linklist').get('link'))
 	#drawLinks(network.get('linklist').get('link'))
   # node.lat = window.textarea_scenario.get('network').get('nodelist').get('node')[0].get('position').get('point')[0].get('lat')
@@ -64,20 +65,7 @@ window.main_stuff.display = ->
   # marker = getMarker(new google.maps.LatLng(node.lat, node.lng))
   # marker1 = getMarker(new google.maps.LatLng(node1.lat, node1.lng))
   # getPolyLine(marker,marker1)
-###  
-handleFiles = (files) ->
-	reader = new FileReader()
-	
-	xml_text = ""
-	
-	reader.onload = (e) ->
-		xml_text = e.target.result
-	reader.onerror = (e) ->
-	
-	reader.readAsText files[0]
-	xml = $.parseXML(xml_text)
-	window.textarea_scenario = window.aurora.Scenario.from_xml($(xml).children())
-###
+  
 drawLinks = (links, broker) ->
   _.each(links, (i) ->  new window.aurora.MapLinkView(i,broker))
 
