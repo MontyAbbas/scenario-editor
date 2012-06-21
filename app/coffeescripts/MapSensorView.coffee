@@ -1,4 +1,4 @@
-class window.aurora.MapSensorView extends window.aurora.MapMarkerView
+class window.sirius.MapSensorView extends window.sirius.MapMarkerView
   @view_sensors = []
      
   initialize: (model,broker,lat_lng) ->

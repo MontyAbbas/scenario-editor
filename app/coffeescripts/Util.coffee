@@ -1,4 +1,4 @@
-class window.aurora.Util
+class window.sirius.Util
   round_dec = (num,dec) ->
     Math.round(num * Math.pow(10,dec)) / Math.pow(10,dec)
 

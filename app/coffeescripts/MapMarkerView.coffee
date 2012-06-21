@@ -1,14 +1,13 @@
-class window.aurora.MapMarkerView extends Backbone.View
+class window.sirius.MapMarkerView extends Backbone.View
 
   initialize: (model,broker,lat_lng) ->
-    _.bindAll(this, 'render','dragMarker', 'dragMap')
     this.model = model
     this.latlng = lat_lng
     this.draw()
     this.broker = broker
     this.broker.on('map:init', this.render, this)
 
-  render: ->
+  render: =>
     this.marker.setMap(window.map)
     
   draw: ->
@@ -29,11 +28,11 @@ class window.aurora.MapMarkerView extends Backbone.View
       new google.maps.Point(16, 16)
     );
 
-  dragMarker: ->
+  dragMarker: =>
     self.latlng = this.marker.getPosition();
     window.map.panTo(self.latlng);
 
-  dragMap: ->
+  dragMap: =>
     self.latlng = window.map.getCenter();
     this.marker.setPosition(self.latlng);
   

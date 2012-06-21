@@ -1,4 +1,4 @@
-class window.aurora.MapNodeView extends window.aurora.MapMarkerView
+class window.sirius.MapNodeView extends window.sirius.MapMarkerView
   @view_nodes = []
 
   initialize: (model,broker,lat_lng) ->

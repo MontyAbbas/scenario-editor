@@ -1,4 +1,4 @@
-aurora_classes_with_extensions = [
+sirius_classes_with_extensions = [
   'Begin','Capacity','Controller', 'ControllerSet',
   'Data_sources','Demand', 'Density', 'Display_position',
   'Dynamics', 'End', 'Event', 'EventSet', 'Fd', 'Input',
@@ -10,7 +10,7 @@ aurora_classes_with_extensions = [
   'Source', 'Splitratios'
 ]
 
-aurora_classes_without_extensions = [
+sirius_classes_without_extensions = [
   'Util','MapMarkerView','MapSensorView','MapNodeView','MapLinkView'
   'ALatLng', 'ArrayText', 'CapacityProfileSet', 'Components',
   'Control', 'Controlled', 'DemandProfileSet', 'Description',
@@ -25,11 +25,11 @@ aurora_classes_without_extensions = [
   'Zone', 'Zones'
 ]
 
-load_aurora_classes = (after) ->
-  head.js "js/Aurora.js", ->
-    class_paths = _.map(aurora_classes_without_extensions, (cname) -> "js/#{cname}.js")
+load_sirius_classes = (after) ->
+  head.js "js/Sirius.js", ->
+    class_paths = _.map(sirius_classes_without_extensions, (cname) -> "js/#{cname}.js")
     class_paths = class_paths.concat _.flatten(_.map(
-      aurora_classes_with_extensions,
+      sirius_classes_with_extensions,
       (cname) -> ["js/#{cname}.js","js/extensions/#{cname}.js"]
     ))
     class_paths.push after
@@ -40,9 +40,9 @@ head.js('../libs/js/jquery-1.7.1.js',
         '../libs/js/underscore.js',
         '../libs/js/backbone.js',
         '../libs/js/bootstrap/js/bootstrap.js', ->
-            load_aurora_classes ->
+            load_sirius_classes ->
               $("#load_scenario").click ->
                 xml_text = $("#scenario_text").val()
                 xml = $.parseXML(xml_text)
-                window.textarea_scenario = window.aurora.Scenario.from_xml($(xml).children())
+                window.textarea_scenario = window.sirius.Scenario.from_xml($(xml).children())
 )

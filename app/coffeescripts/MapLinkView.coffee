@@ -1,4 +1,4 @@
-class window.aurora.MapLinkView extends Backbone.View
+class window.sirius.MapLinkView extends Backbone.View
   @view_links = []
   
   initialize: (leg, broker) ->
@@ -11,7 +11,7 @@ class window.aurora.MapLinkView extends Backbone.View
     this.broker.on('map:hide_link_layer',this.hide_link(),this)
     this.broker.on('map:show_link_layer',this.show_link(),this)
     
-  render: ->
+  render: =>
     this.link.setMap(window.map)
     this.arrow.setMap(window.map)
 

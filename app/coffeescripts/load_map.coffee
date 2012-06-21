@@ -42,20 +42,20 @@ window.main_stuff.display = ->
   node_markers = {}
   broker = _.clone( Backbone.Events)
   network = window.textarea_scenario.get('network')
-  window.map.setCenter(window.aurora.Util.getLatLng(network))
+  window.map.setCenter(window.sirius.Util.getLatLng(network))
   drawNodes network.get('nodelist').get('node'), broker
   drawSensors network.get('sensorlist').get('sensor'), broker
   setUpMap broker
   broker.trigger('map:init')
 
 drawLinks = (links, broker) ->
-  _.each(links, (i) ->  new window.aurora.MapLinkView(i,broker))
+  _.each(links, (i) ->  new window.sirius.MapLinkView(i,broker))
 
 drawNodes = (nodes,broker) ->
-  _.each(nodes, (i) ->  new window.aurora.MapNodeView(i,broker,window.aurora.Util.getLatLng(i)))
+  _.each(nodes, (i) ->  new window.sirius.MapNodeView(i,broker,window.sirius.Util.getLatLng(i)))
 
 drawSensors = (sensors,broker) ->
-  _.each(sensors, (i) ->  new window.aurora.MapSensorView(i,broker,window.aurora.Util.getLatLng(i)))
+  _.each(sensors, (i) ->  new window.sirius.MapSensorView(i,broker,window.sirius.Util.getLatLng(i)))
 
 wypnts = []
 network_begin_end = []
@@ -100,9 +100,9 @@ linkInformationForMap = () ->
 determineWayPointsAndNetworkStartEnd = (begin,end) ->
     #if it is not a terminal node, I want it to make the directions request
     if begin.get("type") != "T"
-      wypnts.push { location:window.aurora.Util.getLatLng(begin) }
+      wypnts.push { location:window.sirius.Util.getLatLng(begin) }
     else
-      network_begin_end.push window.aurora.Util.getLatLng(begin)
+      network_begin_end.push window.sirius.Util.getLatLng(begin)
 
     if end.get("type") == "T"
-      network_begin_end.push window.aurora.Util.getLatLng(end)
+      network_begin_end.push window.sirius.Util.getLatLng(end)
