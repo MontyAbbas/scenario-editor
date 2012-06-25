@@ -10,8 +10,6 @@ class window.sirius.Density extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.sirius.Density()
-    network_id = $(xml).attr('network_id')
-    obj.set('network_id', network_id)
     link_id = $(xml).attr('link_id')
     obj.set('link_id', link_id)
     obj.set('text', xml.text())
@@ -23,7 +21,6 @@ class window.sirius.Density extends Backbone.Model
     xml = doc.createElement('density')
     if @encode_references
       @encode_references()
-    xml.setAttribute('network_id', @get('network_id')) if @has('network_id')
     xml.setAttribute('link_id', @get('link_id')) if @has('link_id')
     xml.appendChild(doc.createTextNode($a.ArrayText.emit(@get('text') || [])))
     xml

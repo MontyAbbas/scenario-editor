@@ -25,19 +25,6 @@ window.sirius.Event::display_point = ->
 
 window.sirius.Event::resolve_references = (deferred, object_with_id) ->
   deferred.push =>
-    scenario_elements = @get('targetelements')?.get('scenarioelement')
-    scenario_links = _.map( scenario_elements, (sel) -> [sel.get('type'), sel.id] )
-    _.each(scenario_links, (sl) ->
-      [type, sid] = sl
-      if type == 'node'
-        @set 'node_id', sid
-      else if type == 'link'
-        @set 'link_id', sid
-      else if type == 'network'
-        @set 'network_id', sid
-      else
-        throw new Exception("Unrecognized type in TargetElements: #{type}, id=#{sid}")
-    @)
     node_id = @get('node_id')
     link_id = @get('link_id')
     network_id = @get('network_id')
@@ -47,6 +34,9 @@ window.sirius.Event::resolve_references = (deferred, object_with_id) ->
     @set 'node', node
     @set 'link', link
     @set 'network', network
+
+    if !node_id and !link_id and !network_id
+      throw "Event must have node_id, link_id, or network_id"
 
 window.sirius.Event::encode_references = ->
   @set('node_id', @get('node').id) if @has('node')

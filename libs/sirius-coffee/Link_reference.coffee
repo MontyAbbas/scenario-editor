@@ -10,8 +10,6 @@ class window.sirius.Link_reference extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.sirius.Link_reference()
-    network_id = $(xml).attr('network_id')
-    obj.set('network_id', network_id)
     id = $(xml).attr('id')
     obj.set('id', id)
     if obj.resolve_references
@@ -22,7 +20,6 @@ class window.sirius.Link_reference extends Backbone.Model
     xml = doc.createElement('link_reference')
     if @encode_references
       @encode_references()
-    xml.setAttribute('network_id', @get('network_id')) if @has('network_id')
     xml.setAttribute('id', @get('id')) if @has('id')
     xml
   

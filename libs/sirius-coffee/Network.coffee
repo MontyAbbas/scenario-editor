@@ -18,10 +18,6 @@ class window.sirius.Network extends Backbone.Model
     obj.set('nodelist', $a.NodeList.from_xml2(NodeList, deferred, object_with_id))
     LinkList = xml.children('LinkList')
     obj.set('linklist', $a.LinkList.from_xml2(LinkList, deferred, object_with_id))
-    SignalList = xml.children('SignalList')
-    obj.set('signallist', $a.SignalList.from_xml2(SignalList, deferred, object_with_id))
-    SensorList = xml.children('SensorList')
-    obj.set('sensorlist', $a.SensorList.from_xml2(SensorList, deferred, object_with_id))
     DirectionsCache = xml.children('DirectionsCache')
     obj.set('directionscache', $a.DirectionsCache.from_xml2(DirectionsCache, deferred, object_with_id))
     IntersectionCache = xml.children('IntersectionCache')
@@ -32,8 +28,6 @@ class window.sirius.Network extends Backbone.Model
     obj.set('dt', Number(dt))
     id = $(xml).attr('id')
     obj.set('id', id)
-    if object_with_id.network
-      object_with_id.network[obj.id] = obj
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj
@@ -46,8 +40,6 @@ class window.sirius.Network extends Backbone.Model
     xml.appendChild(@get('position').to_xml(doc)) if @has('position')
     xml.appendChild(@get('nodelist').to_xml(doc)) if @has('nodelist')
     xml.appendChild(@get('linklist').to_xml(doc)) if @has('linklist')
-    xml.appendChild(@get('signallist').to_xml(doc)) if @has('signallist')
-    xml.appendChild(@get('sensorlist').to_xml(doc)) if @has('sensorlist')
     xml.appendChild(@get('directionscache').to_xml(doc)) if @has('directionscache')
     xml.appendChild(@get('intersectioncache').to_xml(doc)) if @has('intersectioncache')
     xml.setAttribute('name', @get('name')) if @has('name')

@@ -10,8 +10,6 @@ class window.sirius.Weavingfactors extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.sirius.Weavingfactors()
-    network_id = $(xml).attr('network_id')
-    obj.set('network_id', network_id)
     node_id = $(xml).attr('node_id')
     obj.set('node_id', node_id)
     obj.set('text', xml.text())
@@ -23,7 +21,6 @@ class window.sirius.Weavingfactors extends Backbone.Model
     xml = doc.createElement('weavingfactors')
     if @encode_references
       @encode_references()
-    xml.setAttribute('network_id', @get('network_id')) if @has('network_id')
     xml.setAttribute('node_id', @get('node_id')) if @has('node_id')
     xml.appendChild(doc.createTextNode($a.ArrayText.emit(@get('text') || [])))
     xml

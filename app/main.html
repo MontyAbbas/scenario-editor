@@ -35,7 +35,7 @@
 					reader.onloadend= function(e) {
 						xml_text = e.target.result;
 						var xml = $.parseXML(xml_text);
-						window.textarea_scenario = window.aurora.Scenario.from_xml($(xml).children());
+						window.textarea_scenario = window.sirius.Scenario.from_xml($(xml).children());
 						window.main_stuff.display();
 					};
 
