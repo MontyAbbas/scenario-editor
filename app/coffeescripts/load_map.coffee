@@ -41,7 +41,7 @@ window.main_stuff.init = ->
 window.main_stuff.display = ->  
   node_markers = {}
   broker = _.clone( Backbone.Events)
-  network = window.textarea_scenario.get('network')
+  network = window.textarea_scenario.get('networklist').get('network')[0]
   window.map.setCenter(window.sirius.Util.getLatLng(network))
   drawNodes network.get('nodelist').get('node'), broker
   drawSensors network.get('sensorlist').get('sensor'), broker
@@ -89,7 +89,7 @@ setUpMap = (broker) ->
 
   
 linkInformationForMap = () ->
-  net = window.textarea_scenario.get('network')
+  net = window.textarea_scenario.get('networklist').get('network')[0]
   _.each(net.get('linklist').get('link'), (link) -> 
     this.begin =  link.get('begin').get('node')
     this.end = link.get('end').get('node')
@@ -99,10 +99,10 @@ linkInformationForMap = () ->
 
 determineWayPointsAndNetworkStartEnd = (begin,end) ->
     #if it is not a terminal node, I want it to make the directions request
-    if begin.get("type") != "T"
+    if begin.get("type") != "terminal"
       wypnts.push { location:window.sirius.Util.getLatLng(begin) }
     else
       network_begin_end.push window.sirius.Util.getLatLng(begin)
 
-    if end.get("type") == "T"
+    if end.get("type") == "terminal"
       network_begin_end.push window.sirius.Util.getLatLng(end)

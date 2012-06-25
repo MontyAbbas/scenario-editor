@@ -25,20 +25,24 @@ window.sirius.Event::display_point = ->
 
 window.sirius.Event::resolve_references = (deferred, object_with_id) ->
   deferred.push =>
-    node_id = @get('node_id')
-    link_id = @get('link_id')
-    network_id = @get('network_id')
-    node = object_with_id.node[node_id]
-    link = object_with_id.link[link_id]
-    network = object_with_id.network[network_id]
-    @set 'node', node
-    @set 'link', link
-    @set 'network', network
+    @set('targetreferences',[]);
+    _.each(@get('targetelements'), (e) -> 
+      switch e.type
+        case 'link' : @get('targetreferences').push object_with_id.link[e.id]
+        case 'node' : @get('targetreferences').push object_with_id.node[e.id]
+        case 'controller' : @get('targetreferences').push object_with_id.controller[e.id]
+        case 'sensor' : @get('targetreferences').push object_with_id.sensor[e.id]
+        case 'event' : @get('targetreferences').push object_with_id.event[e.id]
+        case 'signal' : @get('targetreferences').push object_with_id.signal[e.id]
+    )
 
-    if !node_id and !link_id and !network_id
-      throw "Event must have node_id, link_id, or network_id"
+    if @get('targetreferences').length == 0
+       throw "Event must have target elements defined"
 
 window.sirius.Event::encode_references = ->
-  @set('node_id', @get('node').id) if @has('node')
-  @set('link_id', @get('link').id) if @has('link')
-  @set('network_id', @get('network').id) if @has('network')
+   _.each(@get('targetreferences'), (e) ->
+        @get('targetelements')
+     )
+  # @set('node_id', @get('node').id) if @has('node')
+  # @set('link_id', @get('link').id) if @has('link')
+  # @set('network_id', @get('network').id) if @has('network')

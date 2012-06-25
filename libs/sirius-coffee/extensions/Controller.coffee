@@ -33,20 +33,22 @@ window.sirius.Controller::display_point = ->
 
 window.sirius.Controller::resolve_references = (deferred, object_with_id) ->
   deferred.push =>
-    node_id = @get('node_id')
-    link_id = @get('link_id')
-    network_id = @get('network_id')
-    node = object_with_id.node[node_id]
-    link = object_with_id.link[link_id]
-    network = object_with_id.network[network_id]
-    @set 'node', node
-    @set 'link', link
-    @set 'network', network
-
-    if !node_id and !link_id and !network_id
-      throw "Controller must have node_id, link_id, or network_id"
+    @set 'id', @get('id')
+    # node_id = @get('node_id')
+    # link_id = @get('link_id')
+    # network_id = @get('network_id')
+    # node = object_with_id.node[node_id]
+    # link = object_with_id.link[link_id]
+    # network = object_with_id.network[network_id]
+    # @set 'node', node
+    # @set 'link', link
+    # @set 'network', network
+    # 
+    # if !node_id and !link_id and !network_id
+    #   throw "Controller must have node_id, link_id, or network_id"
 
 window.sirius.Controller::encode_references = ->
-  @set('node_id', @get('node').id) if @has('node')
-  @set('link_id', @get('link').id) if @has('link')
-  @set('network_id', @get('network').id) if @has('network')
+  @set('id', @get('id'))
+  # @set('node_id', @get('node').id) if @has('node')
+  # @set('link_id', @get('link').id) if @has('link')
+  # @set('network_id', @get('network').id) if @has('network')

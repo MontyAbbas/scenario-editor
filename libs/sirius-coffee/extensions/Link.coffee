@@ -5,8 +5,6 @@ window.sirius.Link::defaults =
   record: true
 
 window.sirius.Link::initialize = ->
-  @set('qmax', new window.sirius.Qmax())
-  @set('fd', new window.sirius.Fd())
   @set('dynamics', new window.sirius.Dynamics())
 
 window.sirius.Link::parallel_links = ->
