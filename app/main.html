@@ -8,7 +8,7 @@
     <script src="../libs/js/head.js"></script>
 
     <script type="text/javascript">
-      window.main_stuff = {}
+      window.main = {}
     </script>
 
     <script type="text/javascript">
@@ -20,26 +20,9 @@
         other_params: "libraries=geometry,drawing&sensor=false",
       });
     </script>
-    <script type="text/javascript">
-      google.maps.event.addDomListener(window, 'load', window.main_stuff.init);
-    </script>
     <script src="../libs/js/ContextMenu.js"></script>        
     <link href="../libs/js/bootstrap/css/bootstrap.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
-    <script type="text/javascript">
-      var handleFiles = function(files) {
-      var reader = new FileReader();
-      var xml_text;
-      reader.onloadend= function(e) {
-        xml_text = e.target.result;
-        var xml = $.parseXML(xml_text);
-        window.textarea_scenario = window.sirius.Scenario.from_xml($(xml).children());
-        window.main_stuff.display();
-      };
-
-      reader.readAsText(files[0]);
-      }
-    </script>
   </head>
   <body>
       <!--navbar -->
@@ -55,8 +38,8 @@
                       <li><a href="#">New</a></li>
                       <li class="divider"></li>
                       <input type="file" name="localNetwork" style="visibility:hidden; position:absolute"
-                          id="uploadField" onchange="handleFiles(this.files)"
-                          onpropertychange="handleFiles(this.files)" />
+                          id="uploadField" onchange="window.sirius.AppView.handleFiles(this.files)"
+                          onpropertychange="window.sirius.AppView.handleFiles(this.files)" />
                       <li><a id="upload">Open Local Network</a></li>
                       <li><a href="#">Save Local Network</a></li>
                       <li class="divider"></li>

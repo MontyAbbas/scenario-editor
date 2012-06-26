@@ -28,7 +28,7 @@ sirius_classes_without_extensions = [
 ]
 
 sirius_map_view_classes = [
-  'MapLinkView', 'MapMarkerView', 'MapNodeView', 'MapSensorView', 'MapView', 'Util'
+  'AppView', 'MapLinkView', 'MapMarkerView', 'MapNetworkView', 'MapNodeView', 'MapSensorView', 'Util'
 ]
 
 load_sirius_classes = (after) ->
@@ -45,13 +45,9 @@ load_sirius_classes = (after) ->
 head.js('../libs/js/jquery-1.7.1.js',
         '../libs/js/jquery-ui-1.8.18.min.js',
         'js/menus.js',
-        'js/load_map.js',
         '../libs/js/underscore.js',
         '../libs/js/backbone.js',
         '../libs/js/bootstrap/js/bootstrap.js', ->
             load_sirius_classes ->
-              $("#load_scenario").click ->
-                xml_text = $("#scenario_text").val()
-                xml = $.parseXML(xml_text)
-                window.textarea_scenario = window.sirius.Scenario.from_xml($(xml).children())
+                google.maps.event.addDomListener(window, 'load', new window.sirius.AppView())
 )
