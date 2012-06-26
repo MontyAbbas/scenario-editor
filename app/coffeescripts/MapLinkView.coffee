@@ -2,30 +2,30 @@ class window.sirius.MapLinkView extends Backbone.View
   @view_links = []
   
   initialize: (leg, broker) ->
-    this.leg = leg
-    this.drawLink leg
-    this.drawArrow leg
-    this.broker = broker
-    MapLinkView.view_links.push this
-    this.broker.on('map:init', this.render(), this)
-    this.broker.on('map:hide_link_layer',this.hide_link(),this)
-    this.broker.on('map:show_link_layer',this.show_link(),this)
+    @leg = leg
+    @drawLink leg
+    @drawArrow leg
+    @broker = broker
+    MapLinkView.view_links.push @
+    @broker.on('map:init', @render(), @)
+    @broker.on('map:hide_link_layer',@hide_link(),this)
+    @broker.on('map:show_link_layer',@show_link(),this)
     
   render: =>
-    this.link.setMap(window.map)
-    this.arrow.setMap(window.map) if this.arrow?
+    @link.setMap(window.map)
+    @arrow.setMap(window.map) if @arrow?
 
   #this method reads the path of points contained in the leg
   #and converts it into a polyline object to be drawn on the map
   #The Polyline map attribute will be null until render is called
   drawLink: (leg) ->
     sm_path = []
-    for step in this.leg.steps
+    for step in @leg.steps
       for pt in step.path
         if !(pt in sm_path)
           sm_path.push pt
 
-    this.link = new google.maps.Polyline({
+    @link = new google.maps.Polyline({
       path: sm_path,
       map: null,
       strokeColor:  "blue",
@@ -38,9 +38,9 @@ class window.sirius.MapLinkView extends Backbone.View
   #setUprrow calcuates the position and angle of the arrow to display along the route
   drawArrow: () ->
     #get the step along the route is about halfway
-    arrow_step = this.getArrowStep(this.leg)
+    arrow_step = @getArrowStep(@leg)
     #get the index of the latitude/longitude that is about halfway through the step
-    lat_lng_index = this.getArrowPositionIndex(arrow_step)
+    lat_lng_index = @getArrowPositionIndex(arrow_step)
     #get the arrows lat/lng from the path
     #It would be better to get the exact midpoint of the line using something like this:
     #google.maps.geometry.spherical.interpolate(legs[0].start_location, legs[0].end_location, .5)
@@ -50,12 +50,12 @@ class window.sirius.MapLinkView extends Backbone.View
     arrow_angle_to = arrow_step.path[lat_lng_index + 1]
     
     #if the route has less than 2 steps than don't draw arrow
-    this.arrow = null
+    @arrow = null
     if arrow_step.path.length > 2
       #calculate direction of arrow
-      dir = this.getAngleOfArrow(arrow_lat_lng_pos,arrow_angle_to)
+      dir = @getAngleOfArrow(arrow_lat_lng_pos,arrow_angle_to)
       self = this
-      this.arrow = new google.maps.Marker({
+      @arrow = new google.maps.Marker({
         position: arrow_lat_lng_pos,
         icon: new google.maps.MarkerImage('http://maps.google.com/mapfiles/dir_'+dir+'.png',
                     new google.maps.Size(24,24),
@@ -96,9 +96,9 @@ class window.sirius.MapLinkView extends Backbone.View
   
   ################# The following handles the show and hide of link layers including the arrow heads
   hide_link: ->
-    this.link.setMap(null)
-    this.arrow.setMap(null) if this.arrow?
+    @link.setMap(null)
+    @arrow.setMap(null) if @arrow?
   
   show_link: ->
-    this.link.setMap(window.map)
-    this.arrow.setMap(window.map) if this.arrow?
+    @link.setMap(window.map)
+    @arrow.setMap(window.map) if @arrow?
