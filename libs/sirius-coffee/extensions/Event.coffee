@@ -26,23 +26,21 @@ window.sirius.Event::display_point = ->
 window.sirius.Event::resolve_references = (deferred, object_with_id) ->
   deferred.push =>
     @set('targetreferences',[]);
-    _.each(@get('targetelements'), (e) -> 
+    _.each(@get('targetelements').get('scenarioElement'), (e) -> 
       switch e.type
-        case 'link' : @get('targetreferences').push object_with_id.link[e.id]
-        case 'node' : @get('targetreferences').push object_with_id.node[e.id]
-        case 'controller' : @get('targetreferences').push object_with_id.controller[e.id]
-        case 'sensor' : @get('targetreferences').push object_with_id.sensor[e.id]
-        case 'event' : @get('targetreferences').push object_with_id.event[e.id]
-        case 'signal' : @get('targetreferences').push object_with_id.signal[e.id]
+        when 'link' then @get('targetreferences').push object_with_id.link[e.id]
+        when 'node' then @get('targetreferences').push object_with_id.node[e.id]
+        when 'controller' then @get('targetreferences').push object_with_id.controller[e.id]
+        when 'sensor' then @get('targetreferences').push object_with_id.sensor[e.id]
+        when 'event' then @get('targetreferences').push object_with_id.event[e.id]
+        when 'signal' then @get('targetreferences').push object_with_id.signal[e.id]
     )
 
     if @get('targetreferences').length == 0
        throw "Event must have target elements defined"
 
 window.sirius.Event::encode_references = ->
-   _.each(@get('targetreferences'), (e) ->
-        @get('targetelements')
-     )
+  # TODO : do we to encode references? All the data will be written back via scenarioElements
   # @set('node_id', @get('node').id) if @has('node')
   # @set('link_id', @get('link').id) if @has('link')
   # @set('network_id', @get('network').id) if @has('network')

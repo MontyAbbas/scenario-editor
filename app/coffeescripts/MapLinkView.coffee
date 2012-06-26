@@ -13,7 +13,7 @@ class window.sirius.MapLinkView extends Backbone.View
     
   render: =>
     this.link.setMap(window.map)
-    this.arrow.setMap(window.map)
+    this.arrow.setMap(window.map) if this.arrow?
 
   #this method reads the path of points contained in the leg
   #and converts it into a polyline object to be drawn on the map
@@ -46,21 +46,24 @@ class window.sirius.MapLinkView extends Backbone.View
     #google.maps.geometry.spherical.interpolate(legs[0].start_location, legs[0].end_location, .5)
     #The problem here is that this calculates the lat/lng midpoint of straight line between the points -- not along the route
     arrow_lat_lng_pos = arrow_step.path[lat_lng_index] 
-    #angle the arrow towards this lat_lng - even if one step on route you still have begin and end lat/lng
+    #angle the arrow towards this lat_lng - we only draw arrow if more than 2 steps
     arrow_angle_to = arrow_step.path[lat_lng_index + 1]
     
-    #calculate direction of arrow
-    dir = this.getAngleOfArrow(arrow_lat_lng_pos,arrow_angle_to)
-    self = this
-    this.arrow = new google.maps.Marker({
-      position: arrow_lat_lng_pos,
-      icon: new google.maps.MarkerImage('http://maps.google.com/mapfiles/dir_'+dir+'.png',
-                  new google.maps.Size(24,24),
-                  new google.maps.Point(0,0),
-                  new google.maps.Point(12,12)
-            ),
-      map: null
-    });
+    #if the route has less than 2 steps than don't draw arrow
+    this.arrow = null
+    if arrow_step.path.length > 2
+      #calculate direction of arrow
+      dir = this.getAngleOfArrow(arrow_lat_lng_pos,arrow_angle_to)
+      self = this
+      this.arrow = new google.maps.Marker({
+        position: arrow_lat_lng_pos,
+        icon: new google.maps.MarkerImage('http://maps.google.com/mapfiles/dir_'+dir+'.png',
+                    new google.maps.Size(24,24),
+                    new google.maps.Point(0,0),
+                    new google.maps.Point(12,12)
+              ),
+        map: null
+      });
 
   #this moves through the steps array of the route to determine which step is about 
   #halfway through the leg
@@ -94,8 +97,8 @@ class window.sirius.MapLinkView extends Backbone.View
   ################# The following handles the show and hide of link layers including the arrow heads
   hide_link: ->
     this.link.setMap(null)
-    this.arrow.setMap(null)
+    this.arrow.setMap(null) if this.arrow?
   
   show_link: ->
     this.link.setMap(window.map)
-    this.arrow.setMap(window.map)
+    this.arrow.setMap(window.map) if this.arrow?

@@ -69,25 +69,24 @@ setUpMap = (broker) ->
   this.directionsService = new google.maps.DirectionsService()
   this.directionsDisplay = new google.maps.DirectionsRenderer(renderOptions)
   
-  #Create DirectionsRequest using DRIVING directions.
-  request = {
-    origin: network_begin_end[0],
-    destination: network_begin_end[1],
-    waypoints: wypnts,
-    travelMode: google.maps.TravelMode.DRIVING,
-  }
-  #Route the directions and pass the response to a
-  #function to draw the full link for each step.
-  self = this
-  this.directionsService.route(request, (response, status) =>
-    if (status == google.maps.DirectionsStatus.OK)
-      warnings = $("#warnings_panel")
-      warnings.innerHTML = "" + response.routes[0].warnings + ""
-      #self.directionsDisplay.setDirections(response)
-      drawLinks response.routes[0].legs, broker
-  )
+  for x in [0..wypnts.length] by 8  
+    #Create DirectionsRequest using DRIVING directions.
+    request = {
+      origin: network_begin_end[0],
+      destination: network_begin_end[1],
+      waypoints: wypnts[x...x+8],
+      travelMode: google.maps.TravelMode.DRIVING,
+    }
+    #Route the directions and pass the response to a
+    #function to draw the full link for each step.
+    self = this
+    this.directionsService.route(request, (response, status) =>
+      if (status == google.maps.DirectionsStatus.OK)
+        warnings = $("#warnings_panel")
+        warnings.innerHTML = "" + response.routes[0].warnings + ""
+        drawLinks response.routes[0].legs, broker
+    )
 
-  
 linkInformationForMap = () ->
   net = window.textarea_scenario.get('networklist').get('network')[0]
   _.each(net.get('linklist').get('link'), (link) -> 
@@ -98,7 +97,7 @@ linkInformationForMap = () ->
 
 
 determineWayPointsAndNetworkStartEnd = (begin,end) ->
-    #if it is not a terminal node, I want it to make the directions request
+    #if it is not a terminal node, then it is a waypoint for the directions request
     if begin.get("type") != "terminal"
       wypnts.push { location:window.sirius.Util.getLatLng(begin) }
     else
@@ -106,3 +105,4 @@ determineWayPointsAndNetworkStartEnd = (begin,end) ->
 
     if end.get("type") == "terminal"
       network_begin_end.push window.sirius.Util.getLatLng(end)
+    

@@ -9,4 +9,4 @@ class window.sirius.Util
     elem.get('position').get('point')[0].get('lng')
 
   @getLatLng = (elem) ->
-    new google.maps.LatLng(getLat(elem), getLng(elem));
+    new google.maps.LatLng(round_dec(getLat(elem),4), round_dec(getLng(elem),4));
