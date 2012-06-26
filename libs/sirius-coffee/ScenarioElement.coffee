@@ -12,8 +12,6 @@ class window.sirius.ScenarioElement extends Backbone.Model
     obj = new window.sirius.ScenarioElement()
     type = $(xml).attr('type')
     obj.set('type', type)
-    network_id = $(xml).attr('network_id')
-    obj.set('network_id', network_id)
     id = $(xml).attr('id')
     obj.set('id', id)
     usage = $(xml).attr('usage')
@@ -27,7 +25,6 @@ class window.sirius.ScenarioElement extends Backbone.Model
     if @encode_references
       @encode_references()
     xml.setAttribute('type', @get('type')) if @has('type')
-    xml.setAttribute('network_id', @get('network_id')) if @has('network_id')
     xml.setAttribute('id', @get('id')) if @has('id')
     xml.setAttribute('usage', @get('usage')) if @has('usage')
     xml

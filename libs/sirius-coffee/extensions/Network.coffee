@@ -10,8 +10,6 @@ window.sirius.Network::initialize = ->
   @set 'odlist', new window.sirius.ODList
   @set 'sensorlist', new window.sirius.SensorList
   @set 'signallist', new window.sirius.SignalList
-  # TODO probably delete, no obvious MonitorList replacement in sirius
-  #@set 'monitorlist', new window.sirius.MonitorList
   @set 'description', new window.sirius.Description
   @set 'position', new window.sirius.Position
   @get('position').get('point').push(new window.sirius.Point)

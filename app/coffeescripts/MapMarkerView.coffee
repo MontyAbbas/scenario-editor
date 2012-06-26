@@ -1,26 +1,25 @@
-class window.aurora.MapMarkerView extends Backbone.View
+class window.sirius.MapMarkerView extends Backbone.View
 
   initialize: (model,broker,lat_lng) ->
-    _.bindAll(this, 'render','dragMarker', 'dragMap')
-    this.model = model
-    this.latlng = lat_lng
-    this.draw()
-    this.broker = broker
-    this.broker.on('map:init', this.render, this)
+    @model = model
+    @latlng = lat_lng
+    @draw()
+    @broker = broker
+    @broker.on('map:init', @render, @)
 
-  render: ->
-    this.marker.setMap(window.map)
+  render: =>
+    @marker.setMap(window.map)
     
   draw: ->
-    this.marker = new google.maps.Marker({
+    @marker = new google.maps.Marker({
         map: null,
-        position: this.latlng, 
+        position: @latlng, 
         draggable: true,
-        icon: this.get_icon 'dot'
-        title: "Latitude: " + this.latlng.lat() + "\nLongitude: " + this.latlng.lng()
+        icon: @get_icon 'dot'
+        title: "Latitude: " + @latlng.lat() + "\nLongitude: " + @latlng.lng()
       });
-    google.maps.event.addListener(this.marker, "dragend", this.dragMarker());
-    google.maps.event.addListener(window.map, "dragend", this.dragMap());
+    google.maps.event.addListener(@marker, "dragend", @dragMarker());
+    google.maps.event.addListener(window.map, "dragend", @dragMap());
     
   get_icon: (img) ->
     new google.maps.MarkerImage('../libs/data/img/' + img + '.png',
@@ -29,18 +28,18 @@ class window.aurora.MapMarkerView extends Backbone.View
       new google.maps.Point(16, 16)
     );
 
-  dragMarker: ->
-    self.latlng = this.marker.getPosition();
+  dragMarker: =>
+    self.latlng = @marker.getPosition();
     window.map.panTo(self.latlng);
 
-  dragMap: ->
+  dragMap: =>
     self.latlng = window.map.getCenter();
-    this.marker.setPosition(self.latlng);
+    @marker.setPosition(self.latlng);
   
   ################# The following handles the show and hide of node layers including the arrow heads
   hide_marker: ->
-    this.marker.setMap(null)
+    @marker.setMap(null)
 
   show_marker: ->
-    this.marker.setMap(window.map)
+    @marker.setMap(window.map)
   

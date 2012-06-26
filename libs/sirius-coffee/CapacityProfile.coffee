@@ -10,8 +10,6 @@ class window.sirius.CapacityProfile extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.sirius.CapacityProfile()
-    network_id = $(xml).attr('network_id')
-    obj.set('network_id', network_id)
     link_id = $(xml).attr('link_id')
     obj.set('link_id', link_id)
     start_time = $(xml).attr('start_time')
@@ -27,7 +25,6 @@ class window.sirius.CapacityProfile extends Backbone.Model
     xml = doc.createElement('capacityProfile')
     if @encode_references
       @encode_references()
-    xml.setAttribute('network_id', @get('network_id')) if @has('network_id')
     xml.setAttribute('link_id', @get('link_id')) if @has('link_id')
     if @has('start_time') && @start_time != 0 then xml.setAttribute('start_time', @get('start_time'))
     xml.setAttribute('dt', @get('dt')) if @has('dt')

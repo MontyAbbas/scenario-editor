@@ -5,7 +5,6 @@ window.sirius.Scenario.from_xml = (xml) ->
     link: {}
     path: {}
     sensor: {}
-    signal: {}
 
   sc = window.sirius.Scenario.from_xml1(xml, object_with_id)
   sc.object_with_id = object_with_id
@@ -42,7 +41,7 @@ window.sirius.Scenario.from_xml = (xml) ->
 
 window.sirius.Scenario::initialize = ->
   @set('schemaVersion', window.sirius.SchemaVersion)
-  @object_with_id = network: {}, node: {}, link: {}, path: {}, sensor: {}, signal: {}
+  @object_with_id = network: {}, node: {}, link: {}, path: {}, sensor: {}
   @set('settings', new window.sirius.Settings())
   @set('network', new window.sirius.Network())
 
@@ -54,9 +53,6 @@ window.sirius.Scenario::node_with_id = (id) ->
 
 window.sirius.Scenario::link_with_id = (id) ->
   @object_with_id.link[id]
-
-window.sirius.Scenario::signal_with_id = (id) ->
-  @object_with_id.signal[id]
 
 window.sirius.Scenario::set_network_with_id = (id, network) ->
   if network
@@ -75,12 +71,6 @@ window.sirius.Scenario::set_link_with_id = (id, link) ->
     @object_with_id.link[id] = link
   else
     delete @object_with_id.link[id]
-
-window.sirius.Scenario::set_signal_with_id = (id, signal) ->
-  if signal
-    @object_with_id.signal[id] = signal
-  else
-    delete @object_with_id.signal[id]
 
 window.sirius.Scenario::stampSchemaVersion = ->
   @set('schemaVersion', window.sirius.SchemaVersion)

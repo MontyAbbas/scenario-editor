@@ -10,8 +10,8 @@ class window.sirius.VehicleTypeOrder extends Backbone.Model
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
     obj = new window.sirius.VehicleTypeOrder()
-    vehicleType = xml.children('vehicleType')
-    obj.set('vehicletype', _.map($(vehicleType), (vehicleType_i) -> $a.VehicleType.from_xml2($(vehicleType_i), deferred, object_with_id)))
+    vehicle_type = xml.children('vehicle_type')
+    obj.set('vehicle_type', _.map($(vehicle_type), (vehicle_type_i) -> $a.Vehicle_type.from_xml2($(vehicle_type_i), deferred, object_with_id)))
     if obj.resolve_references
       obj.resolve_references(deferred, object_with_id)
     obj
@@ -20,7 +20,7 @@ class window.sirius.VehicleTypeOrder extends Backbone.Model
     xml = doc.createElement('VehicleTypeOrder')
     if @encode_references
       @encode_references()
-    _.each(@get('vehicletype') || [], (a_vehicletype) -> xml.appendChild(a_vehicletype.to_xml(doc)))
+    _.each(@get('vehicle_type') || [], (a_vehicle_type) -> xml.appendChild(a_vehicle_type.to_xml(doc)))
     xml
   
   deep_copy: -> VehicleTypeOrder.from_xml1(@to_xml(), {})

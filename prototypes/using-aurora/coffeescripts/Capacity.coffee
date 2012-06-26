@@ -1,9 +1,9 @@
-class window.aurora.Capacity extends Backbone.Model
+class window.sirius.Capacity extends Backbone.Model
   @dim = 1
   @delims = [","]
   @cell_type = "Number"
   ### $a = alias for aurora namespace ###
-  $a = window.aurora
+  $a = window.sirius
   @from_xml1: (xml, object_with_id) ->
     deferred = []
     obj = @from_xml2(xml, deferred, object_with_id)
@@ -12,7 +12,7 @@ class window.aurora.Capacity extends Backbone.Model
   
   @from_xml2: (xml, deferred, object_with_id) ->
     return null if (not xml? or xml.length == 0)
-    obj = new window.aurora.Capacity()
+    obj = new window.sirius.Capacity()
     link_id = $(xml).attr('link_id')
     obj.set('link_id', link_id)
     start_time = $(xml).attr('start_time')

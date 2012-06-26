@@ -25,30 +25,22 @@ window.sirius.Event::display_point = ->
 
 window.sirius.Event::resolve_references = (deferred, object_with_id) ->
   deferred.push =>
-    scenario_elements = @get('targetelements')?.get('scenarioelement')
-    scenario_links = _.map( scenario_elements, (sel) -> [sel.get('type'), sel.id] )
-    _.each(scenario_links, (sl) ->
-      [type, sid] = sl
-      if type == 'node'
-        @set 'node_id', sid
-      else if type == 'link'
-        @set 'link_id', sid
-      else if type == 'network'
-        @set 'network_id', sid
-      else
-        throw new Exception("Unrecognized type in TargetElements: #{type}, id=#{sid}")
-    @)
-    node_id = @get('node_id')
-    link_id = @get('link_id')
-    network_id = @get('network_id')
-    node = object_with_id.node[node_id]
-    link = object_with_id.link[link_id]
-    network = object_with_id.network[network_id]
-    @set 'node', node
-    @set 'link', link
-    @set 'network', network
+    @set('targetreferences',[]);
+    _.each(@get('targetelements').get('scenarioElement'), (e) -> 
+      switch e.type
+        when 'link' then @get('targetreferences').push object_with_id.link[e.id]
+        when 'node' then @get('targetreferences').push object_with_id.node[e.id]
+        when 'controller' then @get('targetreferences').push object_with_id.controller[e.id]
+        when 'sensor' then @get('targetreferences').push object_with_id.sensor[e.id]
+        when 'event' then @get('targetreferences').push object_with_id.event[e.id]
+        when 'signal' then @get('targetreferences').push object_with_id.signal[e.id]
+    )
+
+    if @get('targetreferences').length == 0
+       throw "Event must have target elements defined"
 
 window.sirius.Event::encode_references = ->
-  @set('node_id', @get('node').id) if @has('node')
-  @set('link_id', @get('link').id) if @has('link')
-  @set('network_id', @get('network').id) if @has('network')
+  # TODO : do we to encode references? All the data will be written back via scenarioElements
+  # @set('node_id', @get('node').id) if @has('node')
+  # @set('link_id', @get('link').id) if @has('link')
+  # @set('network_id', @get('network').id) if @has('network')
