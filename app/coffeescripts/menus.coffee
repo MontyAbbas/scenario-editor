@@ -1,3 +1,9 @@
+
+triggerEvent = (eventName) ->
+  switch eventName
+    when 'freewayNodes' then alert("working")
+  null
+  
 $( ->
   $(".jdialog").dialog
     autoOpen: false
@@ -25,6 +31,7 @@ $( ->
       titlebar[i].innerHTML = '<i class="icon-remove"></i>'
       i++
 
+  
   $("ul > li > a.jmodal").click ->
     navId = @id
     switch navId
@@ -170,6 +177,8 @@ class window.LayersHandler
         
         menuItem.className = values.className if values.className
         menuItem.href = values.href if values.href
+        menuItem.onclick = ->
+          triggerEvent(values.eventName)
         return menuItem
       else
         menuItem = document.createElement 'div'
