@@ -47,7 +47,7 @@ window.main_stuff.init = ->
 
 window.main_stuff.display = ->
   node_markers = {}
-  broker = _.clone( Backbone.Events)
+  broker = _.clone(Backbone.Events)
   network = window.textarea_scenario.get('network')
   window.map.setCenter(new google.maps.LatLng(getLat(network), getLng(network)))
   drawNodes network.get('nodelist').get('node'), broker

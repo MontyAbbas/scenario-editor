@@ -4,7 +4,7 @@ body { height: 100%; margin: 5px; padding: 0 }
 #map_canvas img { max-width:none; }
 #header {width:100%}
 .navbar {margin-bottom: 0px}
-.container {position:absolute; z-index:1;width: 278px; margin-top:5px;margin-left:80px; background-color: #444444;}
+.container {position:absolute; z-index:1; width: 278px; margin-top:5px;margin-left:80px; background-color: #444444;}
 .ui-dialog {
 	background-color: #fff;
 	border-color: #ccc;
@@ -66,4 +66,27 @@ body { height: 100%; margin: 5px; padding: 0 }
 hr {
 	margin:0;
 	padding:0 0 2px 0;
+}
+
+#lh{position:fixed; left:20px; bottom:25px; z-index: 2}
+#mh{position:fixed; left:75px; bottom:25px; z-index: 2}
+.bottom-up{bottom:100%; max-width:80px}
+/* submenu */
+.submenu-show
+{
+    border-radius: 3px;
+    display: block;
+    left: 100%;
+    top: -400%;
+    margin-top: -25px !important;
+    moz-border-radius: 3px;
+    position: absolute;
+    webkit-border-radius: 3px;
+}
+.submenu-hide
+{
+    display: none !important;
+    float: right;
+    position: relative;
+    top: auto;
 }

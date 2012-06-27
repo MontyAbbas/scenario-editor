@@ -1,52 +1,60 @@
 <!DOCTYPE html>
 <html>
-	<head>
-			<title>Model to Maps</title>
-			<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
-		
-	    <script src="https://www.google.com/jsapi"></script>
-			<script src="../libs/js/head.js"></script>
+  <head>
+    <title>Model to Maps</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    
+    <script src="https://www.google.com/jsapi"></script>
+    <script src="../libs/js/head.js"></script>
 
-			<script type="text/javascript">
-			      window.main_stuff = {}
-		  </script>
-			
-			<script type="text/javascript">
-	      head.js("js/main.js");
-	    </script>
-			<script type="text/javascript" src="js/load_map.js"></script>
-			
-			 <script type="text/javascript">	
-		      google.load("maps", "3", {
-		        other_params: "libraries=geometry,drawing&sensor=false",
-		      });
-	    </script>
-	    <script type="text/javascript">
-	      google.maps.event.addDomListener(window, 'load', window.main_stuff.init);
-	    </script>
-	    <script src="../libs/js/ContextMenu.js"></script>
-			<link href="../libs/js/bootstrap/css/bootstrap.css" rel="stylesheet">
-			<link href="css/style.css" rel="stylesheet">
-			<script src="js/menus.js"></script>
-			
-			<script type="text/javascript">
-				var handleFiles = function(files) {
-					var reader = new FileReader();
-					var xml_text;
-					reader.onloadend= function(e) {
-						xml_text = e.target.result;
-						var xml = $.parseXML(xml_text);
-						window.textarea_scenario = window.aurora.Scenario.from_xml($(xml).children());
-						window.main_stuff.display();
-					};
-					
-					reader.readAsText(files[0]);
-				}
-				
-			</script>
-			
-	</head>
-	<body>
+    <script type="text/javascript">
+      window.main_stuff = {}
+    </script>
+
+    <script type="text/javascript">
+      head.js("js/main.js");
+    </script>
+    <script type="text/javascript" src="js/load_map.js"></script>
+
+    <script type="text/javascript">	
+      google.load("maps", "3", {
+      other_params: "libraries=geometry,drawing&sensor=false",
+        });
+    </script>
+    <script type="text/javascript">
+      google.maps.event.addDomListener(window, 'load', window.main_stuff.init);
+    </script>
+    <script src="../libs/js/ContextMenu.js"></script>
+    <script src="js/menus.js"></script>
+    <link href="../libs/js/bootstrap/css/bootstrap.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <script type="text/javascript">
+      
+      var handleFiles = function(files) {
+        var reader = new FileReader();
+        var xml_text;
+        reader.onloadend= function(e) {
+          xml_text = e.target.result;
+          var xml = $.parseXML(xml_text);
+          window.textarea_scenario = window.aurora.Scenario.from_xml($(xml).children());
+          window.main_stuff.display();
+        };
+
+        reader.readAsText(files[0]);
+      }
+    </script>
+
+  </head>
+  <body>
+    <div class="btn-group">
+      <button id="lh" class="btn dropdown-toggle" data-toggle="dropdown">Layers</button>
+      <button id="mh" class="btn">Mode</button>
+    </div>
+    <script>
+    var lmenu = new window.LayersHandler('lh');
+    lmenu.createHTML();
+    </script>
 			<!--navbar -->
 			<div class="navbar">
 			    <div class="container navbar-inner">
@@ -117,7 +125,6 @@
 						</ul>
 			    </div>
 			</div>
-			
 		<!-- Menu Modals -->
 		<div id="nodebrowser" class="jdialog">
 			<hr>
@@ -271,4 +278,6 @@
   	<div id="map_canvas">
   	</div>
 	</body>
+	<script type="text/javascript">
+	</script>
 </html>
