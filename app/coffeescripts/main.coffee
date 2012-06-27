@@ -28,7 +28,7 @@ sirius_classes_without_extensions = [
 ]
 
 sirius_map_view_classes = [
-  'AppView', 'MapLinkView', 'MapMarkerView', 'MapNetworkView', 'MapNodeView', 'MapSensorView', 'Util'
+  'AppView', 'MapLinkView', 'MapMarkerView', 'MapNetworkView', 'MapNodeView', 'MapSensorView', 'TreeNodeView','Util'
 ]
 
 load_sirius_classes = (after) ->
@@ -45,6 +45,7 @@ load_sirius_classes = (after) ->
 head.js('../libs/js/jquery-1.7.1.js',
         '../libs/js/jquery-ui-1.8.18.min.js',
         'js/menus.js',
+        'js/menu-data.js',
         '../libs/js/underscore.js',
         '../libs/js/backbone.js',
         '../libs/js/bootstrap/js/bootstrap.js', ->

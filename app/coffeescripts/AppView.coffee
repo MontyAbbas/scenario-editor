@@ -1,9 +1,11 @@
 class window.sirius.AppView extends Backbone.View
   $a = window.sirius
-  
+
   initialize: ->
+    @broker = _.clone(Backbone.Events)
     @initializeMap()
     @contextMenu()
+    @treeView()
 
   contextMenu: () ->
     contextMenuOptions = {}
@@ -41,9 +43,8 @@ class window.sirius.AppView extends Backbone.View
 
 
   @displayMap: ->
-    @broker = _.clone(Backbone.Events)
     network = window.textarea_scenario.get('networklist').get('network')[0]
-    @mapView = new window.sirius.MapNetworkView network, @broker
+    @mapView = new $a.MapNetworkView network, @broker
     @broker.trigger('map:init')
     
   initializeMap: ->
@@ -59,3 +60,9 @@ class window.sirius.AppView extends Backbone.View
       }
     }
     window.map = new google.maps.Map document.getElementById("map_canvas"), mapOptions
+
+  treeView: ->
+    self = @
+    _.each(window.main_tree_elements, (e) ->  new $a.TreeNodeView(e, self.broker))
+    @broker.trigger("app:tree")
+    
