@@ -42,8 +42,8 @@ class window.sirius.AppView extends Backbone.View
 
   @displayMap: ->
     broker = _.clone(Backbone.Events)
-    network = window.textarea_scenario.get('networklist').get('network')[0]
-    @mapView = new window.sirius.MapNetworkView network, broker
+    scenario = window.textarea_scenario
+    @mapView = new window.sirius.MapNetworkView scenario, broker
     broker.trigger('map:init')
 
   initializeMap: ->
