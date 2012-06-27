@@ -15,7 +15,7 @@ $( ->
     $(".submenu").hover(->
       $(this).children("ul").removeClass("submenu-hide").addClass "submenu-show"
     , ->
-      $(this).children("ul").removeClass(".submenu-show").addClass "submenu-hide"
+      $(this).children("ul").removeClass("submenu-show").addClass "submenu-hide"
     ).find("a:first").append " &raquo; "
 
   $('.ui-dialog-titlebar-close').ready ->
@@ -157,7 +157,7 @@ class window.LayersHandler
         child.innerHTML = values.label
         if values.link
           submenu = document.createElement('ul')
-          submenu.className = 'dropdown-menu submenu-show submenu-hide'
+          submenu.className = 'dropdown-menu submenu-hide'
           submenu.setAttribute('id', values.link)
       
           menulink = values.obj
