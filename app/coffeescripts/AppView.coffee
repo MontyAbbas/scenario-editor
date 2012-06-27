@@ -4,7 +4,7 @@ class window.sirius.AppView extends Backbone.View
   initialize: ->
     @initializeMap()
     @contextMenu()
-   
+
   contextMenu: () ->
     contextMenuOptions = {}
     contextMenuOptions.classNames = {menu:'context_menu', menuSeparator:'context_menu_separator'}
@@ -41,11 +41,11 @@ class window.sirius.AppView extends Backbone.View
 
 
   @displayMap: ->
-    broker = _.clone(Backbone.Events)
+    @broker = _.clone(Backbone.Events)
     network = window.textarea_scenario.get('networklist').get('network')[0]
-    @mapView = new window.sirius.MapNetworkView network, broker
-    broker.trigger('map:init')
-
+    @mapView = new window.sirius.MapNetworkView network, @broker
+    @broker.trigger('map:init')
+    
   initializeMap: ->
     mapOptions = {
       center: new google.maps.LatLng(37.85794730789898, -122.29954719543457)

@@ -8,8 +8,8 @@ class window.sirius.MapLinkView extends Backbone.View
     @broker = broker
     MapLinkView.view_links.push @
     @broker.on('map:init', @render(), @)
-    @broker.on('map:hide_link_layer',@hide_link(),this)
-    @broker.on('map:show_link_layer',@show_link(),this)
+    @broker.on('map:hide_link_layer', @hide_link(), @)
+    @broker.on('map:show_link_layer', @show_link(), @)
     
   render: =>
     @link.setMap(window.map)
