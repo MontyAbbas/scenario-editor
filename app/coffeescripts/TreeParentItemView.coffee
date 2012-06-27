@@ -1,14 +1,15 @@
 class window.sirius.TreeParentItemView extends Backbone.View
+  $a = window.sirius
   tagName: "div"
   className: "tree-parent-node"
   
-  template: _.template("<%= text %>")
+  template: _.template("> <%= text %>")
       
-  initialize: (element, broker) ->
+  initialize: (element) ->
     @id = "tree-parent-#{element}".toLowerCase().replace(/\ /g,"-")
     $(@el).attr 'id', @id
     @$el.html(@template({text: element}))
-    broker.on('app:tree', @render(), @)
+    $a.AppView.broker.on('app:tree', @render(), @)
 
   render: ->
     self = @

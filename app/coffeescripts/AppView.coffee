@@ -45,7 +45,7 @@ class window.sirius.AppView extends Backbone.View
     network = window.textarea_scenario.get('networklist').get('network')[0]
     @mapView = new $a.MapNetworkView network, @broker
     @treeView()
-    AppView.broker.trigger('map:init')
+    AppView.broker.trigger('map:init','')
   
   initializeMap: ->
     mapOptions = {
@@ -62,8 +62,22 @@ class window.sirius.AppView extends Backbone.View
     window.map = new google.maps.Map document.getElementById("map_canvas"), mapOptions
 
   @treeView: ->
+    $w= window.textarea_scenario
     self = @
-    _.each window.main_tree_elements, (e) ->  new $a.TreeParentItemView(e, AppView.broker)
-    _.each window.textarea_scenario.get('networklist').get('network'), (e) -> new $a.TreeChildItemView(e, "network-list")
-    #AppView.broker.trigger("app:tree")
+    _.each window.main_tree_elements, (e) ->  new $a.TreeParentItemView(e)
+    _.each($w.get('networklist').get('network'), (e) -> new $a.TreeChildItemView(e, "network-list")) if $w.get('networklist')?
+    _.each($w.get('networkconnections').get('network'), (e) -> new $a.TreeChildItemView(e, "network-connections")) if $w.get('networkconnections')?
+    _.each($w.get('controllerset').get('controller'), (e) -> new $a.TreeChildItemView(e, "controllers")) if $w.get('controllerset')?
+    _.each($w.get('initialdensityset').get('density'), (e) -> new $a.TreeChildItemView(e, "initial-density-profiles")) if $w.get('initialdensityset')?
+    _.each($w.get('demandprofileset').get('demandprofile'), (e) -> new $a.TreeChildItemView(e, "demand-profiles")) if $w.get('demandprofileset')?
+    _.each($w.get('eventset').get('event'), (e) -> new $a.TreeChildItemView(e, "events")) if $w.get('eventset')?
+    _.each($w.get('fundamentaldiagramprofileset').get('fundamentaldiagramprofile'), (e) -> new $a.TreeChildItemView(e, "fundamental-diagram-profiles")) if $w.get('fundamentaldiagramprofileset')?
+    _.each($w.get('oddemandprofileset').get('oddemandprofile'), (e) -> new $a.TreeChildItemView(e, "od-demand-profiles")) if $w.get('oddemandprofileset')?
+    _.each($w.get('downstreamboundarycapacityprofileset').get('downstreamboundarycapacityprofile'), (e) -> 
+                                                    new $a.TreeChildItemView(e, "downstream-boundary-capacity-profiles")) if $w.get('downstreamboundarycapacityprofileset')?
+    _.each($w.get('splitratioprofileset').get('splitratioprofile'), (e) -> new $a.TreeChildItemView(e, "split-ratio-profiles")) if $w.get('splitratioprofileset')?
+    _.each($w.get('sensorlist').get('sensor'), (e) -> new $a.TreeChildItemView(e, "sensors")) if $w.get('sensorlist')?
+    _.each($w.get('signallist').get('signal'), (e) -> new $a.TreeChildItemView(e, "signals")) if $w.get('signallist')?
+    AppView.broker.trigger("app:tree")
+
     

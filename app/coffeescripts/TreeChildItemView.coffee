@@ -9,7 +9,8 @@ class window.sirius.TreeChildItemView extends Backbone.View
     @model = e
     @id = "tree-item-#{@model.id}"
     $(@el).attr 'id', @id
-    @$el.html(@template({text: @model.get('name')}))
+    displayName =  if @model.get('name')? then @model.get('name') else"No Name Assigned"
+    @$el.html(@template({text: displayName})) 
     $a.AppView.broker.on('app:tree', @render(), @)
 
   render: ->
