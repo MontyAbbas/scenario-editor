@@ -5,7 +5,7 @@ class window.sirius.Util
   getLat = (elem) ->
     lat = elem.get('position').get('point')[0].get('lat') if elem.get('position')
     lat = elem.get('display_position').get('point')[0].get('lat') if elem.get('display_position')
-    lat
+    lat 
 
   getLng = (elem) ->
     lng = elem.get('position').get('point')[0].get('lng') if elem.get('position')
