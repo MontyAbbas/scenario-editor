@@ -69,6 +69,6 @@ hr {
 }
 
 /**** TreeView *****/
-.node {
+.tree-parent-node {
   font-weight: bold;
 }
