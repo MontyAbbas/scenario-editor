@@ -33,16 +33,18 @@ class window.sirius.AppView extends Backbone.View
     reader = new FileReader()
     self = @
     reader.onloadend = (e) ->
+      console.log e.target.result
       xml_text = e.target.result
       xml = $.parseXML(xml_text)
       window.textarea_scenario = $a.Scenario.from_xml($(xml).children())
       self.displayMap()
-
+      
+    console.log files[0]
     reader.readAsText(files[0])
 
   @displayMap: ->
     scenario = window.textarea_scenario
-    @mapView = new $a.MapNetworkView scenario, @broker
+    @mapView = new $a.MapNetworkView scenario
     @treeView()
     AppView.broker.trigger('map:init')
 

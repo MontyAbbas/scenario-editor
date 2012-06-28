@@ -3,12 +3,13 @@ class window.sirius.MapNetworkView extends Backbone.View
   network_begin_end = []
   $a = window.sirius
   
-  initialize: (@scenario, @broker) ->
-    @broker.on('map:init', @render(), @)
+  initialize: (@scenario) ->
+    $a.AppView.broker.on('map:init', @render(), @)
   
   render: ->  
     @network =  @scenario.get('networklist').get('network')[0]
     @drawNetwork()
+    @
   
   drawNetwork: ->
     window.map.setCenter($a.Util.getLatLng(@network))
@@ -67,25 +68,19 @@ class window.sirius.MapNetworkView extends Backbone.View
         network_begin_end.push $a.Util.getLatLng(end)
 
   _drawLinks: (links) ->
-    self = @
-    _.each(links, (i) ->  new $a.MapLinkView(i,self.broker))
+    _.each(links, (i) ->  new $a.MapLinkView(i))
 
   _drawNodes: (nodes) ->
-    self = @
-    _.each(nodes, (i) ->  new $a.MapNodeView(i,self.broker,$a.Util.getLatLng(i)))
+    _.each(nodes, (i) ->  new $a.MapNodeView(i, $a.Util.getLatLng(i)))
 
   _drawSensors: (sensors) ->
-    self = @
-    _.each(sensors, (i) ->  new $a.MapSensorView(i,self.broker,$a.Util.getLatLng(i)))
+    _.each(sensors, (i) ->  new $a.MapSensorView(i, $a.Util.getLatLng(i)))
 
   _drawEvents: (events) ->
-    self = @
-    _.each(events, (i) ->  new $a.MapEventView(i,self.broker,$a.Util.getLatLng(i)))
+    _.each(events, (i) ->  new $a.MapEventView(i, $a.Util.getLatLng(i)))
 
   _drawControllers: (controllers) ->
-    self = @
-    _.each(controllers, (i) ->  new $a.MapControllerView(i,self.broker,$a.Util.getLatLng(i)))
+    _.each(controllers, (i) ->  new $a.MapControllerView(i, $a.Util.getLatLng(i)))
 
   _drawSignals: (signals) ->
-    self = @
-    _.each(signals, (i) ->  new $a.MapSignalView(i,self.broker,$a.Util.getLatLng(i)))
+    _.each(signals, (i) ->  new $a.MapSignalView(i, $a.Util.getLatLng(i)))

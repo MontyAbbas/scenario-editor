@@ -1,22 +1,21 @@
 class window.sirius.MapMarkerView extends Backbone.View
-
-  initialize: (model,broker,lat_lng) ->
-    @model = model
-    @latlng = lat_lng
+  $a = window.sirius
+  
+  initialize: (@model, @latLng) ->
     @draw()
-    @broker = broker
-    @broker.on('map:init', @render(), @)
+    $a.AppView.broker.on('map:init', @render(), @)
 
   render: =>
     @marker.setMap(window.map)
+    @
     
   draw: ->
     @marker = new google.maps.Marker({
         map: null,
-        position: @latlng, 
+        position: @latLng, 
         draggable: true,
         icon: @get_icon 'dot'
-        title: "Latitude: " + @latlng.lat() + "\nLongitude: " + @latlng.lng()
+        title: "Latitude: " + @latLng.lat() + "\nLongitude: " + @latLng.lng()
       });
     google.maps.event.addListener(@marker, "dragend", @dragMarker());
     google.maps.event.addListener(window.map, "dragend", @dragMap());
@@ -29,12 +28,12 @@ class window.sirius.MapMarkerView extends Backbone.View
     );
 
   dragMarker: =>
-    self.latlng = @marker.getPosition();
-    window.map.panTo(self.latlng);
+    @latLng = @marker.getPosition();
+    window.map.panTo(@latLng);
 
   dragMap: =>
-    self.latlng = window.map.getCenter();
-    @marker.setPosition(self.latlng);
+    @latLng = window.map.getCenter();
+    @marker.setPosition(@latLng);
   
   ################# The following handles the show and hide of node layers including the arrow heads
   hide_marker: ->

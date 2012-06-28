@@ -1,19 +1,18 @@
 class window.sirius.MapLinkView extends Backbone.View
   @view_links = []
   
-  initialize: (leg, broker) ->
-    @leg = leg
-    @drawLink leg
-    @drawArrow leg
-    @broker = broker
+  initialize: (@leg) ->
+    @drawLink @leg
+    @drawArrow @leg
     MapLinkView.view_links.push @
-    @broker.on('map:init', @render(), @)
-    @broker.on('map:hide_link_layer', @hide_link(), @)
-    @broker.on('map:show_link_layer', @show_link(), @)
+    $a.AppView.broker.on('map:init', @render(), @)
+    $a.AppView.on('map:hide_link_layer', @hide_link(), @)
+    $a.AppView.on('map:show_link_layer', @show_link(), @)
     
   render: =>
     @link.setMap(window.map)
     @arrow.setMap(window.map) if @arrow?
+    @
 
   #this method reads the path of points contained in the leg
   #and converts it into a polyline object to be drawn on the map

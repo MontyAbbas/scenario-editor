@@ -11,6 +11,7 @@ class window.sirius.TreeParentItemView extends Backbone.View
   render: ->
     self = @
     $("#tree").append(self.el)
+    @
 
   _markup: -> 
     mk = "<label for='<%= textLower %>'><%= text %></label> "
