@@ -6,6 +6,9 @@ class window.sirius.MapNetworkView extends Backbone.View
   initialize: (network, broker) ->
     @broker = broker
     @network = network
+    @broker.on('map:init', @render(), @)
+  
+  render: ->  
     @drawNetwork()
   
   drawNetwork: ->

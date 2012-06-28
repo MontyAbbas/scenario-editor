@@ -5,7 +5,7 @@ class window.sirius.MapMarkerView extends Backbone.View
     @latlng = lat_lng
     @draw()
     @broker = broker
-    @broker.on('map:init', @render, @)
+    @broker.on('map:init', @render(), @)
 
   render: =>
     @marker.setMap(window.map)
