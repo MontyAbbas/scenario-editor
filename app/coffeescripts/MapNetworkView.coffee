@@ -7,7 +7,7 @@ class window.sirius.MapNetworkView extends Backbone.View
     @broker.on('map:init', @render(), @)
   
   render: ->  
-    @network =  scenario.get('networklist').get('network')[0]
+    @network =  @scenario.get('networklist').get('network')[0]
     @drawNetwork()
   
   drawNetwork: ->
@@ -48,9 +48,8 @@ class window.sirius.MapNetworkView extends Backbone.View
       )
 
   _linkInformationForMap: ->
-    net = window.textarea_scenario.get('networklist').get('network')[0]
     self = @
-    _.each(net.get('linklist').get('link'), (link) -> 
+    _.each(self.network.get('linklist').get('link'), (link) -> 
       @begin =  link.get('begin').get('node')
       @end = link.get('end').get('node')
       self._determineWayPointsAndNetworkStartEnd(@begin,@end)
@@ -60,12 +59,12 @@ class window.sirius.MapNetworkView extends Backbone.View
   _determineWayPointsAndNetworkStartEnd: (begin,end) ->
       #if it is not a terminal node, then it is a waypoint for the directions request
       if begin.get("type") != "terminal"
-        wypnts.push { location:window.sirius.Util.getLatLng(begin) }
+        wypnts.push { location:$a.Util.getLatLng(begin) }
       else
-        network_begin_end.push window.sirius.Util.getLatLng(begin)
+        network_begin_end.push $a.Util.getLatLng(begin)
 
       if end.get("type") == "terminal"
-        network_begin_end.push window.sirius.Util.getLatLng(end)
+        network_begin_end.push $a.Util.getLatLng(end)
 
   _drawLinks: (links) ->
     self = @

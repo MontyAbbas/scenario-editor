@@ -41,10 +41,10 @@ class window.sirius.AppView extends Backbone.View
     reader.readAsText(files[0])
 
   @displayMap: ->
-    network = window.textarea_scenario.get('networklist').get('network')[0]
-    @mapView = new $a.MapNetworkView network, @broker
+    scenario = window.textarea_scenario
+    @mapView = new $a.MapNetworkView scenario, @broker
     @treeView()
-    AppView.broker.trigger('map:init','')
+    AppView.broker.trigger('map:init')
 
   initializeMap: ->
     mapOptions = {
