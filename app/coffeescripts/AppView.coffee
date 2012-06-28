@@ -38,8 +38,7 @@ class window.sirius.AppView extends Backbone.View
       window.textarea_scenario = $a.Scenario.from_xml($(xml).children())
       self.displayMap()
 
-    reader.readAsText(files[0]);
-
+    reader.readAsText(files[0])
 
   @displayMap: ->
     network = window.textarea_scenario.get('networklist').get('network')[0]
