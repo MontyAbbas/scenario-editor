@@ -45,7 +45,7 @@ class window.sirius.AppView extends Backbone.View
     @mapView = new $a.MapNetworkView network, @broker
     @treeView()
     AppView.broker.trigger('map:init','')
-  
+
   initializeMap: ->
     mapOptions = {
       center: new google.maps.LatLng(37.85794730789898, -122.29954719543457)

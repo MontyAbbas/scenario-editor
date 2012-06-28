@@ -8,4 +8,4 @@ class window.sirius.MapNodeView extends window.sirius.MapMarkerView
     @broker.on('map:show_node_layer', @show_marker(), @)
 
   get_icon: ->
-    if @model.get("type") != "T" then super 'dot' else super 'square'
+    if @model.get("type") != "terminal" then super 'dot' else super 'square'
