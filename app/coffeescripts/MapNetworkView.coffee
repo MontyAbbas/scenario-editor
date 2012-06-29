@@ -29,8 +29,8 @@ class window.sirius.MapNetworkView extends Backbone.View
     @_drawNodes @network.get('nodelist').get('node') if @network.get('nodelist')
     @_drawSensors @network.get('sensorlist').get('sensor') if @network.get('sensorlist')
     @_drawControllers @scenario.get('controllerset').get('controller') if @scenario.get('controllerset')
-#    @_drawEvents  @scenario.get('eventset').get('event') if @scenario.get('eventset')
-#    @_drawSignals @network.get('signallist').get('signal') if @network.get('signallist')
+    @_drawEvents  @scenario.get('eventset').get('event') if @scenario.get('eventset')
+    @_drawSignals @network.get('signallist').get('signal') if @network.get('signallist')
     @_drawRoute()
   
   # _drawRoute uses the Google Direction's api to get the data used to render the route.
