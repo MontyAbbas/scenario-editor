@@ -1,3 +1,7 @@
+# Originating load file: main.html.
+# This set of functions and collections is used to load all the javascript classes and libraries into memory.
+# It also registers an onload event with the body class that will instantiate the AppView class and begin
+# the rendering process.
 sirius_classes_with_extensions = [
   'Begin',
   'Controller', 'ControllerSet',

@@ -1,3 +1,7 @@
+# The parent items of the tree view. Each parent item
+# is a li tag with label for its name, a hidden checkbox that enables 
+# us to swap the open/close image easily, and the ol tag for its 
+# child elements to be attached to.
 class window.sirius.TreeParentItemView extends Backbone.View
   $a = window.sirius
   tagName: "li"
@@ -11,6 +15,7 @@ class window.sirius.TreeParentItemView extends Backbone.View
   render: ->
     self = @
     $("#tree").append(self.el)
+    @
 
   _markup: -> 
     mk = "<label for='<%= textLower %>'><%= text %></label> "

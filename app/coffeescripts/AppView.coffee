@@ -1,12 +1,40 @@
+# AppView is main organizing view for the application
+# It handles all the application level elements as well as
+# instantiating and triggering the Network to be drawn
 class window.sirius.AppView extends Backbone.View
   $a = window.sirius
+  
+  # static instance level event aggegator that most classes use to register their
+  # own listeners on
   @broker = _.clone(Backbone.Events)
 
   initialize: ->
-    @initializeMap()
-    @contextMenu()
+    AppView.broker.on('app:init', @render(), @)
 
-  contextMenu: () ->
+  render: ->
+    @_initializeMap()
+    @_contextMenu()
+    @
+
+  # create the landing map. The latitude and longitude our arbitarily pointing
+  # to the I80/Berkeley area
+  _initializeMap: ->
+    mapOptions = {
+      center: new google.maps.LatLng(37.85794730789898, -122.29954719543457)
+      zoom: 14
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+      mapTypeControl: false
+      zoomControl: true
+      zoomControlOptions: {
+        style: google.maps.ZoomControlStyle.DEFAULT,
+        position: google.maps.ControlPosition.TOP_LEFT
+      }
+    }
+    window.map = new google.maps.Map document.getElementById("map_canvas"), mapOptions
+
+  # This creates the context menu as well as adds the listeners for map area of the application.
+  # Currently we have zoom in and zoom out as well as center the map. 
+  _contextMenu: () ->
     contextMenuOptions = {}
     contextMenuOptions.classNames = {menu:'context_menu', menuSeparator:'context_menu_separator'}
     menuItems = []
@@ -29,6 +57,9 @@ class window.sirius.AppView extends Backbone.View
       null
     )
 
+  # This static function is called by the File upload handler. It will load
+  # the xml file, parse it into objects, assign it to window.textarea_scenario, and finally
+  # call displayMap to start the rendering process
   @handleFiles : (files) ->
     reader = new FileReader()
     self = @
@@ -36,47 +67,13 @@ class window.sirius.AppView extends Backbone.View
       xml_text = e.target.result
       xml = $.parseXML(xml_text)
       window.textarea_scenario = $a.Scenario.from_xml($(xml).children())
-      self.displayMap()
-
+      self._displayMap()
+      
     reader.readAsText(files[0])
 
-  @displayMap: ->
-    scenario = window.textarea_scenario
-    @mapView = new $a.MapNetworkView scenario, @broker
-    @treeView()
+  # _displayMap creates the MapNetworkView and trigger the rendering event
+  # for the network
+  @_displayMap: ->
+    @mapView = new $a.MapNetworkView window.textarea_scenario
     AppView.broker.trigger('map:init')
 
-  initializeMap: ->
-    mapOptions = {
-      center: new google.maps.LatLng(37.85794730789898, -122.29954719543457)
-      zoom: 14
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-      mapTypeControl: false
-      zoomControl: true
-      zoomControlOptions: {
-        style: google.maps.ZoomControlStyle.DEFAULT,
-        position: google.maps.ControlPosition.TOP_LEFT
-      }
-    }
-    window.map = new google.maps.Map document.getElementById("map_canvas"), mapOptions
-
-  @treeView: ->
-    $w= window.textarea_scenario
-    self = @
-    _.each window.main_tree_elements, (e) ->  new $a.TreeParentItemView(e)
-    _.each($w.get('networklist').get('network'), (e) -> new $a.TreeChildItemView(e, "network-list")) if $w.get('networklist')?
-    _.each($w.get('networkconnections').get('network'), (e) -> new $a.TreeChildItemView(e, "network-connections")) if $w.get('networkconnections')?
-    _.each($w.get('controllerset').get('controller'), (e) -> new $a.TreeChildItemView(e, "controllers")) if $w.get('controllerset')?
-    _.each($w.get('initialdensityset').get('density'), (e) -> new $a.TreeChildItemView(e, "initial-density-profiles")) if $w.get('initialdensityset')?
-    _.each($w.get('demandprofileset').get('demandprofile'), (e) -> new $a.TreeChildItemView(e, "demand-profiles")) if $w.get('demandprofileset')?
-    _.each($w.get('eventset').get('event'), (e) -> new $a.TreeChildItemView(e, "events")) if $w.get('eventset')?
-    _.each($w.get('fundamentaldiagramprofileset').get('fundamentaldiagramprofile'), (e) -> new $a.TreeChildItemView(e, "fundamental-diagram-profiles")) if $w.get('fundamentaldiagramprofileset')?
-    _.each($w.get('oddemandprofileset').get('oddemandprofile'), (e) -> new $a.TreeChildItemView(e, "od-demand-profiles")) if $w.get('oddemandprofileset')?
-    _.each($w.get('downstreamboundarycapacityprofileset').get('downstreamboundarycapacityprofile'), (e) -> 
-                                                    new $a.TreeChildItemView(e, "downstream-boundary-capacity-profiles")) if $w.get('downstreamboundarycapacityprofileset')?
-    _.each($w.get('splitratioprofileset').get('splitratioprofile'), (e) -> new $a.TreeChildItemView(e, "split-ratio-profiles")) if $w.get('splitratioprofileset')?
-    _.each($w.get('sensorlist').get('sensor'), (e) -> new $a.TreeChildItemView(e, "sensors")) if $w.get('sensorlist')?
-    _.each($w.get('signallist').get('signal'), (e) -> new $a.TreeChildItemView(e, "signals")) if $w.get('signallist')?
-    AppView.broker.trigger("app:tree")
-
-    
