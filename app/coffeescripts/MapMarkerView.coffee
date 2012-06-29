@@ -44,9 +44,9 @@ class window.sirius.MapMarkerView extends Backbone.View
     @marker.setPosition(@latLng);
   
   ################# The following handles the show and hide of node layers
-  hide_marker: ->
+  hide_marker: =>
     @marker.setMap(null)
 
-  show_marker: ->
+  show_marker: =>
     @marker.setMap(window.map)
   

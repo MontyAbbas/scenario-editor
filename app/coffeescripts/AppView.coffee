@@ -75,5 +75,4 @@ class window.sirius.AppView extends Backbone.View
   # for the network
   @_displayMap: ->
     @mapView = new $a.MapNetworkView window.textarea_scenario
-    AppView.broker.trigger('map:init')
 
