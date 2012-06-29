@@ -1,3 +1,5 @@
+# MapMarkerView is base class for scenario elements represented by a 
+# single latitude and longitude on the Map
 class window.sirius.MapMarkerView extends Backbone.View
   $a = window.sirius
   
@@ -8,7 +10,11 @@ class window.sirius.MapMarkerView extends Backbone.View
   render: =>
     @marker.setMap(window.map)
     @
-    
+
+  # Draw the marker by determining the type of icon
+  # is used for each type of element. The default is the 
+  # our standard dot.png. Each subclasses overrides get_icon
+  # to pass the correct icon 
   draw: ->
     @marker = new google.maps.Marker({
         map: null,
@@ -27,6 +33,8 @@ class window.sirius.MapMarkerView extends Backbone.View
       new google.maps.Point(16, 16)
     );
 
+  # events used to move the marker and update its position
+  # as well as to move map as the marker moves
   dragMarker: =>
     @latLng = @marker.getPosition();
     window.map.panTo(@latLng);
@@ -35,7 +43,7 @@ class window.sirius.MapMarkerView extends Backbone.View
     @latLng = window.map.getCenter();
     @marker.setPosition(@latLng);
   
-  ################# The following handles the show and hide of node layers including the arrow heads
+  ################# The following handles the show and hide of node layers
   hide_marker: ->
     @marker.setMap(null)
 

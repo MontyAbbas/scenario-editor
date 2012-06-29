@@ -1,13 +1,18 @@
+# Creates the links of the network. A link consists of a
+# Polyline drawn between two steps in the route as well as
+# an arrow head pointing in the appropriate direction if the 
+# Polyline is sufficiently long. 
 class window.sirius.MapLinkView extends Backbone.View
   @view_links = []
+  $a = window.sirius
   
   initialize: (@leg) ->
     @drawLink @leg
     @drawArrow @leg
     MapLinkView.view_links.push @
     $a.AppView.broker.on('map:init', @render(), @)
-    $a.AppView.on('map:hide_link_layer', @hide_link(), @)
-    $a.AppView.on('map:show_link_layer', @show_link(), @)
+    $a.AppView.broker.on('map:hide_link_layer', @hide_link(), @)
+    $a.AppView.broker.on('map:show_link_layer', @show_link(), @)
     
   render: =>
     @link.setMap(window.map)
