@@ -55,7 +55,6 @@ class window.sirius.MapNetworkView extends Backbone.View
       self._determineWayPointsAndNetworkStartEnd(@begin,@end)
     )
 
-
   _determineWayPointsAndNetworkStartEnd: (begin,end) ->
       #if it is not a terminal node, then it is a waypoint for the directions request
       if begin.get("type") != "terminal"
