@@ -6,7 +6,7 @@
 
   sirius_classes_without_extensions = ['ALatLng', 'CapacityProfile', 'Data_source', 'Decision_point', 'Decision_point_split', 'Decision_points', 'DecisionPoints', 'DemandProfile', 'DemandProfileSet', 'Description', 'DirectionsCacheEntry', 'DirectionsCache', 'DownstreamBoundaryCapacityProfileSet', 'EncodedPolyline', 'FeedbackElements', 'From', 'FundamentalDiagram', 'FundamentalDiagramProfile', 'FundamentalDiagramProfileSet', 'InitialDensitySet', 'Inputs', 'IntersectionCacheEntry', 'IntersectionCache', 'Knob', 'Lane_count_change', 'Levels', 'LinkGeometry', 'Link_reference', 'Linkpair', 'Links', 'NetworkConnections', 'Networkpair', 'Od_demandProfile', 'ODDemandProfileSet', 'Outputs', 'On_off_switch', 'Outputs', 'Parameter', 'Parameters', 'Plan_reference', 'Points', 'Postmile', 'Qcontroller', 'Route_segment', 'Route_segments', 'RouteSegments', 'ScenarioElement', 'Splitratio', 'SplitratioEvent', 'SplitratioProfile', 'SplitRatioProfileSet', 'Stage', 'TargetElements', 'To', 'Units', 'Vehicle_type', 'VehicleTypes', 'VehicleTypeOrder', 'Weavingfactors', 'WeavingfactorSet'];
 
-  sirius_map_view_classes = ['AppView', 'MapLinkView', 'MapMarkerView', 'MapNetworkView', 'MapNodeView', 'MapSensorView', 'MapControllerView', 'MapEventView', 'MapSignalView', 'Util', 'TreeParentItemView', 'TreeChildItemView'];
+  sirius_map_view_classes = ['AppView', 'MapLinkView', 'MapMarkerView', 'MapNetworkView', 'MapNodeView', 'MapSensorView', 'MapControllerView', 'MapEventView', 'MapSignalView', 'Util', 'TreeParentItemView', 'TreeChildItemView', 'NavBarView', 'NavParentItemView', 'NavChildItemView'];
 
   load_sirius_classes = function(after) {
     return head.js("js/Sirius.js", function() {

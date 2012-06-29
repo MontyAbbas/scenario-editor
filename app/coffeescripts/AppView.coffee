@@ -13,6 +13,7 @@ class window.sirius.AppView extends Backbone.View
 
   render: ->
     @_initializeMap()
+    @_navBar()
     @_contextMenu()
     @
 
@@ -56,6 +57,10 @@ class window.sirius.AppView extends Backbone.View
         when 'center_map_click' then window.map.panTo latLng
       null
     )
+
+  # This creates the main navigation bar menu
+  _navBar: () ->
+    new $a.NavBarView()
 
   # This static function is called by the File upload handler. It will load
   # the xml file, parse it into objects, assign it to window.textarea_scenario, and finally
