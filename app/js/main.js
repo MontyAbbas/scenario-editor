@@ -25,9 +25,21 @@
     });
   };
 
-  head.js('../libs/js/jquery-1.7.1.js', '../libs/js/jquery-ui-1.8.18.min.js', 'js/menus.js', 'js/menu-data.js', '../libs/js/underscore.js', '../libs/js/backbone.js', '../libs/js/bootstrap/js/bootstrap.js', function() {
+  window.load_context_menu_and_app_view = function() {
+    return head.js("../libs/js/ContextMenu.js", function() {
+      var lmenu;
+      new window.sirius.AppView();
+      lmenu = new window.LayersHandler('lh');
+      return lmenu.createHTML();
+    });
+  };
+
+  head.js('https://www.google.com/jsapi', '../libs/js/jquery-1.7.1.js', '../libs/js/jquery-ui-1.8.18.min.js', 'js/menus.js', 'js/menu-data.js', '../libs/js/underscore.js', '../libs/js/backbone.js', '../libs/js/bootstrap/js/bootstrap.js', function() {
     return load_sirius_classes(function() {
-      return google.maps.event.addDomListener(window, 'load', new window.sirius.AppView());
+      return google.load("maps", "3", {
+        callback: "window.load_context_menu_and_app_view()",
+        other_params: "libraries=geometry,drawing&sensor=false"
+      });
     });
   });
 

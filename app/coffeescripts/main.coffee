@@ -47,7 +47,15 @@ load_sirius_classes = (after) ->
     class_paths.push after
     head.js.apply(@, class_paths)
 
-head.js('../libs/js/jquery-1.7.1.js',
+# we wait to load ContextMenu.js until after the google libs load
+window.load_context_menu_and_app_view = ->
+    head.js "../libs/js/ContextMenu.js", ->
+      new window.sirius.AppView()
+      lmenu = new window.LayersHandler('lh');
+      lmenu.createHTML();
+
+head.js('https://www.google.com/jsapi',
+        '../libs/js/jquery-1.7.1.js',
         '../libs/js/jquery-ui-1.8.18.min.js',
         'js/menus.js',
         'js/menu-data.js',
@@ -55,5 +63,8 @@ head.js('../libs/js/jquery-1.7.1.js',
         '../libs/js/backbone.js',
         '../libs/js/bootstrap/js/bootstrap.js', ->
             load_sirius_classes ->
-                google.maps.event.addDomListener(window, 'load', new window.sirius.AppView())
+               google.load("maps", "3", {
+                  callback: "window.load_context_menu_and_app_view()",
+                  other_params: "libraries=geometry,drawing&sensor=false"
+                 });
 )
