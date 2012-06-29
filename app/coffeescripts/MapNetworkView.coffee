@@ -29,8 +29,8 @@ class window.sirius.MapNetworkView extends Backbone.View
     @_drawNodes @network.get('nodelist').get('node') if @network.get('nodelist')
     @_drawSensors @network.get('sensorlist').get('sensor') if @network.get('sensorlist')
     @_drawControllers @scenario.get('controllerset').get('controller') if @scenario.get('controllerset')
-    @_drawEvents  @scenario.get('eventset').get('event') if @scenario.get('eventset')
-    @_drawSignals @network.get('signallist').get('signal') if @network.get('signallist')
+#    @_drawEvents  @scenario.get('eventset').get('event') if @scenario.get('eventset')
+#    @_drawSignals @network.get('signallist').get('signal') if @network.get('signallist')
     @_drawRoute()
   
   # _drawRoute uses the Google Direction's api to get the data used to render the route.
@@ -39,7 +39,6 @@ class window.sirius.MapNetworkView extends Backbone.View
   _drawRoute: ->
     @_linkInformationForMap()
     directionsService = new google.maps.DirectionsService()
-
     for x in [0..wypnts.length] by 8  
       #Create DirectionsRequest using DRIVING directions.
       request = {
@@ -87,19 +86,19 @@ class window.sirius.MapNetworkView extends Backbone.View
     _.each(links, (i) ->  new $a.MapLinkView(i))
 
   _drawNodes: (nodes) ->
-    _.each(nodes, (i) ->  new $a.MapNodeView(i, $a.Util.getLatLng(i)))
+    _.each(nodes, (i) ->  new $a.MapNodeView(i, $a.Util.getLatLng(i)) if $a.Util.getLatLng(i)?)
 
   _drawSensors: (sensors) ->
-    _.each(sensors, (i) ->  new $a.MapSensorView(i, $a.Util.getLatLng(i)))
+    _.each(sensors, (i) ->  new $a.MapSensorView(i, $a.Util.getLatLng(i)) if $a.Util.getLatLng(i)?)
 
   _drawEvents: (events) ->
-    _.each(events, (i) ->  new $a.MapEventView(i, $a.Util.getLatLng(i)))
+    _.each(events, (i) ->  new $a.MapEventView(i, $a.Util.getLatLng(i)) if $a.Util.getLatLng(i)?)
 
   _drawControllers: (controllers) ->
-    _.each(controllers, (i) ->  new $a.MapControllerView(i, $a.Util.getLatLng(i)))
+    _.each(controllers, (i) -> new $a.MapControllerView(i, $a.Util.getLatLng(i)) if $a.Util.getLatLng(i)?)
 
   _drawSignals: (signals) ->
-    _.each(signals, (i) ->  new $a.MapSignalView(i, $a.Util.getLatLng(i)))
+    _.each(signals, (i) ->  new $a.MapSignalView(i, $a.Util.getLatLng(i)) if $a.Util.getLatLng(i)?)
 
   # This method creates the tree view of all the elements of the network
   _treeView: ->

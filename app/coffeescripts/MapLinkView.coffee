@@ -35,7 +35,7 @@ class window.sirius.MapLinkView extends Backbone.View
       strokeColor:  "blue",
       strokeOpacity: 0.6,
       strokeWeight: 6
-    }); 
+    })
 
   #Arrow Positoning calculations involve the following functions:
   #displayArrow, getArrowStep, getArrowPositionIndex, and getAngleOfArrow

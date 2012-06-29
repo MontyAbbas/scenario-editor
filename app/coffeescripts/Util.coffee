@@ -17,7 +17,7 @@ class window.sirius.Util
   # returns a google LatLng obect by retrieving the latitude and longitude from the elements object.
   # In some cases it is stored in position and in others in display_position.
   @getLatLng: (elem) ->
-    new google.maps.LatLng(@_round_dec(@_getLat(elem),4), @_round_dec(@_getLng(elem),4));
+    if @_getLng(elem)? && @_getLat(elem)? then new google.maps.LatLng(@_round_dec(@_getLat(elem),4), @_round_dec(@_getLng(elem),4)) else null
   
   # This method is used by View classes to create id names that are all lowercased and have
   # dashes for spaces
