@@ -10,10 +10,10 @@ class window.sirius.MapNetworkView extends Backbone.View
   $a = window.sirius
   
   initialize: (@scenario) ->
-    $a.AppView.broker.on('map:init', @render(), @)
+    @network =  @scenario.get('networklist').get('network')[0]
+    @render()
   
   render: ->  
-    @network =  @scenario.get('networklist').get('network')[0]
     @_drawNetwork()
     @_treeView()
     @
