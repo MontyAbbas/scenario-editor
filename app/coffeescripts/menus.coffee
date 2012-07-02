@@ -254,6 +254,6 @@ class window.LayersHandler
         else
           true
 
-    $("#upload").click (e) ->
+    $("#open-local-network").click (e) ->
       $("#uploadField").click()
       e.preventDefault()
