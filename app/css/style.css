@@ -73,6 +73,10 @@ hr {
 #mh{position:fixed; left:75px; bottom:25px; z-index: 2}
 .bottom-up{bottom:100%; max-width:80px}
 /* submenu */
+.dropdown-menu a 
+{
+  text-align:left;
+}
 .submenu-show
 {
     border-radius: 3px;

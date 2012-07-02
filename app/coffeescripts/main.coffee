@@ -51,8 +51,9 @@ load_sirius_classes = (after) ->
 window.load_context_menu_and_app_view = ->
     head.js "../libs/js/ContextMenu.js", ->
       new window.sirius.AppView()
-      lmenu = new window.LayersHandler('lh');
-      lmenu.createHTML();
+      lmenu = new window.LayersHandler('lh')
+      lmenu.createHTML()
+      lmenu.attachEvents()
 
 head.js('https://www.google.com/jsapi',
         '../libs/js/jquery-1.7.1.js',

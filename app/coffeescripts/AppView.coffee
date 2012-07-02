@@ -9,7 +9,7 @@ class window.sirius.AppView extends Backbone.View
   @broker = _.clone(Backbone.Events)
 
   initialize: ->
-    AppView.broker.on('app:init', @render(), @)
+    @render()
 
   render: ->
     @_initializeMap()

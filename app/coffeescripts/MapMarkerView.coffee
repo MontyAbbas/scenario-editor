@@ -21,7 +21,7 @@ class window.sirius.MapMarkerView extends Backbone.View
         position: @latLng, 
         draggable: true,
         icon: @get_icon 'dot'
-        title: "Latitude: " + @latLng.lat() + "\nLongitude: " + @latLng.lng()
+        title: "Name: " + @model.get('name') + "\nLatitude: " + @latLng.lat() + "\nLongitude: " + @latLng.lng()
       });
     google.maps.event.addListener(@marker, "dragend", @dragMarker());
     google.maps.event.addListener(window.map, "dragend", @dragMap());

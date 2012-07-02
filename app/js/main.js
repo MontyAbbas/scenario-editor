@@ -30,7 +30,8 @@
       var lmenu;
       new window.sirius.AppView();
       lmenu = new window.LayersHandler('lh');
-      return lmenu.createHTML();
+      lmenu.createHTML();
+      return lmenu.attachEvents();
     });
   };
 
