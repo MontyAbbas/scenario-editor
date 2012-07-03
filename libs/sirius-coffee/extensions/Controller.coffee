@@ -45,8 +45,8 @@ window.sirius.Controller::resolve_references = (deferred, object_with_id) ->
         when 'signal' then @get('targetreferences').push object_with_id.signal[e.id]
     )
 
-    if @get('targetreferences').length == 0
-       throw "Event must have target elements defined"
+    # if @get('targetreferences').length == 0
+    #    throw "Event must have target elements defined"
     
 
 window.sirius.Controller::encode_references = ->

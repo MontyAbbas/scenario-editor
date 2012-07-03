@@ -27,35 +27,91 @@ class window.sirius.MapNetworkView extends Backbone.View
     @_drawControllers @scenario.get('controllerset').get('controller') if @scenario.get('controllerset')
     @_drawEvents  @scenario.get('eventset').get('event') if @scenario.get('eventset')
     @_drawSignals @network.get('signallist').get('signal') if @network.get('signallist')
-    @_drawRoute()
+    @_drawRoute(0)
   
+  _findEndTerminal: (link) ->
+    if link.get('end').get('node').get('type') == 'terminal'
+      self.links = _.filter self.links, (e) ->  e.get('id') !=  link.get('id')
+      @route_end = $a.Util.getLatLng link.get('end').get('node')
+    else
+      @waypnts.push {location:$a.Util.getLatLng link.get('end').get('node')}
+      self.links = _.filter self.links, (e) ->  e.get('id') !=  link.get('id')
+      @_findEndTerminal(@_findFollowLink(link))
+
+  _findFollowLink: (t) ->
+    _.find(@links, (link) -> 
+      link.get('begin').get('node').get('id') ==  t.get('end').get('node').get('id')
+    )
+
   # _drawRoute uses the Google Direction's api to get the data used to render the route.
-  _drawRoute: ->
-    directionsService = new google.maps.DirectionsService()
+  _drawRoute: (x) ->
+    @directionsService = new google.maps.DirectionsService()
     self = @
-    _.each(self.network.get('linklist').get('link'), (link) -> 
+    # @links = @network.get('linklist').get('link')[..]
+    # begin_terminal_links = _.filter(@links, (link) -> 
+    #     link.get('begin').get('node').get('type') == 'terminal'
+    #   )
+    # console.log begin_terminal_links
+    # _.each(begin_terminal_links, (t) ->
+    #   self.links = _.filter self.links, (link) ->  link.get('id') !=  t.get('id')
+    #   self.waypnts = []
+    #   @route_begin = $a.Util.getLatLng t.get('begin').get('node')
+    #   self._findEndTerminal t
+    #   #Create DirectionsRequest using DRIVING directions.
+    #   console.log @route_begin
+    #   console.log self.route_end
+    #   console.log self.waypnts
+    #   request = {
+    #     origin: @route_begin,
+    #     destination: self.route_end,
+    #     waypoints: self.waypnts,
+    #     travelMode: google.maps.TravelMode.DRIVING
+    #   }
+    #   #Route the directions and pass the response to a
+    #   #function to draw the full link for each step.
+    #   directionsService.route(request, (response, status) =>
+    #     if (status == google.maps.DirectionsStatus.OK)
+    #       warnings = $("#warnings_panel")
+    #       warnings.innerHTML = "" + response.routes[0].warnings + ""
+    #       self._drawLinks response.routes[0].legs
+    #     else #TODO configure into html
+    #       warnings = $("#warnings_panel")
+    #       warnings.innerHTML = "Directions API Error: " + status + ""
+    #   )
+    # )
+    @_doTenLinks(x)
+    if x < self.network.get('linklist').get('link').length
+      setTimeout (() -> self._drawRoute(x+9)), 2000
+
+  _doTenLinks: (x) ->
+    self = @
+    _.each(self.network.get('linklist').get('link')[x..x+8], (link) -> 
       begin =  link.get('begin').get('node')
       end = link.get('end').get('node')
       #Create DirectionsRequest using DRIVING directions.
       request = {
-        origin: $a.Util.getLatLng(begin),
-        destination: $a.Util.getLatLng(end),
-        travelMode: google.maps.TravelMode.DRIVING,
+       origin: $a.Util.getLatLng(begin),
+       destination: $a.Util.getLatLng(end),
+       travelMode: google.maps.TravelMode.DRIVING,
       }
       #Route the directions and pass the response to a
-      #function to draw the full link for each step.
-      directionsService.route(request, (response, status) =>
-        if (status == google.maps.DirectionsStatus.OK)
-          warnings = $("#warnings_panel")
-          warnings.innerHTML = "" + response.routes[0].warnings + ""
-          self._drawLinks response.routes[0].legs
-        else #TODO configure into html
-          warnings = $("#warnings_panel")
-          warnings.innerHTML = "Directions API Error: " + status + ""
-      )
+      #function to draw the full link for each steps
+      self._directionsRequest(request)
+    )
+
+  _directionsRequest: (request) ->
+    self = @
+    @directionsService.route(request, (response, status) ->
+      if (status == google.maps.DirectionsStatus.OK)
+        @attempts += 10
+        warnings = $("#warnings_panel")
+        warnings.innerHTML = "" + response.routes[0].warnings + ""
+        self._drawLinks response.routes[0].legs
+      else #TODO configure into html
+        warnings = $("#warnings_panel")
+        warnings.innerHTML = "Directions API Error: " + status + ""
     )
   
-
   # These methods instantiate each elements view instance in the map
   _drawLinks: (links) ->
     _.each(links, (i) ->  new $a.MapLinkView(i))
