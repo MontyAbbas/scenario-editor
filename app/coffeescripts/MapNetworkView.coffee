@@ -27,65 +27,19 @@ class window.sirius.MapNetworkView extends Backbone.View
     @_drawControllers @scenario.get('controllerset').get('controller') if @scenario.get('controllerset')
     @_drawEvents  @scenario.get('eventset').get('event') if @scenario.get('eventset')
     @_drawSignals @network.get('signallist').get('signal') if @network.get('signallist')
-    @_drawRoute(0)
-  
-  _findEndTerminal: (link) ->
-    if link.get('end').get('node').get('type') == 'terminal'
-      self.links = _.filter self.links, (e) ->  e.get('id') !=  link.get('id')
-      @route_end = $a.Util.getLatLng link.get('end').get('node')
-    else
-      @waypnts.push {location:$a.Util.getLatLng link.get('end').get('node')}
-      self.links = _.filter self.links, (e) ->  e.get('id') !=  link.get('id')
-      @_findEndTerminal(@_findFollowLink(link))
-
-  _findFollowLink: (t) ->
-    _.find(@links, (link) -> 
-      link.get('begin').get('node').get('id') ==  t.get('end').get('node').get('id')
-    )
+    @_drawRoute()
 
   # _drawRoute uses the Google Direction's api to get the data used to render the route.
-  _drawRoute: (x) ->
+  _drawRoute: ->
     @directionsService = new google.maps.DirectionsService()
-    self = @
-    # @links = @network.get('linklist').get('link')[..]
-    # begin_terminal_links = _.filter(@links, (link) -> 
-    #     link.get('begin').get('node').get('type') == 'terminal'
-    #   )
-    # console.log begin_terminal_links
-    # _.each(begin_terminal_links, (t) ->
-    #   self.links = _.filter self.links, (link) ->  link.get('id') !=  t.get('id')
-    #   self.waypnts = []
-    #   @route_begin = $a.Util.getLatLng t.get('begin').get('node')
-    #   self._findEndTerminal t
-    #   #Create DirectionsRequest using DRIVING directions.
-    #   console.log @route_begin
-    #   console.log self.route_end
-    #   console.log self.waypnts
-    #   request = {
-    #     origin: @route_begin,
-    #     destination: self.route_end,
-    #     waypoints: self.waypnts,
-    #     travelMode: google.maps.TravelMode.DRIVING
-    #   }
-    #   #Route the directions and pass the response to a
-    #   #function to draw the full link for each step.
-    #   directionsService.route(request, (response, status) =>
-    #     if (status == google.maps.DirectionsStatus.OK)
-    #       warnings = $("#warnings_panel")
-    #       warnings.innerHTML = "" + response.routes[0].warnings + ""
-    #       self._drawLinks response.routes[0].legs
-    #     else #TODO configure into html
-    #       warnings = $("#warnings_panel")
-    #       warnings.innerHTML = "Directions API Error: " + status + ""
-    #   )
-    # )
-    @_doTenLinks(x)
-    if x < self.network.get('linklist').get('link').length
-      setTimeout (() -> self._drawRoute(x+9)), 2000
+    @_requestLink(@network.get('linklist').get('link').length - 1)
 
-  _doTenLinks: (x) ->
-    self = @
-    _.each(self.network.get('linklist').get('link')[x..x+8], (link) -> 
+  # recursive method used to grab the Google route for every link
+  # indexOfLink starts at the end of the link list and is decreased 
+  # on each recrusive call
+  _requestLink: (indexOfLink) ->
+    if indexOfLink > -1
+      link = self.network.get('linklist').get('link')[indexOfLink]
       begin =  link.get('begin').get('node')
       end = link.get('end').get('node')
       #Create DirectionsRequest using DRIVING directions.
@@ -94,26 +48,33 @@ class window.sirius.MapNetworkView extends Backbone.View
        destination: $a.Util.getLatLng(end),
        travelMode: google.maps.TravelMode.DRIVING,
       }
-      #Route the directions and pass the response to a
-      #function to draw the full link for each steps
-      self._directionsRequest(request)
-    )
-
-  _directionsRequest: (request) ->
+      # request the route from the directions service.
+      # The parameters are the request object for Google API
+      # as well as 0, indicating the number of attempts -- read
+      # below
+      self._directionsRequest(request, 0)
+      self._requestLink(indexOfLink - 1)
+  
+  # _directionsRequest makes the actual route request to google. if we recieve OVER_QUERY_LIMIT error, this method
+  # will wait one second and then call itself again with the same request object but montior the number of attempts.
+  # We attempt to get the route for the link 3 times and then give up. If get a route, this method calls _drawLink
+  # to render the link on the page
+  _directionsRequest: (request, attempts) ->
     self = @
     @directionsService.route(request, (response, status) ->
       if (status == google.maps.DirectionsStatus.OK)
-        @attempts += 10
         warnings = $("#warnings_panel")
         warnings.innerHTML = "" + response.routes[0].warnings + ""
-        self._drawLinks response.routes[0].legs
+        self._drawLink response.routes[0].legs
+      else if status == google.maps.DirectionsStatus.OVER_QUERY_LIMIT and attempts < 3
+        setTimeout (() -> self._directionsRequest(request, attempts + 1)), 1000
       else #TODO configure into html
         warnings = $("#warnings_panel")
-        warnings.innerHTML = "Directions API Error: " + status + ""
+        warnings.innerHTML = "Directions API Error: Could not render link : " + status + ""
     )
-  
+
   # These methods instantiate each elements view instance in the map
-  _drawLinks: (links) ->
+  _drawLink: (links) ->
     _.each(links, (i) ->  new $a.MapLinkView(i))
 
   _drawNodes: (nodes) ->
