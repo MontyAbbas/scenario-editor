@@ -5,10 +5,10 @@ class window.sirius.MapMarkerView extends Backbone.View
   
   initialize: (@model, @latLng) ->
     @draw()
-    $a.AppView.broker.on('map:init', @render(), @)
+    $a.broker.on('map:init', @render, @)
 
   render: =>
-    @marker.setMap(window.map)
+    @marker.setMap($a.map)
     @
 
   # Draw the marker by determining the type of icon
@@ -17,14 +17,14 @@ class window.sirius.MapMarkerView extends Backbone.View
   # to pass the correct icon 
   draw: ->
     @marker = new google.maps.Marker({
-        map: null,
-        position: @latLng, 
-        draggable: true,
+        map: null
+        position: @latLng 
+        draggable: true
         icon: @get_icon 'dot'
         title: "Name: " + @model.get('name') + "\nLatitude: " + @latLng.lat() + "\nLongitude: " + @latLng.lng()
       });
     google.maps.event.addListener(@marker, "dragend", @dragMarker());
-    google.maps.event.addListener(window.map, "dragend", @dragMap());
+    google.maps.event.addListener($a.map, "dragend", @dragMap());
     
   get_icon: (img) ->
     new google.maps.MarkerImage('../libs/data/img/' + img + '.png',
@@ -37,10 +37,10 @@ class window.sirius.MapMarkerView extends Backbone.View
   # as well as to move map as the marker moves
   dragMarker: =>
     @latLng = @marker.getPosition();
-    window.map.panTo(@latLng);
+    $a.map.panTo(@latLng);
 
   dragMap: =>
-    @latLng = window.map.getCenter();
+    @latLng = $a.map.getCenter();
     @marker.setPosition(@latLng);
   
   ################# The following handles the show and hide of node layers
@@ -48,5 +48,5 @@ class window.sirius.MapMarkerView extends Backbone.View
     @marker.setMap(null)
 
   show_marker: =>
-    @marker.setMap(window.map)
+    @marker.setMap($a.map)
   
