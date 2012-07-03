@@ -8,8 +8,8 @@ class window.sirius.MapSensorView extends window.sirius.MapMarkerView
   initialize: (model, lat_lng) ->
     super model, lat_lng
     MapSensorView.view_sensors.push @
-    $a.AppView.broker.on('map:hide_sensor_layer', @hide_marker(), @)
-    $a.AppView.broker.on('map:show_sensor_layer', @show_marker(), @)
+    $a.broker.on('map:hide_sensor_layer', @hide_marker, @)
+    $a.broker.on('map:show_sensor_layer', @show_marker, @)
 
   get_icon: ->
     super 'camera-orig' 

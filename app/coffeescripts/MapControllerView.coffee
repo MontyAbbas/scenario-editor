@@ -8,8 +8,8 @@ class window.sirius.MapControllerView extends window.sirius.MapMarkerView
   initialize: (model,lat_lng) ->
     super  model, lat_lng
     MapControllerView.view_controllers.push @
-    $a.AppView.broker.on('map:hide_controller_layer', @hide_marker(), @)
-    $a.AppView.broker.on('map:show_controller_layer', @show_marker(), @)
+    $a.broker.on('map:hide_controller_layer', @hide_marker, @)
+    $a.broker.on('map:show_controller_layer', @show_marker, @)
 
   get_icon: ->
     super 'controller-deselected'

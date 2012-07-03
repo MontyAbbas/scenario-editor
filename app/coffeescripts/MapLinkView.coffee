@@ -10,13 +10,13 @@ class window.sirius.MapLinkView extends Backbone.View
     @drawLink @leg
     @drawArrow @leg
     MapLinkView.view_links.push @
-    $a.AppView.broker.on('map:init', @render(), @)
-    $a.AppView.broker.on('map:hide_link_layer', @hide_link(), @)
-    $a.AppView.broker.on('map:show_link_layer', @show_link(), @)
+    $a.broker.on('map:init', @render, @)
+    $a.broker.on('map:hide_link_layer', @hide_link, @)
+    $a.broker.on('map:show_link_layer', @show_link, @)
     
   render: =>
-    @link.setMap(window.map)
-    @arrow.setMap(window.map) if @arrow?
+    @link.setMap($a.map)
+    @arrow.setMap($a.map) if @arrow?
     @
 
   #this method reads the path of points contained in the leg
@@ -31,7 +31,7 @@ class window.sirius.MapLinkView extends Backbone.View
 
     @link = new google.maps.Polyline({
       path: sm_path,
-      map: null,
+      map: $a.map,
       strokeColor:  "blue",
       strokeOpacity: 0.6,
       strokeWeight: 6
@@ -66,7 +66,7 @@ class window.sirius.MapLinkView extends Backbone.View
                     new google.maps.Point(0,0),
                     new google.maps.Point(12,12)
               ),
-        map: null
+        map: $a.map
       });
 
   #this moves through the steps array of the route to determine which step is about 
@@ -104,5 +104,5 @@ class window.sirius.MapLinkView extends Backbone.View
     @arrow.setMap(null) if @arrow?
   
   show_link: ->
-    @link.setMap(window.map)
-    @arrow.setMap(window.map) if @arrow?
+    @link.setMap($a.map)
+    @arrow.setMap($a.map) if @arrow?
