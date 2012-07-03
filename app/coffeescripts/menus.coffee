@@ -1,7 +1,8 @@
 
 triggerEvent = (eventName) ->
   switch eventName
-    when 'freewayNodes' then window.sirius.AppView.broker.trigger('map:hide_node_layer')
+    when 'freewayNodes' then alert("working")
+    when 'hideAllNodes' then window.sirius.broker.trigger('map:hide_node_layer')
   null
   
 # $( ->

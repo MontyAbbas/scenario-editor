@@ -35,9 +35,9 @@ window.sirius.Event::resolve_references = (deferred, object_with_id) ->
         when 'event' then @get('targetreferences').push object_with_id.event[e.id]
         when 'signal' then @get('targetreferences').push object_with_id.signal[e.id]
     )
-
-    if @get('targetreferences').length == 0
-       throw "Event must have target elements defined"
+    # 
+    # if @get('targetreferences').length == 0
+    #    throw "Event must have target elements defined"
 
 window.sirius.Event::encode_references = ->
   # TODO : do we to encode references? All the data will be written back via scenarioElements

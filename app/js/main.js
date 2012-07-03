@@ -28,6 +28,7 @@
   window.load_context_menu_and_app_view = function() {
     return head.js("../libs/js/ContextMenu.js", function() {
       var lmenu;
+      window.sirius.broker = _.clone(Backbone.Events);
       new window.sirius.AppView();
       lmenu = new window.LayersHandler('lh');
       lmenu.createHTML();

@@ -16,48 +16,67 @@ class window.sirius.MapNetworkView extends Backbone.View
   render: ->  
     @_drawNetwork()
     @_treeView()
+    $a.broker.trigger('map:init')
     @
   
   # _drawNetwork is organizing function calling all the methods that
   # instantiate the various elements of the network
   _drawNetwork: ->
-    window.map.setCenter($a.Util.getLatLng(@network))
+    $a.map.setCenter($a.Util.getLatLng(@network))
     @_drawNodes @network.get('nodelist').get('node') if @network.get('nodelist')
     @_drawSensors @network.get('sensorlist').get('sensor') if @network.get('sensorlist')
     @_drawControllers @scenario.get('controllerset').get('controller') if @scenario.get('controllerset')
     @_drawEvents  @scenario.get('eventset').get('event') if @scenario.get('eventset')
     @_drawSignals @network.get('signallist').get('signal') if @network.get('signallist')
     @_drawRoute()
-  
+
   # _drawRoute uses the Google Direction's api to get the data used to render the route.
   _drawRoute: ->
-    directionsService = new google.maps.DirectionsService()
-    self = @
-    _.each(self.network.get('linklist').get('link'), (link) -> 
+    @directionsService = new google.maps.DirectionsService()
+    @_requestLink(@network.get('linklist').get('link').length - 1)
+
+  # recursive method used to grab the Google route for every link
+  # indexOfLink starts at the end of the link list and is decreased 
+  # on each recrusive call
+  _requestLink: (indexOfLink) ->
+    if indexOfLink > -1
+      link = @network.get('linklist').get('link')[indexOfLink]
       begin =  link.get('begin').get('node')
       end = link.get('end').get('node')
       #Create DirectionsRequest using DRIVING directions.
       request = {
-        origin: $a.Util.getLatLng(begin),
-        destination: $a.Util.getLatLng(end),
-        travelMode: google.maps.TravelMode.DRIVING,
+       origin: $a.Util.getLatLng(begin),
+       destination: $a.Util.getLatLng(end),
+       travelMode: google.maps.TravelMode.DRIVING,
       }
-      #Route the directions and pass the response to a
-      #function to draw the full link for each step.
-      directionsService.route(request, (response, status) =>
-        if (status == google.maps.DirectionsStatus.OK)
-          warnings = $("#warnings_panel")
-          warnings.innerHTML = "" + response.routes[0].warnings + ""
-          self._drawLinks response.routes[0].legs
-        else #TODO configure into html
-          warnings = $("#warnings_panel")
-          warnings.innerHTML = "Directions API Error: " + status + ""
-      )
-    )
+      # request the route from the directions service.
+      # The parameters are the request object for Google API
+      # as well as 0, indicating the number of attempts -- read
+      # below
+      @_directionsRequest(request, 0)
+      @_requestLink(indexOfLink - 1)
   
+  # _directionsRequest makes the actual route request to google. if we recieve OVER_QUERY_LIMIT error, this method
+  # will wait 3 seconds and then call itself again with the same request object but montior the number of attempts.
+  # We attempt to get the route for the link 3 times and then give up. If get a route, this method calls _drawLink
+  # to render the link on the page
+  _directionsRequest: (request, attempts) ->
+    self = @
+    @directionsService.route(request, (response, status) ->
+      if (status == google.maps.DirectionsStatus.OK)
+        warnings = $("#warnings_panel")
+        warnings.innerHTML = "" + response.routes[0].warnings + ""
+        self._drawLink response.routes[0].legs
+      else if status == google.maps.DirectionsStatus.OVER_QUERY_LIMIT and attempts < 3
+        setTimeout (() -> self._directionsRequest(request, attempts + 1)), 3000
+      else #TODO configure into html
+        warnings = $("#warnings_panel")
+        warnings.innerHTML = "Directions API Error: Could not render link : " + status + ""
+        console.log warnings.innerHTML
+    )
 
   # These methods instantiate each elements view instance in the map
-  _drawLinks: (links) ->
+  _drawLink: (links) ->
     _.each(links, (i) ->  new $a.MapLinkView(i))
 
   _drawNodes: (nodes) ->
