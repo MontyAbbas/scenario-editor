@@ -97,7 +97,7 @@ class window.sirius.MapNetworkView extends Backbone.View
   # This method creates the tree view of all the elements of the network
   _treeView: ->
     self = @
-    _.each window.main_tree_elements, (e) ->  new $a.TreeParentItemView(e)
+    _.each $a.main_tree_elements, (e) ->  new $a.TreeParentItemView(e)
     _.each(@scenario.get('networklist').get('network'), (e) -> new $a.TreeChildItemView(e, "network-list")) if @scenario.get('networklist')?
     _.each(@scenario.get('networkconnections').get('network'), (e) -> new $a.TreeChildItemView(e, "network-connections")) if @scenario.get('networkconnections')?
     _.each(@scenario.get('controllerset').get('controller'), (e) -> new $a.TreeChildItemView(e, "controllers")) if @scenario.get('controllerset')?

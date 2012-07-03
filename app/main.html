@@ -17,76 +17,15 @@
       <button id="lh" class="btn dropdown-toggle" data-toggle="dropdown">Layers</button>
       <button id="mh" class="btn">Mode</button>
     </div>
-      <!--navbar -->
-      <div class="navbar">
-          <div class="container navbar-inner">
-            <ul class="nav">
-              <li class="dropdown active" id="menu1">
-                  <a class="dropdown-toggle" data-toggle="dropdown" href="#menu1">
-                    File
-                    <b class="caret"></b>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">New</a></li>
-                    <li class="divider"></li>
-                    <input type="file" name="localNetwork" style="visibility:hidden; position:absolute"
-                      id="uploadField" onchange="window.sirius.AppView.handleFiles(this.files)"
-                      onpropertychange="window.sirius.AppView.handleFiles(this.files)" />
-                    <li><a id="upload">Open Local Network</a></li>
-                    <li><a href="#">Save Local Network</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Import Local Network</a></li>
-                  </ul>
-                </li>
-                <li class="dropdown active" id="windows">
-                  <a class="dropdown-toggle" data-toggle="dropdown" href="#windows">
-                    Windows
-                    <b class="caret"></b>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a id="nb" class="jmodal">Node Browser</a></li>
-                    <li><a id="lb" class="jmodal">Link Browser</a></li>
-                    <li><a id="pb" class="jmodal">Path Browser</a></li>
-                    <li><a id="eb" class="jmodal">Event Browser</a></li>
-                    <li><a id="cb" class="jmodal">Controller Browser</a></li>
-                    <li><a id="sb" class="jmodal">Sensor Browser</a></li>
-                    <li><a id="np" class="jmodal">Network Properties</a></li>
-                    <li><a href="#">Map</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">Cascade</a></li>
-                    <li><a href="#">Tile</a></li>
-                    <li><a href="#">Tile + Fill Space</a></li>
-                    <li><a href="#">Show All</a></li>
-                  </ul>
-                </li>
-                <li class="dropdown active" id="tools">
-                  <a class="dropdown-toggle" data-toggle="dropdown" href="#tools">
-                    Tools
-                    <b class="caret"></b>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a href="#">Import PeMS data</a></li>
-                    <li><a href="#">Calibrate</a></li>
-                    <li><a href="#">Simulate</a></li>
-                  </ul>
-                </li>
-                <li class="dropdown active" id="help">
-                  <a class="dropdown-toggle" data-toggle="dropdown" href="#help">
-                    Help
-                    <b class="caret"></b>
-                  </a>
-                  <ul class="dropdown-menu">
-                    <li><a data-toggle="modal" href="#about">About</a></li>
-                    <li><a data-toggle="modal" href="#helpinfo">Help</a></li>
-                    <li><a data-toggle="modal" href="#version">Version</a></li>
-                    <li><a data-toggle="modal" href="#identity">Identity</a></li>
-                    <li><a data-toggle="modal" href="#contact">Contact</a></li>
-                    <li><a data-toggle="modal" href="#legal">Legal</a></li>
-                  </ul>
-                </li>
-            </ul>
-          </div>
+    <!--navbar -->
+    <div id="main-nav" class="navbar">
+      <div class="container navbar-inner">
+        <!-- Used for uploading files from local network -->
+        <input type="file" name="localNetwork" style="visibility:hidden; position:absolute"
+          id="uploadField" onchange="window.sirius.AppView.handleFiles(this.files)"
+          onpropertychange="window.sirius.AppView.handleFiles(this.files)" />
       </div>
+    </div>
     <!-- Menu Modals -->
     <div id="nodebrowser" class="jdialog">
       <hr>
