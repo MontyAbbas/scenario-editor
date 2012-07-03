@@ -33,7 +33,7 @@ sirius_classes_without_extensions = [
 
 sirius_map_view_classes = [
   'AppView', 'MapLinkView', 'MapMarkerView', 'MapNetworkView', 'MapNodeView', 'MapSensorView', 'MapControllerView', 'MapEventView', 'MapSignalView', 'Util',
-  'TreeParentItemView', 'TreeChildItemView','NavBarView','NavParentItemView','NavChildItemView'
+  'TreeParentItemView', 'TreeChildItemView','NavBarView','NavParentItemView','NavChildItemView', 'FileUploadView'
 ]
 
 load_sirius_classes = (after) ->
@@ -49,20 +49,20 @@ load_sirius_classes = (after) ->
 
 # we wait to load ContextMenu.js until after the google libs load
 window.load_context_menu_and_app_view = ->
-    head.js "../libs/js/ContextMenu.js", ->
-      # static instance level event aggegator that most classes use to register their
-      # own listeners on
-      window.sirius.broker = _.clone(Backbone.Events)
-      new window.sirius.AppView()
-      lmenu = new window.LayersHandler('lh')
-      lmenu.createHTML()
-      lmenu.attachEvents()
+    head.js 'js/menus.js',
+            'js/menu-data.js',
+            '../libs/js/ContextMenu.js', ->
+              # static instance level event aggegator that most classes use to register their
+              # own listeners on
+              window.sirius.broker = _.clone(Backbone.Events)
+              new window.sirius.AppView()
+              lmenu = new window.LayersHandler('lh')
+              lmenu.createHTML()
+              lmenu.attachEvents()
 
 head.js('https://www.google.com/jsapi',
         '../libs/js/jquery-1.7.1.js',
         '../libs/js/jquery-ui-1.8.18.min.js',
-        'js/menus.js',
-        'js/menu-data.js',
         '../libs/js/underscore.js',
         '../libs/js/backbone.js',
         '../libs/js/bootstrap/js/bootstrap.js', ->

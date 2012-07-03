@@ -8,7 +8,7 @@ class window.sirius.NavParentItemView extends Backbone.View
     $(@el).attr 'id', $a.Util.toLowerCaseAndDashed(itemName)
     @template = _.template(@_markup())
     @$el.html(@template({text: itemName, textLower: $a.Util.toLowerCaseAndDashed(itemName)}))
-    $a.AppView.broker.on('app:nav-menu', @render(), @)
+    $a.broker.on('app:nav-menu', @render(), @)
     @render()
 
   render: ->

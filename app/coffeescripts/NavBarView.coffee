@@ -6,13 +6,13 @@ class window.sirius.NavBarView extends Backbone.View
 
   initialize: ->
     self = @
-    $(".navbar div").append(self.el)
-    for key, value of window.nav_bar_menu_items
+    @render()
+    for key, values of $a.nav_bar_menu_items
       new $a.NavParentItemView(key)
-      eval window.nav_bar_menu_items_events['Open Local Network']
-      _.each(value, (item) -> new $a.NavChildItemView(item, $a.Util.toLowerCaseAndDashed(key)))
+      for subkey, event of values
+         new $a.NavChildItemView(subkey, event, $a.Util.toLowerCaseAndDashed(key))
 
   render: ->
     self = @
-    $(".navbar div").append(self.el)
+    $("#main-nav div").append(self.el)
     @

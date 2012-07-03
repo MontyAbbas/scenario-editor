@@ -17,15 +17,15 @@
       <button id="lh" class="btn dropdown-toggle" data-toggle="dropdown">Layers</button>
       <button id="mh" class="btn">Mode</button>
     </div>
-      <!--navbar -->
-      <div class="navbar">
-          <div class="container navbar-inner">
-            <!-- Used for uploading files from local network -->
-            <input type="file" name="localNetwork" style="visibility:hidden; position:absolute"
-              id="uploadField" onchange="window.sirius.AppView.handleFiles(this.files)"
-              onpropertychange="window.sirius.AppView.handleFiles(this.files)" />
-          </div>
+    <!--navbar -->
+    <div id="main-nav" class="navbar">
+      <div class="container navbar-inner">
+        <!-- Used for uploading files from local network -->
+        <input type="file" name="localNetwork" style="visibility:hidden; position:absolute"
+          id="uploadField" onchange="window.sirius.AppView.handleFiles(this.files)"
+          onpropertychange="window.sirius.AppView.handleFiles(this.files)" />
       </div>
+    </div>
     <!-- Menu Modals -->
     <div id="nodebrowser" class="jdialog">
       <hr>

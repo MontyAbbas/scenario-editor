@@ -57,6 +57,8 @@ class window.sirius.AppView extends Backbone.View
 
   # This creates the main navigation bar menu
   _navBar: () ->
+    #parameters : name and id
+    #new $a.FileUploadView("localNetwork", "uploadField")
     new $a.NavBarView()
 
   # This static function is called by the File upload handler. It will load
