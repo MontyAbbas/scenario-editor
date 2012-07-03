@@ -1,70 +1,38 @@
 
 triggerEvent = (eventName) ->
+  show_events = true
+  show_controllers = true
+  show_sensors = true
+  
   switch eventName
-    when 'freewayNodes' then alert("working")
-    when 'hideAllNodes' then window.sirius.broker.trigger('map:hide_node_layer')
+    when 'showAllNodes'
+      window.sirius.broker.trigger('map:show_node_layer')
+    when 'hideAllNodes'
+      window.sirius.broker.trigger('map:hide_node_layer')
+    when 'showAllLinks'
+      window.sirius.broker.trigger('map:show_link_layer')
+    when 'hideAllLinks'
+      window.sirius.broker.trigger('map:hide_link_layer')
+    when 'showEvents'
+      if show_events
+        window.sirius.broker.trigger('map:hide_event_layer')
+      else
+        window.sirius.broker.trigger('map:show_event_layer')
+      show_events = !show_events
+    when 'showControllers'
+      if show_controllers
+        window.sirius.broker.trigger('map:hide_controller_layer')
+      else
+        window.sirius.broker.trigger('map:show_controller_layer')
+      show_controllers = !show_controllers
+    when 'showSensors'
+      if show_sensors
+        window.sirius.broker.trigger('map:hide_sensor_layer')
+      else
+        window.sirius.broker.trigger('map:show_sensor_layer')
+      show_sensors = !show_sensors
   null
   
-# $( ->
-#   $(".jdialog").dialog
-#     autoOpen: false
-#     show:
-#       effect: "drop"
-#       direction: "left"
-#       duration: 200
-# 
-#     hide:
-#       effect: "drop"
-#       direction: "right"
-#       duration: 200
-# 
-#   $(window).load ->
-#     $(".submenu").hover(->
-#       $(this).children("ul").removeClass("submenu-hide").addClass "submenu-show"
-#     , ->
-#       $(this).children("ul").removeClass("submenu-show").addClass "submenu-hide"
-#     ).find("a:first").append " &raquo; "
-# 
-#   $('.ui-dialog-titlebar-close').ready ->
-#     titlebar = $('.ui-dialog-titlebar-close')
-#     i = 0;
-#     while i < titlebar.length
-#       titlebar[i].innerHTML = '<i class="icon-remove"></i>'
-#       i++
-# 
-#   
-#   $("ul > li > a.jmodal").click ->
-#     navId = @id
-#     switch navId
-#       when "nb"
-#         $("#nodebrowser").dialog "open"
-#         true
-#       when "lb"
-#         $("#linkbrowser").dialog "open"
-#         true
-#       when "pb"
-#         $("#pathbrowser").dialog "open"
-#         true
-#       when "eb"
-#         $("#eventbrowser").dialog "open"
-#         true
-#       when "cb"
-#         $("#controlbrowser").dialog "open"
-#         true
-#       when "sb"
-#         $("#sensorbrowser").dialog "open"
-#         true
-#       when "np"
-#         $("#netprop").dialog "open"
-#         true
-#       else
-#         true
-# 
-#   $("#upload").click (e) ->
-#     $("#uploadField").click()
-#     e.preventDefault()
-# )
-
 class window.LayersHandler
   constructor: (id) ->
     @id = id
