@@ -7,9 +7,9 @@ body { height: 100%; margin: 5px; padding: 0 }
 .navbar {margin-bottom: 0px}
 
 /** File upload **/
-#uploadfield {
+#uploadField {
   visibility:hidden; 
-  position:absolute
+  position:absolute;
 }
 
 .container {position:absolute; z-index:1; width: 278px; margin-top:5px;margin-left:80px; background-color: #444444;}
