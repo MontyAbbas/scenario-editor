@@ -10,10 +10,11 @@ $a.main_tree_elements = [
 $a.nav_bar_menu_items = {
     'File': {
               'New' : (() -> alert('Not Configured'))
-              'Open Local Network' : ((e) -> 
+              'Open Local Network' : ((e) ->
+                                        window.triggerEvent('clearMap') 
                                         $("#uploadField").click()
                                         e.preventDefault())
-              'Close Local Network' : (() -> alert('Not Configured'))
+              'Close Local Network' : (() -> window.triggerEvent('clearMap'))
               'Import Local Network' : (() -> alert('Not Configured'))
             }
     'Windows': {

@@ -2,7 +2,7 @@
 # show/hide events from the signals layer. It also adds itself to and holds a static 
 # array of signals
 class window.sirius.MapSignalView extends window.sirius.MapMarkerView
-  @view_sensors = []
+  @view_signals = []
   $a = window.sirius
 
   initialize: (model, lat_lng) ->

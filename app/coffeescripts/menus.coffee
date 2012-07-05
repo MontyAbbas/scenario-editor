@@ -3,9 +3,20 @@ show_events = true
 show_controllers = true
 show_sensors = true
 
-triggerEvent = (eventName) ->
-  
+window.triggerEvent = (eventName) ->
   switch eventName
+    when 'clearMap'
+      window.sirius.broker.trigger('map:hide_node_layer')
+      window.sirius.broker.trigger('map:hide_link_layer')
+      window.sirius.broker.trigger('map:hide_event_layer')
+      window.sirius.broker.trigger('map:hide_controller_layer')
+      window.sirius.broker.trigger('map:hide_sensor_layer')
+      window.sirius.broker.trigger('map:hide_signal_layer')
+      window.sirius.MapControllerView.view_controllers = []
+      window.sirius.MapControllerView.view_events = []
+      window.sirius.MapControllerView.view_nodes = []
+      window.sirius.MapControllerView.view_sensors = []
+      window.sirius.MapControllerView.view_signals = []
     when 'showAllNodes'
       window.sirius.broker.trigger('map:show_node_layer')
     when 'hideAllNodes'
@@ -21,9 +32,7 @@ triggerEvent = (eventName) ->
         window.sirius.broker.trigger('map:show_event_layer')
       show_events = !show_events
     when 'showControllers'
-      alert "working!"
       if show_controllers
-        alert "working!"
         window.sirius.broker.trigger('map:hide_controller_layer')
       else
         window.sirius.broker.trigger('map:show_controller_layer')
@@ -150,7 +159,7 @@ class window.LayersHandler
         menuItem.className = values.className if values.className
         menuItem.href = values.href if values.href
         menuItem.onclick = ->
-          triggerEvent(values.eventName)
+          window.triggerEvent(values.eventName)
         return menuItem
       else
         menuItem = document.createElement 'div'
