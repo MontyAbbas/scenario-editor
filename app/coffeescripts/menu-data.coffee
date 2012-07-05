@@ -6,6 +6,7 @@ $a.main_tree_elements = [
   ]
 
 
+# The menu items and their events for the main navigation bar
 $a.nav_bar_menu_items = {
     'File': {
               'New' : (() -> alert('Not Configured'))

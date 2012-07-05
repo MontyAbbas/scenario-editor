@@ -11,12 +11,13 @@ class window.sirius.MapNetworkView extends Backbone.View
   
   initialize: (@scenario) ->
     @network =  @scenario.get('networklist').get('network')[0]
+    @_drawNetwork()
+    @_treeView()
     @render()
   
   render: ->  
-    @_drawNetwork()
-    @_treeView()
     $a.broker.trigger('map:init')
+    $a.broker.trigger('app:tree')
     @
   
   # _drawNetwork is organizing function calling all the methods that

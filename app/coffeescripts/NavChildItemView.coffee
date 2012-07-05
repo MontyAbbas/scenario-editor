@@ -6,11 +6,12 @@ class window.sirius.NavChildItemView extends Backbone.View
   
   # The model attribute is the model for this class, the element attribute is 
   # the name of the parent tree element this model should be attached too 
-  initialize: (itemText, event, @parent) ->
-    $(@el).attr 'id', $a.Util.toLowerCaseAndDashed(itemText)
-    @template = _.template(@_markup())
-    @$el.html(@template({text: itemText}))
-    @events = { 'click' : event }
+  initialize: (args) ->
+    $(@el).attr 'id', args.textLower
+    @parent = args.attach
+    @template = _.template($("#child-item-menu-template").html())
+    @$el.html(@template({text: args.text}))
+    @events = { 'click' : args.event }
     $a.broker.on('app:nav-menu', @render, @)
     @render()
 
@@ -18,7 +19,4 @@ class window.sirius.NavChildItemView extends Backbone.View
     self = @
     $("##{@parent} ul").append(self.el)
     @
-
-  _markup: ->
-    "<a href='#'><%= text %></a>"
 
