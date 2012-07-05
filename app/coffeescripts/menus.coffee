@@ -1,8 +1,9 @@
 
+show_events = true
+show_controllers = true
+show_sensors = true
+
 triggerEvent = (eventName) ->
-  show_events = true
-  show_controllers = true
-  show_sensors = true
   
   switch eventName
     when 'showAllNodes'
@@ -20,7 +21,9 @@ triggerEvent = (eventName) ->
         window.sirius.broker.trigger('map:show_event_layer')
       show_events = !show_events
     when 'showControllers'
+      alert "working!"
       if show_controllers
+        alert "working!"
         window.sirius.broker.trigger('map:hide_controller_layer')
       else
         window.sirius.broker.trigger('map:show_controller_layer')
