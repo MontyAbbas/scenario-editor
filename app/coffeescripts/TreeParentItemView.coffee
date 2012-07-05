@@ -10,7 +10,7 @@ class window.sirius.TreeParentItemView extends Backbone.View
   initialize: (element) ->
     @template = _.template($("#parent-item-tree-template").html())
     @$el.html(@template({textLower: $a.Util.toLowerCaseAndDashed(element), text: element}))
-    $a.broker.on('app:tree', @render, @)
+    $a.broker.on('app:parent_tree', @render, @)
 
   render: ->
     self = @
