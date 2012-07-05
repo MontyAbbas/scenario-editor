@@ -4,15 +4,17 @@ class window.sirius.NavBarView extends Backbone.View
   tagName: "ul"
   className: "nav"
 
-  initialize: ->
+  initialize: (args) ->
     self = @
+    @parent = args.attach
     @render()
-    for key, values of $a.nav_bar_menu_items
-      new $a.NavParentItemView(key)
+    for key, values of args.menuItems
+      keyLower = $a.Util.toLowerCaseAndDashed(key)
+      new $a.NavParentItemView({text: key, textLower: keyLower, attach: ".#{@className}"})
       for subkey, event of values
-         new $a.NavChildItemView(subkey, event, $a.Util.toLowerCaseAndDashed(key))
+         new $a.NavChildItemView({text: subkey, textLower: $a.Util.toLowerCaseAndDashed(subkey), event: event, attach: keyLower})
 
   render: ->
     self = @
-    $("#main-nav div").append(self.el)
+    $(@parent).append(self.el)
     @

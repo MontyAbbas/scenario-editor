@@ -5,6 +5,8 @@ class window.sirius.AppView extends Backbone.View
   $a = window.sirius
 
   initialize: ->
+    #change underscores symbols for handling interpolation to {{}}
+    _.templateSettings = {interpolate : /\{\{(.+?)\}\}/g }
     @render()
 
   render: ->
@@ -58,9 +60,8 @@ class window.sirius.AppView extends Backbone.View
 
   # This creates the main navigation bar menu
   _navBar: () ->
-    #parameters : name and id
-    new $a.FileUploadView("localNetwork", "uploadField")
-    new $a.NavBarView()
+    new $a.FileUploadView({name: "localNetwork", id : "uploadField", attach: "#main-nav div"})
+    new $a.NavBarView({menuItems: $a.nav_bar_menu_items, attach: "#main-nav div"})
 
   # displayMap takes the uploaded file data parses the xml into the model objects, and creates the MapNetworkView
   _displayMap: (fileText) ->

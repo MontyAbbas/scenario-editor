@@ -8,16 +8,12 @@ class window.sirius.TreeParentItemView extends Backbone.View
   className: "tree-parent-node"
 
   initialize: (element) ->
-    @template = _.template(@_markup())
+    @template = _.template($("#parent-item-tree-template").html())
     @$el.html(@template({textLower: $a.Util.toLowerCaseAndDashed(element), text: element}))
     $a.broker.on('app:tree', @render, @)
 
   render: ->
     self = @
     $("#tree").append(self.el)
-    @
+    @ 
 
-  _markup: -> 
-    mk = "<label for='<%= textLower %>'><%= text %></label> "
-    mk += "<input type='checkbox' id='check-<%= textLower %>' />"
-    mk += "<ol id='tree-parent-<%= textLower %>' ></ol>"

@@ -1,19 +1,21 @@
-# This class creates the file upload markup
+# This class creates the file upload markup. I didn't create a corresponding 
+# model class here. I may in the future
 class window.sirius.FileUploadView extends Backbone.View
   $a = window.sirius
   tagName: "input"
   type: "file" 
 
-  initialize: (@name, @id) ->
+  initialize: (args) ->
     $(@el).attr 'type', 'file'
-    $(@el).attr 'name', @name
-    $(@el).attr 'id', @id
+    $(@el).attr 'name', args.name
+    $(@el).attr 'id', args.id
+    @parent = args.attach
     @events = {'change' : "handleFiles"}
     @render()
   
   render: ->
     self = @
-    $("#main-nav div").append(self.el)
+    $(@parent).append(self.el)
     @
 
   # This function is File upload handler. It will load

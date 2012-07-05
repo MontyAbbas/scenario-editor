@@ -21,6 +21,13 @@
     <div id="main-nav" class="navbar">
       <div class="container navbar-inner">
         <!-- The top navigation is placed here as well the file uploader in put type -->
+        <script type="text/template" id="parent-item-menu-template">
+          <a class='dropdown-toggle' data-toggle='dropdown' href='#{{textLower}}'>{{text}}<b class='caret'></b></a>
+          <ul class='dropdown-menu'></ul>
+        </script>
+        <script type="text/template" id="child-item-menu-template">
+          <a href='#'>{{text}}</a>
+        </script>
       </div>
     </div>
     <!-- Menu Modals -->
@@ -179,6 +186,11 @@
     <div id="right_tree" class="collapsible">
       <label for="right tree heading">Scenario Elements</label>
       <ol id="tree" >
+        <script type="text/template" id="parent-item-tree-template">
+          <label for='{{textLower}}'>{{text}}</label>
+          <input type='checkbox' id='check-{{textLower}}' />
+          <ol id='tree-parent-{{textLower}}' ></ol>
+        </script>
       </ol>
     </div>
   </body>
