@@ -65,7 +65,8 @@ class window.sirius.TreeView extends Backbone.View
   _findTargetElementName: (element, type, list) ->
     switch type
       when "network-list", "network-connections" then element.get('name')
-      when "demand-profiles", "od-demand-profiles" then @_getElementName(element.get('link_id_origin'), list)
+      when "demand-profiles" then @_getElementName(element.get('link_id_origin'), list)
+      when "od-demand-profiles" then  @_getElementName(element.get('link_id_origin'), list) + " -> " + @_getElementName(element.get('link_id_destination'), list)
       when "controllers", "events" then @_getElementName(element.get('targetelements').get('scenarioelement')[0].get('id'), list)
       when "fundamental-diagram-profiles", "downstream-boundary-profiles", "initial-density-profiles" then @_getElementName(element.get('link_id'), list)
       when "split-ratio-profiles", "signals" then @_getElementName(element.get('node_id'), list)
