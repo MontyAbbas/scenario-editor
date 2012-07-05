@@ -66,5 +66,6 @@ class window.sirius.AppView extends Backbone.View
   # displayMap takes the uploaded file data parses the xml into the model objects, and creates the MapNetworkView
   _displayMap: (fileText) ->
     xml = $.parseXML(fileText)
-    @mapView = new $a.MapNetworkView $a.Scenario.from_xml($(xml).children())
+    $a.models = $a.Scenario.from_xml($(xml).children())
+    @mapView = new $a.MapNetworkView $a.models
 
