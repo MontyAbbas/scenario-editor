@@ -7,18 +7,16 @@ class window.sirius.TreeChildItemView extends Backbone.View
 
   # The model attribute is the model for this class, the element attribute is 
   # the name of the parent tree element this model should be attached too 
-  initialize: (@model, @element) ->
+  initialize: (@model, name, @element) ->
     @id = "tree-item-#{@model.id}"
     $(@el).attr 'id', @id
-    displayName =  if @model.get('name')? then @model.get('name') else "No Name Assigned"
-    @template = _.template(@_markup())
+    displayName =  name
+    @template = _.template($("#child-item-menu-template").html())
     @$el.html(@template({text: displayName})) 
-    $a.broker.on('app:tree', @render, @)
+    $a.broker.on('app:child_trees', @render, @)
 
   render: ->
     self = @
     $("#tree-parent-#{@element}").append(self.el)
     @
 
-  _markup: ->
-    "<a href=''><%= text %></a>"

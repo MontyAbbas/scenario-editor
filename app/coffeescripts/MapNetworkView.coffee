@@ -11,12 +11,15 @@ class window.sirius.MapNetworkView extends Backbone.View
   
   initialize: (@scenario) ->
     @network =  @scenario.get('networklist').get('network')[0]
+    @_drawNetwork()
+    
+    # This class creates the tree view of all the elements of the network
+    new window.sirius.TreeView({ scenario: @scenario, attach: "#right_tree"})
     @render()
   
   render: ->  
-    @_drawNetwork()
-    @_treeView()
     $a.broker.trigger('map:init')
+    $a.broker.trigger('app:main_tree')
     @
   
   # _drawNetwork is organizing function calling all the methods that
@@ -94,20 +97,4 @@ class window.sirius.MapNetworkView extends Backbone.View
   _drawSignals: (signals) ->
     _.each(signals, (i) ->  new $a.MapSignalView(i, $a.Util.getLatLng(i)) if $a.Util.getLatLng(i)?)
 
-  # This method creates the tree view of all the elements of the network
-  _treeView: ->
-    self = @
-    _.each window.main_tree_elements, (e) ->  new $a.TreeParentItemView(e)
-    _.each(@scenario.get('networklist').get('network'), (e) -> new $a.TreeChildItemView(e, "network-list")) if @scenario.get('networklist')?
-    _.each(@scenario.get('networkconnections').get('network'), (e) -> new $a.TreeChildItemView(e, "network-connections")) if @scenario.get('networkconnections')?
-    _.each(@scenario.get('controllerset').get('controller'), (e) -> new $a.TreeChildItemView(e, "controllers")) if @scenario.get('controllerset')?
-    _.each(@scenario.get('initialdensityset').get('density'), (e) -> new $a.TreeChildItemView(e, "initial-density-profiles")) if @scenario.get('initialdensityset')?
-    _.each(@scenario.get('demandprofileset').get('demandprofile'), (e) -> new $a.TreeChildItemView(e, "demand-profiles")) if @scenario.get('demandprofileset')?
-    _.each(@scenario.get('eventset').get('event'), (e) -> new $a.TreeChildItemView(e, "events")) if @scenario.get('eventset')?
-    _.each(@scenario.get('fundamentaldiagramprofileset').get('fundamentaldiagramprofile'), (e) -> new $a.TreeChildItemView(e, "fundamental-diagram-profiles")) if @scenario.get('fundamentaldiagramprofileset')?
-    _.each(@scenario.get('oddemandprofileset').get('oddemandprofile'), (e) -> new $a.TreeChildItemView(e, "od-demand-profiles")) if @scenario.get('oddemandprofileset')?
-    _.each(@scenario.get('downstreamboundarycapacityprofileset').get('downstreamboundarycapacityprofile'), (e) -> 
-                                                    new $a.TreeChildItemView(e, "downstream-boundary-capacity-profiles")) if @scenario.get('downstreamboundarycapacityprofileset')?
-    _.each(@scenario.get('splitratioprofileset').get('splitratioprofile'), (e) -> new $a.TreeChildItemView(e, "split-ratio-profiles")) if @scenario.get('splitratioprofileset')?
-    _.each(@scenario.get('sensorlist').get('sensor'), (e) -> new $a.TreeChildItemView(e, "sensors")) if @scenario.get('sensorlist')?
-    _.each(@scenario.get('signallist').get('signal'), (e) -> new $a.TreeChildItemView(e, "signals")) if @scenario.get('signallist')?
+    

@@ -5,11 +5,15 @@ class window.sirius.AppView extends Backbone.View
   $a = window.sirius
 
   initialize: ->
+    #change underscores symbols for handling interpolation to {{}}
+    _.templateSettings = {interpolate : /\{\{(.+?)\}\}/g }
     @render()
 
   render: ->
     @_initializeMap()
+    @_navBar()
     @_contextMenu()
+    $a.broker.on('map:upload_complete', @_displayMap, @)
     @
 
   # create the landing map. The latitude and longitude our arbitarily pointing
@@ -54,22 +58,14 @@ class window.sirius.AppView extends Backbone.View
       null
     )
 
-  # This static function is called by the File upload handler. It will load
-  # the xml file, parse it into objects, assign it to window.textarea_scenario, and finally
-  # call displayMap to start the rendering process
-  @handleFiles : (files) ->
-    reader = new FileReader()
-    self = @
-    reader.onloadend = (e) ->
-      xml_text = e.target.result
-      xml = $.parseXML(xml_text)
-      window.textarea_scenario = $a.Scenario.from_xml($(xml).children())
-      self._displayMap()
-      
-    reader.readAsText(files[0])
+  # This creates the main navigation bar menu
+  _navBar: () ->
+    new $a.FileUploadView({name: "localNetwork", id : "uploadField", attach: "#main-nav div"})
+    new $a.NavBarView({menuItems: $a.nav_bar_menu_items, attach: "#main-nav div"})
 
-  # _displayMap creates the MapNetworkView and trigger the rendering event
-  # for the network
-  @_displayMap: ->
-    @mapView = new $a.MapNetworkView window.textarea_scenario
+  # displayMap takes the uploaded file data parses the xml into the model objects, and creates the MapNetworkView
+  _displayMap: (fileText) ->
+    xml = $.parseXML(fileText)
+    $a.models = $a.Scenario.from_xml($(xml).children())
+    @mapView = new $a.MapNetworkView $a.models
 
