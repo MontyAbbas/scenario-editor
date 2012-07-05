@@ -3,6 +3,9 @@
 # an arrow head pointing in the appropriate direction if the 
 # Polyline is sufficiently long. 
 class window.sirius.MapLinkView extends Backbone.View
+  @LINK_COLOR: 'blue'
+  @SELECTED_LINK_COLOR: 'red'
+  
   @view_links = []
   $a = window.sirius
   
@@ -29,13 +32,16 @@ class window.sirius.MapLinkView extends Backbone.View
         if !(pt in sm_path)
           sm_path.push pt
 
+    self = @
     @link = new google.maps.Polyline({
-      path: sm_path,
-      map: $a.map,
-      strokeColor:  "blue",
-      strokeOpacity: 0.6,
+      path: sm_path
+      map: $a.map
+      strokeColor:  MapLinkView.LINK_COLOR
+      strokeOpacity: 0.6
       strokeWeight: 6
     })
+    
+    google.maps.event.addListener(@link, 'click', (event) -> self.link_select())
 
   #Arrow Positoning calculations involve the following functions:
   #displayArrow, getArrowStep, getArrowPositionIndex, and getAngleOfArrow
@@ -60,13 +66,13 @@ class window.sirius.MapLinkView extends Backbone.View
       dir = @getAngleOfArrow(arrow_lat_lng_pos,arrow_angle_to)
       self = this
       @arrow = new google.maps.Marker({
-        position: arrow_lat_lng_pos,
+        #position: arrow_lat_lng_pos,
         icon: new google.maps.MarkerImage('http://maps.google.com/mapfiles/dir_'+dir+'.png',
                     new google.maps.Size(24,24),
                     new google.maps.Point(0,0),
                     new google.maps.Point(12,12)
               ),
-        map: $a.map
+        #map: $a.map
       });
 
   #this moves through the steps array of the route to determine which step is about 
@@ -106,3 +112,10 @@ class window.sirius.MapLinkView extends Backbone.View
   show_link: ->
     @link.setMap($a.map)
     @arrow.setMap($a.map) if @arrow?
+
+  ################# select events for link
+  link_select: () ->
+    if @link.get('strokeColor') == MapLinkView.LINK_COLOR
+      @link.setOptions(options: { strokeColor: MapLinkView.SELECTED_LINK_COLOR })
+    else
+      @link.setOptions(options: { strokeColor: MapLinkView.LINK_COLOR })

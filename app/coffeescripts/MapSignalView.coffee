@@ -13,4 +13,12 @@ class window.sirius.MapSignalView extends window.sirius.MapMarkerView
 
   get_icon: ->
     super 'reddot'
+    
+  ################# select events for marker
+  marker_select: () ->
+    console.log @marker.get('icon')
+    # if @marker.get('icon') == MapLinkView.LINK_COLOR
+    #   @marker.setOptions(options: { strokeColor: MapLinkView.SELECTED_LINK_COLOR })
+    # else
+    #   @link.setOptions(options: { strokeColor: MapLinkView.LINK_COLOR })
 
