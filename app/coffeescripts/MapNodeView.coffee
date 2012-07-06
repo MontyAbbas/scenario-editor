@@ -21,7 +21,7 @@ class window.sirius.MapNodeView extends window.sirius.MapMarkerView
 
   ################# select events for marker
   # Callback for the markers click event
-  markerSelect: () ->
+  markerSelect: () =>
     if @model.get('type') != MapNodeView.TERMINAL_TYPE
       @_setIcon(MapNodeView.ICON, MapNodeView.SELECTED_ICON) 
     else

@@ -52,3 +52,5 @@ class window.sirius.MapMarkerView extends Backbone.View
     tokens = @marker.get('icon').url.split '/'
     lastIndex =  tokens.length - 1
     tokens[lastIndex]
+    
+
