@@ -19,6 +19,7 @@ class window.sirius.MapSensorView extends window.sirius.MapMarkerView
   ################# select events for marker
   # Callback for the markers click event
   markerSelect: () ->
+    $a.broker.trigger('map:clear_selected')
     @_setIcon(MapSensorView.ICON, MapSensorView.SELECTED_ICON) 
 
   # Swaps icons depending on which icon is set
