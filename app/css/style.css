@@ -1,7 +1,7 @@
 html { height: 100% }
 body { height: 100%; margin: 5px; padding: 0 }
-#map_canvas { height: 100%; width:70%; float:left}
-#right_tree { height: 100%; width:30%; float:right;}
+#map_canvas { height: 100%; width:78%; float:left}
+#right_tree { height: 100%; width:22%; float:right;}
 #map_canvas img { max-width:none; }
 #header {width:100%}
 .navbar {margin-bottom: 0px}
@@ -136,6 +136,12 @@ hr {
   padding-left: 21px;
   text-decoration: none;
   display: block;
+}
+
+#tree li.highlight a
+{
+  background-color: #ccc;
+  color: red;
 }
 
 #tree li input

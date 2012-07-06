@@ -71,6 +71,7 @@ class window.sirius.AppView extends Backbone.View
   _displayMap: (fileText) ->
     xml = $.parseXML(fileText)
     $a.models = $a.Scenario.from_xml($(xml).children())
+    new $a.MapNetworkModel()
     @mapView = new $a.MapNetworkView $a.models
 
   _setShift: (e) ->

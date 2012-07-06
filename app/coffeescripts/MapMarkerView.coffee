@@ -10,6 +10,7 @@ class window.sirius.MapMarkerView extends Backbone.View
     google.maps.event.addListener(@marker, 'dragend', @dragMarker())
     google.maps.event.addListener(@marker, 'click', (event) -> self.markerSelect())
     $a.broker.on('map:clear_selected', @clearSelected, @)
+    $a.broker.on("map:select_item:#{@model.cid}", @markerSelect, @)
     $a.broker.on('map:init', @render, @)
 
   render: =>

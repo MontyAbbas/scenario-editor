@@ -23,3 +23,8 @@ class window.sirius.Util
   # dashes for spaces
   @toLowerCaseAndDashed: (text) ->
     text.toLowerCase().replace(/\ /g,"-")
+  
+  # This method is used to grab the model elements from object model by id.
+  # The list is the list you want to iterate over and the id is what you want to find
+  @getElement: (id, list) ->
+    _.find(list, (elem) ->  elem.get('id') == id)  

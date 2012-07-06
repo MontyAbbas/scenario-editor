@@ -17,6 +17,7 @@ class window.sirius.MapLinkView extends Backbone.View
     $a.broker.on('map:init', @render, @)
     $a.broker.on('map:hide_link_layer', @hideLink, @)
     $a.broker.on('map:show_link_layer', @showLink, @)
+    $a.broker.on("map:select_item:#{@model.cid}", @linkSelectFromTree, @)
     google.maps.event.addListener(@link, 'click', (event) -> self.linkSelect())
     $a.broker.on('map:clear_selected', @clearSelected, @)
   
@@ -62,15 +63,20 @@ class window.sirius.MapLinkView extends Backbone.View
 
   ################# select events for link
   linkSelect: () ->
-    $a.broker.trigger('map:clear_selected')
+    $a.broker.trigger('map:clear_selected') unless $a.SHIFT_DOWN
+    $a.broker.trigger('app:tree_remove_highlight') unless $a.SHIFT_DOWN
+    $a.broker.trigger("app:tree_highlight:#{@model.cid}")
     if @link.get('strokeColor') == MapLinkView.LINK_COLOR
       @link.setOptions(options: { strokeColor: MapLinkView.SELECTED_LINK_COLOR })
     else
       @link.setOptions(options: { strokeColor: MapLinkView.LINK_COLOR })
 
+  linkSelectFromTree: () ->
+    @link.setOptions(options: { strokeColor: MapLinkView.SELECTED_LINK_COLOR })
+    
   # This method swaps the icon for the de-selected icon
   clearSelected: () =>
-    @link.setOptions(options: { strokeColor: MapLinkView.LINK_COLOR }) unless $a.SHIFT_DOWN
+    @link.setOptions(options: { strokeColor: MapLinkView.LINK_COLOR })
   
   ################# manually drawing arrow 
   # NOTE : I am removing this for now in favor of the v3 method of using symbol paths. 
