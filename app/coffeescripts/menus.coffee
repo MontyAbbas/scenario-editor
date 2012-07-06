@@ -4,6 +4,7 @@ show_controllers = true
 show_sensors = true
 
 window.triggerEvent = (eventName) ->
+
   switch eventName
     when 'clearMap'
       window.sirius.broker.trigger('map:hide_node_layer')
@@ -24,7 +25,7 @@ window.triggerEvent = (eventName) ->
     when 'showAllLinks'
       window.sirius.broker.trigger('map:show_link_layer')
     when 'hideAllLinks'
-      window.sirius.broker.trigger('map:hide_link_layer')
+      window.sirius.broker.trigger('map:hide_link_layer:freeway')
     when 'showEvents'
       if show_events
         window.sirius.broker.trigger('map:hide_event_layer')
@@ -147,12 +148,13 @@ class window.LayersHandler
           submenu = document.createElement('ul')
           submenu.className = 'dropdown-menu submenu-hide'
           submenu.setAttribute('id', values.link)
-      
+          
           menulink = values.obj
           a = 0
           b = menulink.length
           while a < b
             submenu.appendChild(createMenuItem(menulink[a]))
+
             a++
           menuItem.appendChild submenu
         
@@ -235,6 +237,3 @@ class window.LayersHandler
         else
           true
 
-    # $("#open-local-network").click (e) ->
-    #   $("#uploadField").click()
-    #   e.preventDefault()

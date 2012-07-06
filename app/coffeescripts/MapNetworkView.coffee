@@ -56,31 +56,30 @@ class window.sirius.MapNetworkView extends Backbone.View
       # The parameters are the request object for Google API
       # as well as 0, indicating the number of attempts -- read
       # below
-      @_directionsRequest(request, 0)
+      @_directionsRequest(request, link, 0)
       @_requestLink(indexOfLink - 1)
   
   # _directionsRequest makes the actual route request to google. if we recieve OVER_QUERY_LIMIT error, this method
   # will wait 3 seconds and then call itself again with the same request object but montior the number of attempts.
   # We attempt to get the route for the link 3 times and then give up. If get a route, this method calls _drawLink
   # to render the link on the page
-  _directionsRequest: (request, attempts) ->
+  _directionsRequest: (request, linkModel, attempts) ->
     self = @
     @directionsService.route(request, (response, status) ->
       if (status == google.maps.DirectionsStatus.OK)
         warnings = $("#warnings_panel")
         warnings.innerHTML = "" + response.routes[0].warnings + ""
-        self._drawLink response.routes[0].legs
+        self._drawLink linkModel, response.routes[0].legs
       else if status == google.maps.DirectionsStatus.OVER_QUERY_LIMIT and attempts < 3
-        setTimeout (() -> self._directionsRequest(request, attempts + 1)), 3000
+        setTimeout (() -> self._directionsRequest(request, linkModel, attempts + 1)), 3000
       else #TODO configure into html
         warnings = $("#warnings_panel")
         warnings.innerHTML = "Directions API Error: Could not render link : " + status + ""
-        console.log warnings.innerHTML
     )
 
   # These methods instantiate each elements view instance in the map
-  _drawLink: (links) ->
-    _.each(links, (i) ->  new $a.MapLinkView(i))
+  _drawLink: (linkModel, legs) ->
+    new $a.MapLinkView(linkModel, legs)
 
   _drawNodes: (nodes) ->
     _.each(nodes, (i) ->  new $a.MapNodeView(i, $a.Util.getLatLng(i)) if $a.Util.getLatLng(i)?)
