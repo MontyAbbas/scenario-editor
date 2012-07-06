@@ -1,4 +1,4 @@
-# Creates nodes by overriding get_icon from MapMarkerView and registering
+# Creates nodes by overriding getIcon from MapMarkerView and registering
 # show/hide events from the node layer. It also adds itself to and holds a static 
 # array of nodes
 class window.sirius.MapNodeView extends window.sirius.MapMarkerView
@@ -19,22 +19,18 @@ class window.sirius.MapNodeView extends window.sirius.MapMarkerView
   getIcon: ->
     if @model.get('type') != MapNodeView.TERMINAL_TYPE then super MapNodeView.ICON else super MapNodeView.TERMINAL_ICON
 
-  marker_select: () ->
-
+  ################# select events for marker
+  # Callback for the markers click event
+  markerSelect: () ->
     if @model.get('type') != MapNodeView.TERMINAL_TYPE
       @_setIcon(MapNodeView.ICON, MapNodeView.SELECTED_ICON) 
     else
       @_setIcon(MapNodeView.TERMINAL_ICON, MapNodeView.SELECTED_TERMINAL_ICON)
-  
+
+  # Swaps icons depending on which icon is set
   _setIcon: (icon, selected) ->
-    iconName = @_getIconName()
+    iconName = MapNodeView.__super__._getIconName.apply(@, []) 
     if iconName == "#{icon}.png" 
       @marker.setIcon(MapNodeView.__super__.getIcon.apply(@, [selected]) )
     else
       @marker.setIcon(MapNodeView.__super__.getIcon.apply(@, [icon]) )
-    
-  _getIconName: () ->
-    tokens = @marker.get('icon').url.split "/"
-    lastIndex =  tokens.length - 1
-    tokens[lastIndex]
-    

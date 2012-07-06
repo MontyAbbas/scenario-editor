@@ -15,9 +15,9 @@ class window.sirius.MapLinkView extends Backbone.View
     #@drawArrow @leg
     MapLinkView.view_links.push @
     $a.broker.on('map:init', @render, @)
-    $a.broker.on('map:hide_link_layer', @hide_link, @)
-    $a.broker.on('map:show_link_layer', @show_link, @)
-    google.maps.event.addListener(@link, 'click', (event) -> self.link_select())
+    $a.broker.on('map:hide_link_layer', @hideLink, @)
+    $a.broker.on('map:show_link_layer', @showLink, @)
+    google.maps.event.addListener(@link, 'click', (event) -> self.linkSelect())
     
   render: =>
     @link.setMap($a.map)
@@ -51,16 +51,16 @@ class window.sirius.MapLinkView extends Backbone.View
 
   
   ################# The following handles the show and hide of link layers including the arrow heads
-  hide_link: ->
+  hideLink: ->
     @link.setMap(null)
     @arrow.setMap(null) if @arrow?
   
-  show_link: ->
+  showLink: ->
     @link.setMap($a.map)
     @arrow.setMap($a.map) if @arrow?
 
   ################# select events for link
-  link_select: () ->
+  linkSelect: () ->
     if @link.get('strokeColor') == MapLinkView.LINK_COLOR
       @link.setOptions(options: { strokeColor: MapLinkView.SELECTED_LINK_COLOR })
     else

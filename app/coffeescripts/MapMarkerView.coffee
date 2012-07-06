@@ -1,6 +1,7 @@
 # MapMarkerView is base class for scenario elements represented by a 
 # single latitude and longitude on the Map
 class window.sirius.MapMarkerView extends Backbone.View
+  @IMAGE_PATH: '../libs/data/img/'
   $a = window.sirius
   
   initialize: (@model, @latLng) ->
@@ -21,14 +22,14 @@ class window.sirius.MapMarkerView extends Backbone.View
         map: null
         position: @latLng 
         draggable: true
-        icon: @getIcon 'dot'
-        title: "Name: " + @model.get('name') + "\nLatitude: " + @latLng.lat() + "\nLongitude: " + @latLng.lng()
+        icon: @getIcon()
+        title: "Name: #{@model.get('name')}\nLatitude: #{@latLng.lat()}\nLongitude: #{@latLng.lng()}"
       });
     google.maps.event.addListener(@marker, 'dragend', @dragMarker())
-    google.maps.event.addListener(@marker, 'click', (event) -> self.marker_select())
+    google.maps.event.addListener(@marker, 'click', (event) -> self.markerSelect())
     
   getIcon: (img) ->
-    new google.maps.MarkerImage('../libs/data/img/' + img + '.png',
+    new google.maps.MarkerImage("#{MapMarkerView.IMAGE_PATH}#{img}.png",
       new google.maps.Size(32, 32),
       new google.maps.Point(0,0),
       new google.maps.Point(16, 16)
@@ -46,3 +47,8 @@ class window.sirius.MapMarkerView extends Backbone.View
   showMarker: =>
     @marker.setMap($a.map)
 
+  # Used by subclasses to get name of image in order to swap between selected and not selected
+  _getIconName: () ->
+    tokens = @marker.get('icon').url.split '/'
+    lastIndex =  tokens.length - 1
+    tokens[lastIndex]
