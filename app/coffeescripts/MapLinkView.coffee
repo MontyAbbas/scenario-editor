@@ -9,9 +9,9 @@ class window.sirius.MapLinkView extends Backbone.View
   @view_links = []
   $a = window.sirius
   
-  initialize: (@leg) ->
+  initialize: (@model, @legs) ->
     self = @
-    @drawLink @leg
+    @drawLink @legs
     #@drawArrow @leg
     MapLinkView.view_links.push @
     $a.broker.on('map:init', @render, @)
@@ -28,12 +28,13 @@ class window.sirius.MapLinkView extends Backbone.View
   #this method reads the path of points contained in the leg
   #and converts it into a polyline object to be drawn on the map
   #The Polyline map attribute will be null until render is called
-  drawLink: (leg) ->
+  drawLink: (legs) ->
     sm_path = []
-    for step in @leg.steps
-      for pt in step.path
-        if !(pt in sm_path)
-          sm_path.push pt
+    for leg in legs
+      for step in leg.steps
+        for pt in step.path
+          if !(pt in sm_path)
+            sm_path.push pt
           
     @link = new google.maps.Polyline({
       path: sm_path
@@ -49,16 +50,15 @@ class window.sirius.MapLinkView extends Backbone.View
       strokeWeight: 4
     })
     
-
   
   ################# The following handles the show and hide of link layers including the arrow heads
-  hideLink: ->
+  hideLink: () ->
     @link.setMap(null)
-    @arrow.setMap(null) if @arrow?
+    #@arrow.setMap(null) if @arrow?
   
-  showLink: ->
+  showLink: () =>
     @link.setMap($a.map)
-    @arrow.setMap($a.map) if @arrow?
+    #@arrow.setMap($a.map) if @arrow?
 
   ################# select events for link
   linkSelect: () ->
