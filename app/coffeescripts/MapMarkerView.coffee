@@ -24,8 +24,7 @@ class window.sirius.MapMarkerView extends Backbone.View
         icon: @getIcon 'dot'
         title: "Name: " + @model.get('name') + "\nLatitude: " + @latLng.lat() + "\nLongitude: " + @latLng.lng()
       });
-    google.maps.event.addListener(@marker, "dragend", @dragMarker())
-    google.maps.event.addListener($a.map, "dragend", @dragMap())
+    google.maps.event.addListener(@marker, 'dragend', @dragMarker())
     google.maps.event.addListener(@marker, 'click', (event) -> self.marker_select())
     
   getIcon: (img) ->
@@ -36,14 +35,9 @@ class window.sirius.MapMarkerView extends Backbone.View
     );
 
   # events used to move the marker and update its position
-  # as well as to move map as the marker moves
   dragMarker: =>
     @latLng = @marker.getPosition();
     $a.map.panTo(@latLng);
-
-  dragMap: =>
-    @latLng = $a.map.getCenter();
-    @marker.setPosition(@latLng);
   
   ################# The following handles the show and hide of node layers
   hideMarker: =>
