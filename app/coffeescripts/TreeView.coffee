@@ -41,10 +41,10 @@ class window.sirius.TreeView extends Backbone.View
 
   # Called by initialize to create the child nodes. If no nodes are defined we add an empty child
   _createChildren : (parentList, modelListName, attach_id, nameList) ->
-    if !parentList? or parentList.get(modelListName).length == 0
-      @_createEmptyChild(attach_id)
-    else
+    if parentList? and parentList.get(modelListName)? and parentList.get(modelListName).length != 0
       @_createChildNodes(parentList.get(modelListName), attach_id, nameList)
+    else
+      @_createEmptyChild(attach_id)
  
   # If there are no items defined for a parent we add an empty node labelled None Defined
   _createEmptyChild : (attach) ->

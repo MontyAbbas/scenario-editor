@@ -3,7 +3,8 @@
 # instantiating and triggering the Network to be drawn
 class window.sirius.AppView extends Backbone.View
   $a = window.sirius
-
+  $a.SHIFT_DOWN = false
+  
   initialize: ->
     #change underscores symbols for handling interpolation to {{}}
     _.templateSettings = {interpolate : /\{\{(.+?)\}\}/g }
@@ -13,6 +14,9 @@ class window.sirius.AppView extends Backbone.View
     @_initializeMap()
     @_navBar()
     @_contextMenu()
+    self = @
+    google.maps.event.addDomListener(window, 'keydown', (event) -> self._setShift(event))
+    google.maps.event.addDomListener(window, 'keyup', (event) -> self._setShift(event))
     $a.broker.on('map:upload_complete', @_displayMap, @)
     @
 
@@ -69,3 +73,6 @@ class window.sirius.AppView extends Backbone.View
     $a.models = $a.Scenario.from_xml($(xml).children())
     @mapView = new $a.MapNetworkView $a.models
 
+  _setShift: (e) ->
+    $a.SHIFT_DOWN = false
+    $a.SHIFT_DOWN = true if e.type == 'keydown' and e.keyCode == 16
