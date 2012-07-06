@@ -9,9 +9,8 @@ class window.sirius.TreeView extends Backbone.View
   initialize: (args) ->
       scenario = args.scenario
       @parent = args.attach
-      network = scenario.get('networklist').get('network')[0]
-      links = network.get('linklist').get('link')
-      nodes = network.get('nodelist').get('node')
+      links = $a.MapNetworkModel.LINKS
+      nodes = $a.MapNetworkModel.NODES
       @_createParentNodes $a.main_tree_elements
       @_createChildren(scenario.get('networklist'), 'network', "network-list", null)
       @_createChildren(scenario.get('networkconnections'), 'network', "network-connections", null)
@@ -48,7 +47,7 @@ class window.sirius.TreeView extends Backbone.View
  
   # If there are no items defined for a parent we add an empty node labelled None Defined
   _createEmptyChild : (attach) ->
-    new $a.TreeChildItemView(null, "None Defined", attach)
+    new $a.TreeChildItemView(null, null, "None Defined", attach)
       
   # Creates the child nodes and prepares the for rendering. It is slightly more complex
   # in that the different types of elements have different ways of storing what node
@@ -56,22 +55,22 @@ class window.sirius.TreeView extends Backbone.View
   _createChildNodes: (list, attach, nameList) ->
     self = @
     _.each(list, (e) ->
-      name = self._findTargetElementName(e, attach, nameList)
-      new $a.TreeChildItemView(e, name, attach))
-  
-  # We are trying to figure what name will associate with each element type. Again, we case the 
+      target = self._findTargetElements(e, attach, nameList)
+      name = target[0].get('name')
+      name = "#{name} -> #{target[1].get('name')}" if target.length > 1 #for OD Profiles
+      new $a.TreeChildItemView(e, target, name, attach))
+
+  # We are trying to figure out the target objects for these elements. Again, we case the 
   # type in order to appropriate access the node or link id and then get its name from the node
   # or link list
-  _findTargetElementName: (element, type, list) ->
+  _findTargetElements: (element, type, list) ->
     switch type
-      when "network-list", "network-connections" then element.get('name')
-      when "demand-profiles" then @_getElementName(element.get('link_id_origin'), list)
-      when "od-demand-profiles" then  @_getElementName(element.get('link_id_origin'), list) + " -> " + @_getElementName(element.get('link_id_destination'), list)
-      when "controllers", "events" then @_getElementName(element.get('targetelements').get('scenarioelement')[0].get('id'), list)
-      when "fundamental-diagram-profiles", "downstream-boundary-profiles", "initial-density-profiles" then @_getElementName(element.get('link_id'), list)
-      when "split-ratio-profiles", "signals" then @_getElementName(element.get('node_id'), list)
-      when "sensors" then @_getElementName(element.get('link_reference').get('id'), list)
+      when "network-list", "network-connections" then [element]
+      when "demand-profiles" then [$a.Util.getElement(element.get('link_id_origin'), list)]
+      when "od-demand-profiles" then [$a.Util.getElement(element.get('link_id_origin'), list), $a.Util.getElement(element.get('link_id_destination'), list)]
+      when "controllers", "events" then [$a.Util.getElement(element.get('targetelements').get('scenarioelement')[0].get('id'), list)]
+      when "fundamental-diagram-profiles", "downstream-boundary-profiles", "initial-density-profiles" then [$a.Util.getElement(element.get('link_id'), list)]
+      when "split-ratio-profiles", "signals" then [$a.Util.getElement(element.get('node_id'), list)]
+      when "sensors" then [$a.Util.getElement(element.get('link_reference').get('id'), list)]
 
-  # Iterate over the list to find name associated with the id
-  _getElementName: (id, list) ->
-      (_.find(list, (elem) ->  elem.get('id') == id)).get('name')
+
