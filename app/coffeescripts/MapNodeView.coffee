@@ -33,7 +33,7 @@ class window.sirius.MapNodeView extends window.sirius.MapMarkerView
     else
       @marker.setIcon(MapNodeView.__super__.getIcon.apply(@, [icon]) )
     
-  _getIconName: () ->  
+  _getIconName: () ->
     tokens = @marker.get('icon').url.split "/"
     lastIndex =  tokens.length - 1
     tokens[lastIndex]
