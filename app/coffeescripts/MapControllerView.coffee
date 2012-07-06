@@ -28,3 +28,7 @@ class window.sirius.MapControllerView extends window.sirius.MapMarkerView
       @marker.setIcon(MapControllerView.__super__.getIcon.apply(@, [selected]) )
     else
       @marker.setIcon(MapControllerView.__super__.getIcon.apply(@, [icon]) )
+
+  # This method swaps the icon for the de-selected icon
+  clearSelected: () =>
+    super MapControllerView.ICON unless $a.SHIFT_DOWN

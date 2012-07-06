@@ -5,7 +5,11 @@ class window.sirius.MapMarkerView extends Backbone.View
   $a = window.sirius
   
   initialize: (@model, @latLng) ->
+    self = @
     @draw()
+    google.maps.event.addListener(@marker, 'dragend', @dragMarker())
+    google.maps.event.addListener(@marker, 'click', (event) -> self.markerSelect())
+    $a.broker.on('map:clear_selected', @clearSelected, @)
     $a.broker.on('map:init', @render, @)
 
   render: =>
@@ -17,7 +21,6 @@ class window.sirius.MapMarkerView extends Backbone.View
   # our standard dot.png. Each subclasses overrides get_icon
   # to pass the correct icon 
   draw: ->
-    self = @
     @marker = new google.maps.Marker({
         map: null
         position: @latLng 
@@ -25,8 +28,7 @@ class window.sirius.MapMarkerView extends Backbone.View
         icon: @getIcon()
         title: "Name: #{@model.get('name')}\nLatitude: #{@latLng.lat()}\nLongitude: #{@latLng.lng()}"
       });
-    google.maps.event.addListener(@marker, 'dragend', @dragMarker())
-    google.maps.event.addListener(@marker, 'click', (event) -> self.markerSelect())
+    
     
   getIcon: (img) ->
     new google.maps.MarkerImage("#{MapMarkerView.IMAGE_PATH}#{img}.png",
@@ -52,5 +54,9 @@ class window.sirius.MapMarkerView extends Backbone.View
     tokens = @marker.get('icon').url.split '/'
     lastIndex =  tokens.length - 1
     tokens[lastIndex]
-    
+  
+  # This method swaps the icon for the de-selected icon
+  clearSelected: (img) ->
+    @marker.setIcon(@getIcon(img))
+  
 

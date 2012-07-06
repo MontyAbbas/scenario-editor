@@ -22,6 +22,7 @@ class window.sirius.MapNodeView extends window.sirius.MapMarkerView
   ################# select events for marker
   # Callback for the markers click event
   markerSelect: () =>
+    $a.broker.trigger('map:clear_selected')
     if @model.get('type') != MapNodeView.TERMINAL_TYPE
       @_setIcon(MapNodeView.ICON, MapNodeView.SELECTED_ICON) 
     else
@@ -34,3 +35,7 @@ class window.sirius.MapNodeView extends window.sirius.MapMarkerView
       @marker.setIcon(MapNodeView.__super__.getIcon.apply(@, [selected]) )
     else
       @marker.setIcon(MapNodeView.__super__.getIcon.apply(@, [icon]) )
+  
+  # This method swaps the icon for the de-selected icon
+  clearSelected: () =>
+    super MapNodeView.ICON unless $a.SHIFT_DOWN
