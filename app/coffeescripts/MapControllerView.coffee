@@ -9,6 +9,8 @@ class window.sirius.MapControllerView extends window.sirius.MapMarkerView
 
   initialize: (model,lat_lng) ->
     super  model, lat_lng
+    @model.scenElements = @model.get('targetelements').get('scenarioelement')
+    @model.links = @_getLinks()
     MapControllerView.view_controllers.push @
     $a.broker.on('map:hide_controller_layer', @hideMarker, @)
     $a.broker.on('map:show_controller_layer', @showMarker, @)
@@ -19,7 +21,14 @@ class window.sirius.MapControllerView extends window.sirius.MapMarkerView
   ################# select events for marker
   # Callback for the markers click event
   markerSelect: () ->
-    $a.broker.trigger('map:clear_selected')
+    $a.broker.trigger('map:clear_selected') unless $a.SHIFT_DOWN
+    $a.broker.trigger('app:tree_remove_highlight') unless $a.SHIFT_DOWN
+    self = @
+    _.each(self.model.links, (link) -> 
+          $a.broker.trigger("map:select_item:#{link.cid}")
+          $a.broker.trigger("app:tree_highlight:#{link.cid}")
+        )
+
     @_setIcon(MapControllerView.ICON, MapControllerView.SELECTED_ICON) 
 
   # Swaps icons depending on which icon is set
@@ -32,4 +41,11 @@ class window.sirius.MapControllerView extends window.sirius.MapMarkerView
 
   # This method swaps the icon for the de-selected icon
   clearSelected: () =>
-    super MapControllerView.ICON unless $a.SHIFT_DOWN
+    super MapControllerView.ICON
+
+  # Iterate over the list to find name associated with the id
+  _getLinks: ->
+    links = []
+    self = @
+    _.each(self.model.scenElements, (elem) -> links.push $a.Util.getElement(elem.id,$a.MapNetworkModel.LINKS))
+    links

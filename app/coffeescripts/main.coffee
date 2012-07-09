@@ -32,7 +32,7 @@ sirius_classes_without_extensions = [
 ]
 
 sirius_map_view_classes = [
-  'AppView', 'MapLinkView', 'MapMarkerView', 'MapNetworkView', 'MapNodeView', 'MapSensorView', 'MapControllerView', 'MapEventView', 'MapSignalView', 'Util',
+  'MapNetworkModel', 'AppView', 'MapLinkView', 'MapMarkerView', 'MapNetworkView', 'MapNodeView', 'MapSensorView', 'MapControllerView', 'MapEventView', 'MapSignalView', 'Util',
   'TreeView', 'TreeParentItemView', 'TreeChildItemView','NavBarView','NavParentItemView','NavChildItemView', 'FileUploadView'
 ]
 
