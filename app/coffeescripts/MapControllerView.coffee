@@ -18,6 +18,10 @@ class window.sirius.MapControllerView extends window.sirius.MapMarkerView
   getIcon: ->
     super MapControllerView.ICON
 
+  # Reset the static array
+  @removeAll: ->
+    @view_controllers = []
+
   ################# select events for marker
   # Callback for the markers click event
   markerSelect: () ->
