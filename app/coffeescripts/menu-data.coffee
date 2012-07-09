@@ -41,3 +41,10 @@ $a.nav_bar_menu_items = {
             }
 }
 
+###### Main window context menu
+$a.main_context_menu = [
+   {className:'context_menu_item', event: (() -> $a.map.setZoom $a.map.getZoom()+1), label:'Zoom in'}
+   {className:'context_menu_item', event: (() -> $a.map.setZoom $a.map.getZoom()-1), label:'Zoom out'}
+   {className:'context_menu_separator'}
+   {className:'context_menu_item', event: (() -> $a.map.panTo $a.contextMenu.position), label:'Center map here'}
+]

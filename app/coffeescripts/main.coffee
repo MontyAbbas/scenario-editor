@@ -36,6 +36,10 @@ sirius_map_view_classes = [
   'TreeView', 'TreeParentItemView', 'TreeChildItemView','NavBarView','NavParentItemView','NavChildItemView', 'FileUploadView'
 ]
 
+sirius_overlay_view_classes = [
+  'ContextMenuItemView','ContextMenuView'
+]
+
 load_sirius_classes = (after) ->
   head.js "js/Sirius.js", ->
     class_paths = _.map(sirius_classes_without_extensions, (cname) -> "js/#{cname}.js")
@@ -51,14 +55,14 @@ load_sirius_classes = (after) ->
 window.load_context_menu_and_app_view = ->
     head.js 'js/menus.js',
             'js/menu-data.js',
-            '../libs/js/ContextMenu.js', ->
-              # static instance level event aggegator that most classes use to register their
-              # own listeners on
-              window.sirius.broker = _.clone(Backbone.Events)
-              new window.sirius.AppView()
-              lmenu = new window.LayersHandler('lh')
-              lmenu.createHTML()
-              lmenu.attachEvents()
+            'js/ContextMenuItemView.js',
+            'js/ContextMenuView.js', ->
+        #    '../libs/js/ContextMenu.js', ->
+              
+                  # static instance level event aggegator that most classes use to register their
+                  # own listeners on
+                  window.sirius.broker = _.clone(Backbone.Events)
+                  new window.sirius.AppView()
 
 head.js('https://www.google.com/jsapi',
         '../libs/js/jquery-1.7.1.js',

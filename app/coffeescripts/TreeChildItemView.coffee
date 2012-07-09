@@ -14,7 +14,7 @@ class window.sirius.TreeChildItemView extends Backbone.View
       @id = "tree-item-#{@model.id}" 
       $(@el).attr 'id', @id
     displayName =  name
-    @template = _.template($("#child-item-menu-template").html())
+    @template = _.template($('#child-item-menu-template').html())
     @$el.html(@template({text: displayName})) 
     $a.broker.on('app:child_trees', @render, @)
     self = @
