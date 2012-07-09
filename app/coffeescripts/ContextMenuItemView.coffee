@@ -4,7 +4,7 @@
 class window.sirius.ContextMenuItemView extends Backbone.View
   tagName: 'li'
 
-  initialize: (@parent, values) ->
+  initialize: (@parentId, values) ->
     @template = _.template($('#child-item-menu-template').html())
     @$el.html @template({text: values.label})  if values.label
     @$el.attr 'class', values.className if values.className
@@ -15,6 +15,6 @@ class window.sirius.ContextMenuItemView extends Backbone.View
   
   render: () ->
     self = @
-    $("##{@parent.options.id}").append(self.el)
+    $("##{@parentId}").append(self.el)
     @
 

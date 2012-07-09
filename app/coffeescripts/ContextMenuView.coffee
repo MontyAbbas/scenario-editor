@@ -6,12 +6,14 @@
 # https://developers.google.com/maps/documentation/javascript/reference#OverlayView
 class window.sirius.ContextMenuView extends google.maps.OverlayView
   $a = window.sirius
+  el: {}
   
   constructor: (@options) ->
+    @template = _.template($('#context-menu-template').html())
+    @el =  @template({elemId: @options.id, elemClass: @options.class})
     @pixelOffset = @options.pixelOffset || new google.maps.Point(0, 0)
     @isVisible = false
     @position = new google.maps.LatLng(0, 0);
-    @setMap($a.map)
     #hides the context menu if you click anywhere else on the map
     self = @
     google.maps.event.addDomListener(window, 'click', (() -> self.hide()))
@@ -19,17 +21,17 @@ class window.sirius.ContextMenuView extends google.maps.OverlayView
   
   draw: () ->
     if @isVisible
-      mapSize=new google.maps.Size($("##{@options.id}").offsetWidth, $("##{@options.id}").offsetHeight)
-      menuSize=new google.maps.Size($("##{@options.id}").offsetWidth, $("##{@options.id}").offsetHeight)
-      mousePosition=@getProjection().fromLatLngToDivPixel(@position)
-      left=mousePosition.x
-      top=mousePosition.y
+      mapSize = new google.maps.Size($("##{@options.id}").offsetWidth, $("##{@options.id}").offsetHeight)
+      menuSize = new google.maps.Size($("##{@options.id}").offsetWidth, $("##{@options.id}").offsetHeight)
+      mousePosition = @getProjection().fromLatLngToDivPixel(@position)
+      left = mousePosition.x
+      top = mousePosition.y
 
       if(mousePosition.x>mapSize.width-menuSize.width-@pixelOffset.x)
-        left=left-menuSize.width-@pixelOffset.x
+         left=left-menuSize.width-@pixelOffset.x
       else
-        left+=@pixelOffset.x
-
+         left+=@pixelOffset.x
+       
       if(mousePosition.y>mapSize.height-menuSize.height-@pixelOffset.y)
         top=top-menuSize.height-@pixelOffset.y
       else
@@ -38,25 +40,25 @@ class window.sirius.ContextMenuView extends google.maps.OverlayView
       $("##{@options.id}").css({ top: "#{top}px", left: "#{left}px"})
   
   hide: () ->
+    @setMap(null)
     if @isVisible
       $("##{@options.id}").hide()
       @isVisible=false
   
   show: (position) ->
+    $("body").append(@el)
+    @position = position
+    @setMap($a.map)
     if(!@isVisible)
       $("##{@options.id}").show()
       @isVisible = true
-    @position = position
-    @draw()
-  
+
   onAdd: () ->
-    @menu = $("##{@options.id}")[0]
     self = @
-    _.each(self.options.menuItems, (item) -> new $a.ContextMenuItemView(self, item))
-    @getPanes().floatPane.appendChild(@menu)
+    _.each(self.options.menuItems, (item) -> new $a.ContextMenuItemView(self.options.id, item))
 
   onRemove: () ->
-    @menu.parentNode.removeChild(@menu)
+    $("##{@options.id}").remove()
   
   getVisible: () ->
     @isVisible

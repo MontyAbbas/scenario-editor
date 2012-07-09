@@ -48,3 +48,9 @@ $a.main_context_menu = [
    {className:'context_menu_separator'}
    {className:'context_menu_item', event: (() -> $a.map.panTo $a.contextMenu.position), label:'Center map here'}
 ]
+
+###### Link Context Menu
+$a.link_context_menu = [
+  { label: 'Select Link and its Nodes', className: 'context_menu_item', event: (() -> alert('Not Configured')) }
+  { label: 'Clear Selection', className: 'context_menu_item', event: (() -> alert('Not Configured')) }
+]

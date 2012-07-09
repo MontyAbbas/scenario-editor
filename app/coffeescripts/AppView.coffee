@@ -45,7 +45,8 @@ class window.sirius.AppView extends Backbone.View
   _contextMenu: () ->
     contextMenuOptions = {}
     contextMenuOptions.menuItems= $a.main_context_menu
-    contextMenuOptions.id="main-context-menu"
+    contextMenuOptions.id='main-context-menu'
+    contextMenuOptions.class='context_menu'
     $a.contextMenu = new $a.ContextMenuView(contextMenuOptions)
     google.maps.event.addListener($a.map, 'rightclick', (mouseEvent) -> $a.contextMenu.show mouseEvent.latLng )
 

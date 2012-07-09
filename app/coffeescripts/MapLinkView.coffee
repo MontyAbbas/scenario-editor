@@ -14,6 +14,7 @@ class window.sirius.MapLinkView extends Backbone.View
     @drawLink @legs
     #@drawArrow @leg
     MapLinkView.view_links.push @
+    @_contextMenu()
     $a.broker.on('map:init', @render, @)
     $a.broker.on('map:hide_link_layer', @hideLink, @)
     $a.broker.on('map:show_link_layer', @showLink, @)
@@ -51,6 +52,15 @@ class window.sirius.MapLinkView extends Backbone.View
       strokeWeight: 4
     })
     
+  # Context Menu
+  # Create the link Context Menu
+  _contextMenu: () ->
+    contextMenuOptions = {}
+    contextMenuOptions.menuItems = $a.link_context_menu
+    contextMenuOptions.class = 'context_menu'
+    contextMenuOptions.id = "context-menu-link-#{@model.id}"
+    $a.contextMenuLink = new $a.ContextMenuView(contextMenuOptions)
+    google.maps.event.addListener(@link, 'rightclick', (mouseEvent) -> $a.contextMenuLink.show mouseEvent.latLng )
   
   ################# The following handles the show and hide of link layers including the arrow heads
   hideLink: () ->
@@ -77,6 +87,7 @@ class window.sirius.MapLinkView extends Backbone.View
   # This method swaps the icon for the de-selected icon
   clearSelected: () =>
     @link.setOptions(options: { strokeColor: MapLinkView.LINK_COLOR })
+  
   
   ################# manually drawing arrow 
   # NOTE : I am removing this for now in favor of the v3 method of using symbol paths. 

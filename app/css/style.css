@@ -75,8 +75,8 @@ body { height: 100%; margin: 5px; padding: 0 }
   background-color: #0088cc;
 }
 hr {
-	margin:0;
-	padding:0 0 2px 0;
+  margin:0;
+  padding:0 0 2px 0;
 }
 
 #lh{position:fixed; left:20px; bottom:25px; z-index: 2}
