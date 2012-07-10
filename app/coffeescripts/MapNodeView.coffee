@@ -19,6 +19,10 @@ class window.sirius.MapNodeView extends window.sirius.MapMarkerView
   getIcon: ->
     if @model.get('type') != MapNodeView.TERMINAL_TYPE then super MapNodeView.ICON else super MapNodeView.TERMINAL_ICON
 
+  # Reset the static array
+  @removeAll: ->
+    @view_nodes = []
+
   ################# select events for marker
   # Callback for the markers click event
   markerSelect: () =>

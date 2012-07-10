@@ -16,6 +16,10 @@ class window.sirius.MapSensorView extends window.sirius.MapMarkerView
   getIcon: ->
     super MapSensorView.ICONMapSensorView
 
+  # Reset the static array
+  @removeAll: ->
+    @view_sensors = []
+
   ################# select events for marker
   # Callback for the markers click event
   markerSelect: () ->

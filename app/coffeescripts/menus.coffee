@@ -1,54 +1,7 @@
-
-show_events = true
-show_controllers = true
-show_sensors = true
-
-window.triggerEvent = (eventName) ->
-
-  switch eventName
-    when 'clearMap'
-      window.sirius.broker.trigger('map:hide_node_layer')
-      window.sirius.broker.trigger('map:hide_link_layer')
-      window.sirius.broker.trigger('map:hide_event_layer')
-      window.sirius.broker.trigger('map:hide_controller_layer')
-      window.sirius.broker.trigger('map:hide_sensor_layer')
-      window.sirius.broker.trigger('map:hide_signal_layer')
-      window.sirius.MapControllerView.view_controllers = []
-      window.sirius.MapControllerView.view_events = []
-      window.sirius.MapControllerView.view_nodes = []
-      window.sirius.MapControllerView.view_sensors = []
-      window.sirius.MapControllerView.view_signals = []
-    when 'showAllNodes'
-      window.sirius.broker.trigger('map:show_node_layer')
-    when 'hideAllNodes'
-      window.sirius.broker.trigger('map:hide_node_layer')
-    when 'showAllLinks'
-      window.sirius.broker.trigger('map:show_link_layer')
-    when 'hideAllLinks'
-      window.sirius.broker.trigger('map:hide_link_layer:freeway')
-    when 'showEvents'
-      if show_events
-        window.sirius.broker.trigger('map:hide_event_layer')
-      else
-        window.sirius.broker.trigger('map:show_event_layer')
-      show_events = !show_events
-    when 'showControllers'
-      if show_controllers
-        window.sirius.broker.trigger('map:hide_controller_layer')
-      else
-        window.sirius.broker.trigger('map:show_controller_layer')
-      show_controllers = !show_controllers
-    when 'showSensors'
-      if show_sensors
-        window.sirius.broker.trigger('map:hide_sensor_layer')
-      else
-        window.sirius.broker.trigger('map:show_sensor_layer')
-      show_sensors = !show_sensors
-  null
+class window.LayersHandler extends Backbone.View
+  $a = window.sirius
   
-class window.LayersHandler
-  constructor: (id) ->
-    @id = id
+  initialize: (options) ->
     menuItems = []
     menuItems.push {
       eventName: 'showAllNodes',
@@ -137,6 +90,7 @@ class window.LayersHandler
     @menuItems_ = menuItems
 
   createHTML: ->
+    alert 'creating'
     f = 0
     createMenuItem = (values) ->
       if values.label
@@ -170,8 +124,10 @@ class window.LayersHandler
     menu = document.createElement('ul')
     menu.className = 'dropdown-menu bottom-up'
     menu.id = 'l_list'
-    parent = document.getElementById(@id)
+    alert 'oh no'
+    parent = document.getElementById('lh')
     parent.href="#l_list"
+    alert 'here?'
 
     i = 0
     j = @menuItems_.length
@@ -180,8 +136,7 @@ class window.LayersHandler
       i++
     parent.appendChild menu
     @menu_ = menu;
-    null
-    # possibly add click listener here
+    this
   
   attachEvents: ->
     $(".jdialog").dialog
@@ -237,3 +192,51 @@ class window.LayersHandler
         else
           true
 
+show_events = true
+show_controllers = true
+show_sensors = true
+
+window.triggerEvent = (eventName) ->
+  switch eventName
+    when 'clearMap'
+      window.sirius.broker.trigger('map:hide_node_layer')
+      window.sirius.broker.trigger('map:hide_link_layer')
+      window.sirius.broker.trigger('map:hide_event_layer')
+      window.sirius.broker.trigger('map:hide_controller_layer')
+      window.sirius.broker.trigger('map:hide_sensor_layer')
+      window.sirius.broker.trigger('map:hide_signal_layer')
+      window.sirius.MapControllerView.removeAll()
+      window.sirius.MapEventView.removeAll()
+      window.sirius.MapLinkView.removeAll()
+      window.sirius.MapNodeView.removeAll()
+      window.sirius.MapSensorView.removeAll()
+      window.sirius.MapSignalView.removeAll()
+      window.sirius.MapNetworkModel.removeAll()
+      
+    when 'showAllNodes'
+      window.sirius.broker.trigger('map:show_node_layer')
+    when 'hideAllNodes'
+      window.sirius.broker.trigger('map:hide_node_layer')
+    when 'showAllLinks'
+      window.sirius.broker.trigger('map:show_link_layer')
+    when 'hideAllLinks'
+      window.sirius.broker.trigger('map:hide_link_layer:freeway')
+    when 'showEvents'
+      if show_events
+        window.sirius.broker.trigger('map:hide_event_layer')
+      else
+        window.sirius.broker.trigger('map:show_event_layer')
+      show_events = !show_events
+    when 'showControllers'
+      if show_controllers
+        window.sirius.broker.trigger('map:hide_controller_layer')
+      else
+        window.sirius.broker.trigger('map:show_controller_layer')
+      show_controllers = !show_controllers
+    when 'showSensors'
+      if show_sensors
+        window.sirius.broker.trigger('map:hide_sensor_layer')
+      else
+        window.sirius.broker.trigger('map:show_sensor_layer')
+      show_sensors = !show_sensors
+  null

@@ -26,6 +26,10 @@ class window.sirius.MapLinkView extends Backbone.View
     #@arrow.setMap($a.map) if @arrow?
     @
 
+  # Reset the static array
+  @removeAll: ->
+    @view_links = []
+
   #this method reads the path of points contained in the leg
   #and converts it into a polyline object to be drawn on the map
   #The Polyline map attribute will be null until render is called

@@ -26,11 +26,11 @@
   };
 
   window.load_context_menu_and_app_view = function() {
-    return head.js('js/menus.js', 'js/menu-data.js', '../libs/js/ContextMenu.js', function() {
+    return head.js('js/LayersHandlerItem.js', 'js/LayersHandler.js', 'js/menu-data.js', '../libs/js/ContextMenu.js', function() {
       var lmenu;
       window.sirius.broker = _.clone(Backbone.Events);
       new window.sirius.AppView();
-      lmenu = new window.LayersHandler('lh');
+      lmenu = new window.LayersHandler({});
       lmenu.createHTML();
       return lmenu.attachEvents();
     });

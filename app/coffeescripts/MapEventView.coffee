@@ -17,6 +17,10 @@ class window.sirius.MapEventView extends window.sirius.MapMarkerView
 
   getIcon: ->
     super MapEventView.ICON
+  
+  # Reset the static array
+  @removeAll: ->
+    @view_events = []
 
   ################# select events for marker
   # Callback for the markers click event
@@ -50,3 +54,4 @@ class window.sirius.MapEventView extends window.sirius.MapMarkerView
     _.each(self.model.scenElements, (elem) -> links.push $a.Util.getElement(elem.id,$a.MapNetworkModel.LINKS))
     links
     
+  
