@@ -20,24 +20,30 @@ class window.sirius.MapControllerView extends window.sirius.MapMarkerView
 
   ################# select events for marker
   # Callback for the markers click event
-  markerSelect: () ->
+  # Callback for the markers click event. It decided whether we are selecting or de-selecting and triggers appropriately 
+  manageMarkerSelect: () =>
+    iconName = MapControllerView.__super__._getIconName.apply(@, []) 
+    if iconName == "#{MapControllerView.ICON}.png"
+      @_triggerClearSelectEvents()
+      $a.broker.trigger("app:tree_highlight:#{@model.cid}")
+      @makeSelected()
+    else
+      @_triggerClearSelectEvents()
+      @clearSelected() # you call clearSelected in case the Shift key is down and you are deselecting yourself
+
+  # This function triggers the events that make the selected tree and map items to de-selected
+  _triggerClearSelectEvents: () ->
     $a.broker.trigger('map:clear_selected') unless $a.SHIFT_DOWN
     $a.broker.trigger('app:tree_remove_highlight') unless $a.SHIFT_DOWN
+
+  # This method swaps the icon for the selected icon
+  makeSelected: () ->
     self = @
     _.each(self.model.links, (link) -> 
           $a.broker.trigger("map:select_item:#{link.cid}")
           $a.broker.trigger("app:tree_highlight:#{link.cid}")
         )
-
-    @_setIcon(MapControllerView.ICON, MapControllerView.SELECTED_ICON) 
-
-  # Swaps icons depending on which icon is set
-  _setIcon: (icon, selected) ->
-    iconName = MapControllerView.__super__._getIconName.apply(@, []) 
-    if iconName == "#{icon}.png" 
-      @marker.setIcon(MapControllerView.__super__.getIcon.apply(@, [selected]) )
-    else
-      @marker.setIcon(MapControllerView.__super__.getIcon.apply(@, [icon]) )
+    super MapControllerView.SELECTED_ICON
 
   # This method swaps the icon for the de-selected icon
   clearSelected: () =>
