@@ -49,7 +49,8 @@ load_sirius_classes = (after) ->
 
 # we wait to load ContextMenu.js until after the google libs load
 window.load_context_menu_and_app_view = ->
-    head.js 'js/menus.js',
+    head.js 'js/LayersHandler.js',
+            'js/LayersHandlerItem.js',
             'js/menu-data.js',
             '../libs/js/ContextMenu.js', ->
               # static instance level event aggegator that most classes use to register their

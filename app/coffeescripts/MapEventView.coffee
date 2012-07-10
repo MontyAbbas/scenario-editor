@@ -6,7 +6,7 @@ class window.sirius.MapEventView extends window.sirius.MapMarkerView
   @SELECTED_ICON: 'event-selected'
   @view_events = []
   $a = window.sirius
-  
+
   initialize: (model, lat_lng) ->
     super model, lat_lng
     @model.scenElements = @model.get('targetelements').get('scenarioelement')

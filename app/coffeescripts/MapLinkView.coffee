@@ -8,7 +8,7 @@ class window.sirius.MapLinkView extends Backbone.View
   
   @view_links = []
   $a = window.sirius
-  
+
   initialize: (@model, @legs) ->
     self = @
     @drawLink @legs

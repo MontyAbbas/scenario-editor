@@ -15,7 +15,7 @@ class window.sirius.MapNodeView extends window.sirius.MapMarkerView
     MapNodeView.view_nodes.push @
     $a.broker.on('map:show_node_layer', @showMarker, @)
     $a.broker.on('map:hide_node_layer', @hideMarker, @)
-
+    
   getIcon: ->
     if @model.get('type') != MapNodeView.TERMINAL_TYPE then super MapNodeView.ICON else super MapNodeView.TERMINAL_ICON
 

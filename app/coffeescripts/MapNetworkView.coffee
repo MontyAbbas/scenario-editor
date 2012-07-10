@@ -17,7 +17,7 @@ class window.sirius.MapNetworkView extends Backbone.View
     new window.sirius.TreeView({ scenario: @scenario, attach: "#right_tree"})
     @render()
   
-  render: ->  
+  render: ->
     $a.broker.trigger('map:init')
     $a.broker.trigger('app:main_tree')
     @
