@@ -7,8 +7,11 @@ class window.sirius.MapSensorView extends window.sirius.MapMarkerView
   @view_sensors = []
   $a = window.sirius
   
-  initialize: (model, lat_lng) ->
+  # we pass in the network links so the sensors can figure out which link they 
+  # belong too 
+  initialize: (model, lat_lng, links) ->
     super model, lat_lng
+    @model.links = links
     MapSensorView.view_sensors.push @
     @_contextMenu()
     $a.broker.on("map:select_neighbors:#{@model.cid}", @selectSelfandMyLinks, @)
@@ -28,7 +31,8 @@ class window.sirius.MapSensorView extends window.sirius.MapMarkerView
     iconName = MapSensorView.__super__._getIconName.apply(@, []) 
     if iconName == "#{MapSensorView.ICON}.png"
       @_triggerClearSelectEvents()
-      $a.broker.trigger("app:tree_highlight:#{@model.cid}")
+      target = $a.Util.getElement(@model.get('link_reference').get('id'), @model.links)
+      $a.broker.trigger("app:tree_highlight:#{target.cid}")
       @makeSelected()
     else
       @_triggerClearSelectEvents()

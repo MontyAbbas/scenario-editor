@@ -11,7 +11,7 @@ class window.sirius.TreeChildItemView extends Backbone.View
   initialize: (@model, @targets, name, @element) ->
     # We add an empty node that says None Defined if no children are defined
     if @model?
-      @id = "tree-item-#{@model.id}" 
+      @id = "tree-item-#{@element}-#{@model.id}" 
       $(@el).attr 'id', @id
     displayName =  name
     @template = _.template($('#child-item-menu-template').html())
