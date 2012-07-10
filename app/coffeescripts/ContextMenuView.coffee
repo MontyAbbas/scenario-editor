@@ -17,13 +17,14 @@ class window.sirius.ContextMenuView extends google.maps.OverlayView
     #hides the context menu if you click anywhere else on the map
     self = @
     google.maps.event.addDomListener(window, 'click', (() -> self.hide()))
+    $a.broker.on('map:hide_context_menus', @hide, @)
 
   
   draw: () ->
     if @isVisible
       mapSize = new google.maps.Size($("##{@options.id}").offsetWidth, $("##{@options.id}").offsetHeight)
       menuSize = new google.maps.Size($("##{@options.id}").offsetWidth, $("##{@options.id}").offsetHeight)
-      mousePosition = @getProjection().fromLatLngToDivPixel(@position)
+      mousePosition = @getProjection().fromLatLngToContainerPixel(@position)
       left = mousePosition.x
       top = mousePosition.y
 
@@ -46,6 +47,7 @@ class window.sirius.ContextMenuView extends google.maps.OverlayView
       @isVisible=false
   
   show: (position) ->
+    $a.broker.trigger('map:hide_context_menus')
     $("body").append(@el)
     @position = position
     @setMap($a.map)
