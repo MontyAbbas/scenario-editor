@@ -47,6 +47,7 @@ class window.sirius.ContextMenuView extends google.maps.OverlayView
       @isVisible=false
   
   show: (position) ->
+    # This ensures no other context menus are on the screen when we show this one
     $a.broker.trigger('map:hide_context_menus')
     $("body").append(@el)
     @position = position

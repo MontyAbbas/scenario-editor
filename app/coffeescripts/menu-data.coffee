@@ -41,7 +41,7 @@ $a.nav_bar_menu_items = {
             }
 }
 
-###### Main window context menu
+# Main window context menu
 $a.main_context_menu = [
    {className:'context_menu_item', event: (() -> $a.map.setZoom $a.map.getZoom()+1), label:'Zoom in'}
    {className:'context_menu_item', event: (() -> $a.map.setZoom $a.map.getZoom()-1), label:'Zoom out'}
@@ -49,8 +49,22 @@ $a.main_context_menu = [
    {className:'context_menu_item', event: (() -> $a.map.panTo $a.contextMenu.position), label:'Center map here'}
 ]
 
-###### Link Context Menu
+# Link Context Menu
 $a.link_context_menu = [
-  { label: 'Select Link and its Nodes', className: 'context_menu_item', event: (() -> alert('Not Configured')) }
+  { label: 'Select Link and its Nodes', className: 'context_menu_item', event: ((e) -> $a.broker.trigger("map:select_neighbors:#{e.currentTarget.id}")) }
+  { label: 'Clear Selection', className: 'context_menu_item', event: (() -> alert('Not Configured')) }
+]
+
+# Sensor Context Menu
+$a.sensor_context_menu = [
+  { label: 'Select sensor link', className: 'context_menu_item', event: (() -> alert('Not Configured')) }
+  { label: 'Clear Selection', className: 'context_menu_item', event: (() -> alert('Not Configured')) }
+]
+
+# Node Context Menu
+$a.node_context_menu = [
+  { label: 'Select node and its links', className: 'context_menu_item', event: (() -> alert('Not Configured')) }
+  { label: 'Select Outgoing links', className: 'context_menu_item', event: (() -> alert('Not Configured')) }
+  { label: 'Select Incoming links', className: 'context_menu_item', event: (() -> alert('Not Configured')) }
   { label: 'Clear Selection', className: 'context_menu_item', event: (() -> alert('Not Configured')) }
 ]

@@ -10,12 +10,18 @@ class window.sirius.MapSensorView extends window.sirius.MapMarkerView
   initialize: (model, lat_lng) ->
     super model, lat_lng
     MapSensorView.view_sensors.push @
+    @_contextMenu()
     $a.broker.on('map:hide_sensor_layer', @hideMarker, @)
     $a.broker.on('map:show_sensor_layer', @showMarker, @)
 
   getIcon: ->
     super MapSensorView.ICONMapSensorView
 
+  # Context Menu
+  # Create the Sensor Context Menu. Call the super class method to create the context menu
+  _contextMenu: () ->
+    super 'sensor', $a.sensor_context_menu
+  
   ################# select events for marker
   # Callback for the markers click event
   markerSelect: () ->

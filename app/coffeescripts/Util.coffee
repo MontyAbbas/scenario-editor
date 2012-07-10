@@ -28,3 +28,7 @@ class window.sirius.Util
   # The list is the list you want to iterate over and the id is what you want to find
   @getElement: (id, list) ->
     _.find(list, (elem) ->  elem.get('id') == id)  
+
+  @cloneArray: (arr) ->
+    temp = {}
+    _.each(arr, (item) -> temp.push {item.key : item.value})
