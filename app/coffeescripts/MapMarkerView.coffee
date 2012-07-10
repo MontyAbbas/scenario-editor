@@ -49,7 +49,7 @@ class window.sirius.MapMarkerView extends Backbone.View
     @contextMenuOptions = {}
     @contextMenuOptions.class = 'context_menu'
     @contextMenuOptions.id = "context-menu-#{type}-#{@model.id}"
-    @contextMenuOptions.menuItems = $a.Util.copy($a.link_context_menu)
+    @contextMenuOptions.menuItems = $a.Util.copy(menuItems)
     @contextMenuOptions.menuItems[0].id = "#{@model.cid}"
     @contextMenu = new $a.ContextMenuView(@contextMenuOptions)
     self = @
