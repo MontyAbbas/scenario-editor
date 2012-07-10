@@ -60,7 +60,7 @@ class window.sirius.MapLinkView extends Backbone.View
     @contextMenuOptions = {}
     @contextMenuOptions.menuItems = []
     #set this id for the select item so we know what event to call
-    @contextMenuOptions.menuItems = @_copy($a.link_context_menu)
+    @contextMenuOptions.menuItems = $a.Util.copy($a.link_context_menu)
     @contextMenuOptions.menuItems[0].id = "#{@model.cid}"
     @contextMenuOptions.class = 'context_menu'
     @contextMenuOptions.id = "context-menu-link-#{@model.cid}"
@@ -68,14 +68,7 @@ class window.sirius.MapLinkView extends Backbone.View
     self = @
     google.maps.event.addListener(@link, 'rightclick', (mouseEvent) -> self.contextMenu.show mouseEvent.latLng )
   
-  _copy: (items) ->
-    temp = []
-    self = @
-    _.each(items, (item) ->
-      temp.push {label: item.label, className: item.className, event: item.event}
-    )
-    temp
-    
+
   ################# The following handles the show and hide of link layers including the arrow heads
   hideLink: () ->
     @link.setMap(null)

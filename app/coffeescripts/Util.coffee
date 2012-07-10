@@ -29,6 +29,10 @@ class window.sirius.Util
   @getElement: (id, list) ->
     _.find(list, (elem) ->  elem.get('id') == id)  
 
-  @cloneArray: (arr) ->
-    temp = {}
-    _.each(arr, (item) -> temp.push {item.key : item.value})
+  @copy: (items) ->
+    temp = []
+    self = @
+    _.each(items, (item) ->
+      temp.push {label: item.label, className: item.className, event: item.event}
+    )
+    temp

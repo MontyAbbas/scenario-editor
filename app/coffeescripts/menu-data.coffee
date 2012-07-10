@@ -52,19 +52,19 @@ $a.main_context_menu = [
 # Link Context Menu
 $a.link_context_menu = [
   { label: 'Select Link and its Nodes', className: 'context_menu_item', event: ((e) -> $a.broker.trigger("map:select_neighbors:#{e.currentTarget.id}")) }
-  { label: 'Clear Selection', className: 'context_menu_item', event: (() -> alert('Not Configured')) }
+  { label: 'Clear Selection', className: 'context_menu_item', event: (() -> $a.broker.trigger("map:clear_selected")) }
 ]
 
 # Sensor Context Menu
 $a.sensor_context_menu = [
-  { label: 'Select sensor link', className: 'context_menu_item', event: (() -> alert('Not Configured')) }
-  { label: 'Clear Selection', className: 'context_menu_item', event: (() -> alert('Not Configured')) }
+  { label: 'Select sensor link', className: 'context_menu_item', event: ((e) -> $a.broker.trigger("map:select_neighbors:#{e.currentTarget.id}")) }
+  { label: 'Clear Selection', className: 'context_menu_item', event: (() -> $a.broker.trigger("map:clear_selected")) }
 ]
 
 # Node Context Menu
 $a.node_context_menu = [
-  { label: 'Select node and its links', className: 'context_menu_item', event: (() -> alert('Not Configured')) }
-  { label: 'Select Outgoing links', className: 'context_menu_item', event: (() -> alert('Not Configured')) }
-  { label: 'Select Incoming links', className: 'context_menu_item', event: (() -> alert('Not Configured')) }
-  { label: 'Clear Selection', className: 'context_menu_item', event: (() -> alert('Not Configured')) }
+  { label: 'Select node and its links', className: 'context_menu_item', event: ((e) -> $a.broker.trigger("map:select_neighbors:#{e.currentTarget.id}")) }
+  { label: 'Select Outgoing links', className: 'context_menu_item', event: ((e) -> $a.broker.trigger("map:select_neighbors_outgoing:#{e.currentTarget.id}")) }
+  { label: 'Select Incoming links', className: 'context_menu_item', event: ((e) -> $a.broker.trigger("map:select_neighbors_incoming:#{e.currentTarget.id}")) }
+  { label: 'Clear Selection', className: 'context_menu_item', event: (() -> $a.broker.trigger("map:clear_selected")) }
 ]

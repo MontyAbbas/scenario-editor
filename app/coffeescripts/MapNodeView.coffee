@@ -14,6 +14,7 @@ class window.sirius.MapNodeView extends window.sirius.MapMarkerView
     super model, lat_lng
     MapNodeView.view_nodes.push @
     @_contextMenu()
+    $a.broker.on("map:select_neighbors:#{@model.cid}", @selectSelfandMyLinks, @)
     $a.broker.on('map:show_node_layer', @showMarker, @)
     $a.broker.on('map:hide_node_layer', @hideMarker, @)
 
@@ -41,6 +42,18 @@ class window.sirius.MapNodeView extends window.sirius.MapMarkerView
   _triggerClearSelectEvents: () ->
     $a.broker.trigger('map:clear_selected') unless $a.SHIFT_DOWN
     $a.broker.trigger('app:tree_remove_highlight') unless $a.SHIFT_DOWN
+  
+  # This method is called from the context menu and selects itself and all the nodes links.
+  # Note we filter the Network links for all links with this node attached. The inputs and
+  # output can be used in the future but test data was not configured correctly
+  selectSelfandMyLinks: () ->
+    @makeSelected()
+    self = @
+    links =  _.filter($a.MapNetworkModel.LINKS, (link) -> 
+                  beginID = link.get('begin').get('node').get('id')
+                  endID = link.get('end').get('node').get('id')
+                  ((beginID == self.model.get('id')) or  (endID == self.model.get('id'))))
+    _.each(links, (link) -> $a.broker.trigger("map:select_item:#{link.cid}"))
   
   # This method swaps the icon for the selected icon
   makeSelected: () ->
