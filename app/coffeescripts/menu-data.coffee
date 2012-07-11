@@ -64,7 +64,7 @@ $a.sensor_context_menu = [
 # Node Context Menu
 $a.node_context_menu = [
   { label: 'Select node and its links', className: 'context_menu_item', event: ((e) -> $a.broker.trigger("map:select_neighbors:#{e.currentTarget.id}")) }
-  { label: 'Select Outgoing links', className: 'context_menu_item', event: ((e) -> $a.broker.trigger("map:select_neighbors_outgoing:#{e.currentTarget.id}")) }
-  { label: 'Select Incoming links', className: 'context_menu_item', event: ((e) -> $a.broker.trigger("map:select_neighbors_incoming:#{e.currentTarget.id}")) }
+  { label: 'Select Outgoing links', className: 'context_menu_item', event: ((e) -> $a.broker.trigger("map:select_neighbors_outgoing:#{e.currentTarget.id}",['output'])) }
+  { label: 'Select Incoming links', className: 'context_menu_item', event: ((e) -> $a.broker.trigger("map:select_neighbors_incoming:#{e.currentTarget.id}",['input'])) }
   { label: 'Clear Selection', className: 'context_menu_item', event: ((e) -> $a.broker.trigger("map:clear_neighbors:#{e.currentTarget.id}")) }
 ]

@@ -62,9 +62,13 @@ class window.sirius.AppView extends Backbone.View
     @mapView = new $a.MapNetworkView $a.models
 
   _setKeyEvents: (e) ->
-    # Open Local Network SHIFT-A
-    $("#uploadField").click() if e.type == 'keydown' and $a.SHIFT_DOWN and e.keyCode == 65
+    # Open Local Network ALT-A
+    $("#uploadField").click() if e.type == 'keydown' and $a.ALT_DOWN and e.keyCode == 65
     
     # Set multi-select of map elements with the shift key
     $a.SHIFT_DOWN = false
     $a.SHIFT_DOWN = true if e.type == 'keydown' and e.keyCode == 16
+    
+    # Set multi-select of map elements with the shift key
+    $a.ALT_DOWN = false
+    $a.ALT_DOWN = true if e.type == 'keydown' and e.keyCode == 18
