@@ -70,3 +70,42 @@ $a.node_context_menu = [
   { label: 'Select Incoming links', className: 'context_menu_item', event: ((e) -> $a.broker.trigger("map:select_neighbors_incoming:#{e.currentTarget.id}",['input'])) }
   { label: 'Clear Selection', className: 'context_menu_item', event: ((e) -> $a.broker.trigger("map:clear_neighbors:#{e.currentTarget.id}")) }
 ]
+
+# Layers Menu
+$a.layers_node_type_list = [
+       { label: 'Freeway Nodes', eventName: 'freewayNodes' }
+       { label: 'Highway Nodes', eventName: 'highwayNodes' }
+       { label: 'Signalized Intersections', eventName: 'signalXing' }
+       { label: 'Stop Intersections', eventName: 'stopXing' }
+       { label: 'Terminals', eventName: 'terminals' }
+       { label: 'Other', eventName: 'otherNodes' }  
+     ]
+
+$a.layers_link_type_list = [
+      { label: 'Freeway mainlines', eventName: 'freelines' }
+      { label: 'Highway mainlines', eventName: 'highlines' }
+      { label: 'HOV lanes', eventName: 'hovlanes' }
+      { label: 'HOT lanes', eventName: 'hotlanes' }
+      { label: 'Heavy vehicle lanes', eventName: 'heavylanes' }
+      { label: 'Elec. toll coll. lanes', eventName: 'eleclanes' }
+      { label: 'On-ramps', eventName: 'onramps' }
+      { label: 'Off-ramps', eventName: 'offramps' }
+      { label: 'Interconnects', eventName: 'interconnects' }
+      { label: 'Streets', eventName: 'streets' }
+      { label: 'Dummy links', eventName: 'dummylinks' }
+    ]
+
+$a.layers_menu = [
+  { label: 'Show all nodes', eventName: 'showAllNodes' }
+  { label: 'Hide all nodes', eventName: 'hideAllNodes' }
+  { label: 'Nodes', className: 'dropdown submenu', link: 'nodeTypeList', href: '#nodeTypeList', items: $a.layers_node_type_list }
+  { className: 'divider' }
+  { label: 'Show all links', eventName: 'showAllLinks' }
+  { label: 'Hide all links', eventName: 'hideAllLinks' }
+  { label: 'Links', className: 'dropdown submenu', href: '#linkTypeList', link: 'linkTypeList', items: $a.layers_link_type_list }
+  { className: 'divider' }
+  { label: 'Events', eventName: 'showEvents' }
+  { label: 'Controllers', eventName: 'showControllers' }
+  { label: 'Sensors', eventName: 'showSensors' }
+]
+

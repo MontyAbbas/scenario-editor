@@ -32,19 +32,19 @@ sirius_classes_without_extensions = [
 ]
 
 sirius_map_view_classes = [
-  'MapNetworkModel', 'AppView', 'FileUploadView', 'LayersHandler', 'LayersHandlerItem','MapLinkView', 'MapMarkerView', 'MapNetworkView', 'MapNodeView', 'MapSensorView', 'MapControllerView', 'MapEventView', 'MapSignalView', 'Util',
+  'AppView', 'ContextMenuItemView','ContextMenuView', 'FileUploadView', 'LayersMenuView', 'LayersMenuViewItem','MapLinkView', 'MapMarkerView', 'MapNetworkView', 'MapNodeView', 'MapSensorView', 'MapControllerView', 'MapEventView', 'MapSignalView', 'Util',
   'TreeView', 'TreeParentItemView', 'TreeChildItemView','NavBarView','NavParentItemView','NavChildItemView'
 ]
 
-sirius_overlay_view_classes = [
-  'ContextMenuItemView','ContextMenuView'
+sirius_model_view_classes = [
+  'MapNetworkModel'
 ]
 
 load_sirius_classes = (after) ->
   head.js "js/Sirius.js", ->
     class_paths = _.map(sirius_classes_without_extensions, (cname) -> "js/#{cname}.js")
     class_paths = class_paths.concat _.flatten(_.map(sirius_map_view_classes, (cname) -> "js/#{cname}.js"))
-    class_paths = class_paths.concat _.flatten(_.map(sirius_overlay_view_classes, (cname) -> "js/#{cname}.js"))
+    class_paths = class_paths.concat _.flatten(_.map(sirius_model_view_classes, (cname) -> "js/#{cname}.js"))
     class_paths = class_paths.concat _.flatten(_.map(
       sirius_classes_with_extensions,
       (cname) -> ["js/#{cname}.js","js/extensions/#{cname}.js"]
@@ -54,7 +54,6 @@ load_sirius_classes = (after) ->
 
 window.load_sirius = ->
     head.js "js/Sirius.js",
-            'js/menus.js',
             'js/menu-data.js', ->
               load_sirius_classes ->
                   # static instance level event aggegator that most classes use to register their
