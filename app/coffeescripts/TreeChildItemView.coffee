@@ -5,13 +5,16 @@ class window.sirius.TreeChildItemView extends Backbone.View
   tagName: "li"
   className: "file"
   events : {
-            'click': 'highlight',
+            'click': 'manageHighlight',
             'contextmenu' : 'showContext' 
           }
 
   # The model attribute is the model for this class, the element attribute is 
   # the name of the parent tree element this model should be attached too 
   initialize: (@model, @targets, name, @element) ->
+    # used to toggle highlight for this element
+    @highlighted = false
+
     # We add an empty node that says None Defined if no children are defined
     if @model?
       @id = "tree-item-#{@targets[0].cid}" 
@@ -22,7 +25,7 @@ class window.sirius.TreeChildItemView extends Backbone.View
     $a.broker.on('app:child_trees', @render, @)
     self = @
     _.each(self.targets, (target) -> 
-      $a.broker.on("app:tree_highlight:#{target.cid}", self.highlightOtherSelves, self)
+      $a.broker.on("app:tree_highlight:#{target.cid}", self.highlight, self)
       $a.broker.on("app:tree_remove_highlight:#{target.cid}", self.removeHighlight, self)
       ) if @targets?
     $a.broker.on('app:tree_remove_highlight', @removeHighlight, @)
@@ -32,18 +35,24 @@ class window.sirius.TreeChildItemView extends Backbone.View
     $("#tree-parent-#{@element}").append(self.el)
     @
   
-  highlight:  =>
+  manageHighlight:  =>
     $a.broker.trigger('map:clear_selected') unless $a.SHIFT_DOWN
     $a.broker.trigger('app:tree_remove_highlight') unless $a.SHIFT_DOWN
-    self = @
-    _.each(self.targets, (elem) ->
-          $a.broker.trigger("app:tree_highlight:#{elem.cid}")
-          $a.broker.trigger("map:select_item:#{elem.cid}")
-      ) if @targets?
-    $a.broker.trigger("map:select_item:#{@model.cid}")
-    $(@el).addClass "highlight"
+   
+    if !@highlighted
+      @highlighted = true
+      self = @
+      _.each(self.targets, (elem) ->
+            $a.broker.trigger("app:tree_highlight:#{elem.cid}")
+            $a.broker.trigger("map:select_item:#{elem.cid}")
+          ) if @targets?
+      $a.broker.trigger("map:select_item:#{@model.cid}")
+      @highlight()
+    else 
+      @highlighted = false
+      @removeHighlight()
 
-  highlightOtherSelves: () ->
+  highlight: () =>
     $(@el).addClass "highlight"
   
   removeHighlight: =>
