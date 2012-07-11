@@ -44,6 +44,7 @@ load_sirius_classes = (after) ->
   head.js "js/Sirius.js", ->
     class_paths = _.map(sirius_classes_without_extensions, (cname) -> "js/#{cname}.js")
     class_paths = class_paths.concat _.flatten(_.map(sirius_map_view_classes, (cname) -> "js/#{cname}.js"))
+    class_paths = class_paths.concat _.flatten(_.map(sirius_overlay_view_classes, (cname) -> "js/#{cname}.js"))
     class_paths = class_paths.concat _.flatten(_.map(
       sirius_classes_with_extensions,
       (cname) -> ["js/#{cname}.js","js/extensions/#{cname}.js"]
@@ -52,13 +53,11 @@ load_sirius_classes = (after) ->
     head.js.apply(@, class_paths)
 
 # we wait to load ContextMenu.js until after the google libs load
-window.load_context_menu_and_app_view = ->
-    head.js 'js/menus.js',
-            'js/menu-data.js',
-            'js/ContextMenuItemView.js',
-            'js/ContextMenuView.js', ->
-        #    '../libs/js/ContextMenu.js', ->
-              
+window.load_sirius = ->
+    head.js "js/Sirius.js",
+            'js/menus.js',
+            'js/menu-data.js', ->
+              load_sirius_classes ->
                   # static instance level event aggegator that most classes use to register their
                   # own listeners on
                   window.sirius.broker = _.clone(Backbone.Events)
@@ -70,9 +69,8 @@ head.js('https://www.google.com/jsapi',
         '../libs/js/underscore.js',
         '../libs/js/backbone.js',
         '../libs/js/bootstrap/js/bootstrap.js', ->
-            load_sirius_classes ->
                google.load("maps", "3", {
-                  callback: "window.load_context_menu_and_app_view()",
+                  callback: "window.load_sirius()",
                   other_params: "libraries=geometry,drawing&sensor=false"
                  });
 )
