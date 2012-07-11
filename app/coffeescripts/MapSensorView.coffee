@@ -15,6 +15,7 @@ class window.sirius.MapSensorView extends window.sirius.MapMarkerView
     MapSensorView.view_sensors.push @
     @_contextMenu()
     $a.broker.on("map:select_neighbors:#{@model.cid}", @selectSelfandMyLinks, @)
+    $a.broker.on("map:clear_neighbors:#{@model.cid}", @clearSelfandMyLinks, @)
     $a.broker.on('map:hide_sensor_layer', @hideMarker, @)
     $a.broker.on('map:show_sensor_layer', @showMarker, @)
 
@@ -43,15 +44,29 @@ class window.sirius.MapSensorView extends window.sirius.MapMarkerView
     $a.broker.trigger('map:clear_selected') unless $a.SHIFT_DOWN
     $a.broker.trigger('app:tree_remove_highlight') unless $a.SHIFT_DOWN
 
-  # This method is called from the context menu and selects itself and all the nodes links.
-  # Note we filter the Network links for all links with this node attached. The inputs and
-  # output can be used in the future but test data was not configured correctly
+  # This method is called from the context menu and selects itself and all the sensor links.
+  # Note we filter the Network links for all links with this node attached.
   selectSelfandMyLinks: () ->
+    @_triggerClearSelectEvents()
     @makeSelected()
     self = @
     links =  _.filter($a.MapNetworkModel.LINKS, (link) -> link.get('id') == self.model.get('link_reference').get('id'))
-    _.each(links, (link) -> $a.broker.trigger("map:select_item:#{link.cid}"))
+    _.each(links, (link) -> 
+        $a.broker.trigger("app:tree_highlight:#{link.cid}")
+        $a.broker.trigger("map:select_item:#{link.cid}")
+      )
 
+  # This method is called from the context menu and de-selects itself and all the sensor links.
+  # Note we filter the Network links for all links with this node attached.
+  clearSelfandMyLinks: () ->
+    @clearSelected()
+    self = @
+    links =  _.filter($a.MapNetworkModel.LINKS, (link) -> link.get('id') == self.model.get('link_reference').get('id'))
+    _.each(links, (link) -> 
+        $a.broker.trigger("map:clear_item:#{link.cid}")
+        $a.broker.trigger("app:tree_remove_highlight:#{link.cid}")
+      )
+      
   # This method swaps the icon for the selected icon
   makeSelected: () ->
     super MapSensorView.SELECTED_ICON

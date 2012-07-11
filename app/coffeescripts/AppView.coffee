@@ -65,3 +65,4 @@ class window.sirius.AppView extends Backbone.View
   _setShift: (e) ->
     $a.SHIFT_DOWN = false
     $a.SHIFT_DOWN = true if e.type == 'keydown' and e.keyCode == 16
+    
