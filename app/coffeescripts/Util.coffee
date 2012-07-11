@@ -28,3 +28,11 @@ class window.sirius.Util
   # The list is the list you want to iterate over and the id is what you want to find
   @getElement: (id, list) ->
     _.find(list, (elem) ->  elem.get('id') == id)  
+
+  @copy: (items) ->
+    temp = []
+    self = @
+    _.each(items, (item) ->
+      temp.push {label: item.label, className: item.className, event: item.event}
+    )
+    temp

@@ -14,9 +14,11 @@ class window.sirius.AppView extends Backbone.View
     @_initializeMap()
     @_navBar()
     @_contextMenu()
+    lmenu = new window.LayersHandler('lh')
+    lmenu.createHTML()
+    lmenu.attachEvents()
     self = @
-    google.maps.event.addDomListener(window, 'keydown', (event) -> self._setShift(event))
-    google.maps.event.addDomListener(window, 'keyup', (event) -> self._setShift(event))
+    google.maps.event.addDomListener(window, 'keydown', (event) -> self._setKeyEvents(event))
     $a.broker.on('map:upload_complete', @_displayMap, @)
     @
 
@@ -41,26 +43,11 @@ class window.sirius.AppView extends Backbone.View
   # Currently we have zoom in and zoom out as well as center the map. 
   _contextMenu: () ->
     contextMenuOptions = {}
-    contextMenuOptions.classNames = {menu:'context_menu', menuSeparator:'context_menu_separator'}
-    menuItems = []
-    menuItems.push {className:'context_menu_item', eventName:'zoom_in_click', label:'Zoom in'}
-    menuItems.push {className:'context_menu_item', eventName:'zoom_out_click', label:'Zoom out'}
-    menuItems.push {}
-    menuItems.push {className:'context_menu_item', eventName:'center_map_click', label:'Center map here'}
-    contextMenuOptions.menuItems=menuItems
-    contextMenu = new ContextMenu($a.map, contextMenuOptions)
-    google.maps.event.addListener($a.map, 'rightclick', (mouseEvent) ->
-      contextMenu.show mouseEvent.latLng
-      null
-    )
-
-    google.maps.event.addListener(contextMenu, 'menu_item_selected', (latLng, eventName) ->
-      switch eventName
-        when 'zoom_in_click' then $a.map.setZoom map.getZoom()+1
-        when 'zoom_out_click' then $a.map.setZoom map.getZoom()-1
-        when 'center_map_click' then $a.map.panTo latLng
-      null
-    )
+    contextMenuOptions.menuItems= $a.main_context_menu
+    contextMenuOptions.id='main-context-menu'
+    contextMenuOptions.class='context_menu'
+    $a.contextMenu = new $a.ContextMenuView(contextMenuOptions)
+    google.maps.event.addListener($a.map, 'rightclick', (mouseEvent) -> $a.contextMenu.show mouseEvent.latLng )
 
   # This creates the main navigation bar menu
   _navBar: () ->
@@ -74,6 +61,14 @@ class window.sirius.AppView extends Backbone.View
     new $a.MapNetworkModel()
     @mapView = new $a.MapNetworkView $a.models
 
-  _setShift: (e) ->
+  _setKeyEvents: (e) ->
+    # Open Local Network ALT-A
+    $("#uploadField").click() if e.type == 'keydown' and $a.ALT_DOWN and e.keyCode == 65
+    
+    # Set multi-select of map elements with the shift key
     $a.SHIFT_DOWN = false
     $a.SHIFT_DOWN = true if e.type == 'keydown' and e.keyCode == 16
+    
+    # Set multi-select of map elements with the shift key
+    $a.ALT_DOWN = false
+    $a.ALT_DOWN = true if e.type == 'keydown' and e.keyCode == 18

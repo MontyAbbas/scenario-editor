@@ -8,9 +8,10 @@ class window.sirius.MapMarkerView extends Backbone.View
     self = @
     @draw()
     google.maps.event.addListener(@marker, 'dragend', @dragMarker())
-    google.maps.event.addListener(@marker, 'click', (event) -> self.markerSelect())
+    google.maps.event.addListener(@marker, 'click', (event) -> self.manageMarkerSelect())
     $a.broker.on('map:clear_selected', @clearSelected, @)
-    $a.broker.on("map:select_item:#{@model.cid}", @markerSelect, @)
+    $a.broker.on("map:select_item:#{@model.cid}", @makeSelected, @)
+    $a.broker.on("map:clear_item:#{@model.cid}", @clearSelected, @)
     $a.broker.on('map:init', @render, @)
 
   render: =>
@@ -30,13 +31,33 @@ class window.sirius.MapMarkerView extends Backbone.View
         title: "Name: #{@model.get('name')}\nLatitude: #{@latLng.lat()}\nLongitude: #{@latLng.lng()}"
       });
     
-    
+  
   getIcon: (img) ->
+    @getMarkerImage img
+  
+  getMarkerImage: (img) ->
     new google.maps.MarkerImage("#{MapMarkerView.IMAGE_PATH}#{img}.png",
       new google.maps.Size(32, 32),
       new google.maps.Point(0,0),
       new google.maps.Point(16, 16)
     );
+
+  # Context Menu
+  # Create the Marker Context Menu. This class is always called by it overridden subclass method.
+  # The menu items are stored with their events in an array and
+  # can be configired in the menu-data.coffee file
+  _contextMenu: (type, menuItems) ->
+    @contextMenuOptions = {}
+    @contextMenuOptions.class = 'context_menu'
+    @contextMenuOptions.id = "context-menu-#{type}-#{@model.id}"
+    @contextMenuOptions.menuItems = $a.Util.copy(menuItems)
+    #set this id for the select item so we know what event to call
+    self = @
+    _.each(self.contextMenuOptions.menuItems, (item) -> item.id = "#{self.model.cid}")
+    
+    @contextMenu = new $a.ContextMenuView(@contextMenuOptions)
+    self = @
+    google.maps.event.addListener(@marker, 'rightclick', (mouseEvent) -> self.contextMenu.show mouseEvent.latLng )
 
   # events used to move the marker and update its position
   dragMarker: =>
@@ -56,8 +77,15 @@ class window.sirius.MapMarkerView extends Backbone.View
     lastIndex =  tokens.length - 1
     tokens[lastIndex]
   
+  _setSelected: (img) ->
+    @marker.setIcon(@getMarkerImage(img))
+      
+  # This method swaps the icon for the selected icon
+  makeSelected: (img) ->
+    @_setSelected img
+  
   # This method swaps the icon for the de-selected icon
   clearSelected: (img) ->
-    @marker.setIcon(@getIcon(img))
+    @_setSelected img
   
 

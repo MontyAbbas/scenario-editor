@@ -25,6 +25,8 @@ body { height: 100%; margin: 5px; padding: 0 }
 }
 
 .context_menu {
+  display:none; 
+  position:absolute;
   background-color: #fff;
   min-width: 160px;
   max-width: 220px;
@@ -56,6 +58,7 @@ body { height: 100%; margin: 5px; padding: 0 }
   line-height: 18px;
   color: #555555;
   white-space: nowrap;
+  cursor:pointer; 
 }
 .context_menu_separator {
   height: 1px;
@@ -72,8 +75,8 @@ body { height: 100%; margin: 5px; padding: 0 }
   background-color: #0088cc;
 }
 hr {
-	margin:0;
-	padding:0 0 2px 0;
+  margin:0;
+  padding:0 0 2px 0;
 }
 
 #lh{position:fixed; left:20px; bottom:25px; z-index: 2}

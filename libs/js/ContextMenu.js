@@ -120,12 +120,6 @@ ContextMenu.prototype.onAdd=function(){
 	this.getPanes().floatPane.appendChild(menu);
 };
 
-ContextMenu.prototype.onRemove=function(){
-	this.menu_.parentNode.removeChild(this.menu_);
-	delete this.mapDiv_;
-	delete this.menu_;
-	delete this.position_;
-};
 
 ContextMenu.prototype.show=function(latLng){
 	if(!this.isVisible_){
