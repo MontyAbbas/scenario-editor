@@ -122,12 +122,24 @@ class window.LayersHandler extends Backbone.View
     $a.MapNetworkModel.removeAll()
   
   
-  showAlert: ->
+  showAlert: (message) ->
     alertBox = document.createElement 'div'
     alertBox.className = 'alert alert-bottom'
-    alertBox.innerHTML = 'Loaded map'
+    alertBox.innerHTML = message
+    
+    closeButton = document.createElement 'button'
+    closeButton.className = 'close'
+    closeButton.setAttribute('data-dismiss', 'alert')
+    closeButton.innerHTML = 'x'
+    closeButton.href = '#'
+    
+    alertBox.appendChild closeButton
     bod = document.getElementById 'body'
     bod.appendChild alertBox
+    
+    setTimeout( ->
+      closeButton.click()
+    , 2000)
     
   attachEvents: ->
     $a.broker.on("map:clearMap", @clearMap, @)
