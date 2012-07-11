@@ -24,7 +24,13 @@ class window.sirius.ContextMenuView extends google.maps.OverlayView
     if @isVisible
       mapSize = new google.maps.Size($("##{@options.id}").offsetWidth, $("##{@options.id}").offsetHeight)
       menuSize = new google.maps.Size($("##{@options.id}").offsetWidth, $("##{@options.id}").offsetHeight)
-      mousePosition = @getProjection().fromLatLngToContainerPixel(@position)
+      # If @position comes from the google map it will be of type google.maps.LatLng otherwise it will
+      # be from the tree view and will simply be the x and y position of the item
+      if @position instanceof google.maps.LatLng
+        mousePosition = @getProjection().fromLatLngToContainerPixel(@position) 
+      else
+        mousePosition = @position
+      
       left = mousePosition.x
       top = mousePosition.y
 

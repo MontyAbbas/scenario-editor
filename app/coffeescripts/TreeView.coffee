@@ -55,10 +55,10 @@ class window.sirius.TreeView extends Backbone.View
   _createChildNodes: (list, attach, nameList) ->
     self = @
     _.each(list, (e) ->
-      target = self._findTargetElements(e, attach, nameList)
-      name = target[0].get('name')
-      name = "#{name} -> #{target[1].get('name')}" if target.length > 1 #for OD Profiles
-      new $a.TreeChildItemView(e, target, name, attach))
+      targets = self._findTargetElements(e, attach, nameList)
+      name = targets[0].get('name')
+      name = "#{name} -> #{targets[1].get('name')}" if targets.length > 1 #for OD Profiles
+      new $a.TreeChildItemView(e, targets, name, attach))
 
   # We are trying to figure out the target objects for these elements. Again, we case the 
   # type in order to appropriate access the node or link id and then get its name from the node

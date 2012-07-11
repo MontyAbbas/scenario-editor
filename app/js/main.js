@@ -6,7 +6,7 @@
 
   sirius_classes_without_extensions = ['ALatLng', 'CapacityProfile', 'Data_source', 'Decision_point', 'Decision_point_split', 'Decision_points', 'DecisionPoints', 'DemandProfile', 'DemandProfileSet', 'Description', 'DirectionsCacheEntry', 'DirectionsCache', 'DownstreamBoundaryCapacityProfileSet', 'EncodedPolyline', 'FeedbackElements', 'From', 'FundamentalDiagram', 'FundamentalDiagramProfile', 'FundamentalDiagramProfileSet', 'InitialDensitySet', 'Inputs', 'IntersectionCacheEntry', 'IntersectionCache', 'Knob', 'Lane_count_change', 'Levels', 'LinkGeometry', 'Link_reference', 'Linkpair', 'Links', 'NetworkConnections', 'Networkpair', 'Od_demandProfile', 'ODDemandProfileSet', 'Outputs', 'On_off_switch', 'Outputs', 'Parameter', 'Parameters', 'Plan_reference', 'Points', 'Postmile', 'Qcontroller', 'Route_segment', 'Route_segments', 'RouteSegments', 'ScenarioElement', 'Splitratio', 'SplitratioEvent', 'SplitratioProfile', 'SplitRatioProfileSet', 'Stage', 'TargetElements', 'To', 'Units', 'Vehicle_type', 'VehicleTypes', 'VehicleTypeOrder', 'Weavingfactors', 'WeavingfactorSet'];
 
-  sirius_map_view_classes = ['MapNetworkModel', 'AppView', 'MapLinkView', 'MapMarkerView', 'MapNetworkView', 'MapNodeView', 'MapSensorView', 'MapControllerView', 'MapEventView', 'MapSignalView', 'Util', 'TreeView', 'TreeParentItemView', 'TreeChildItemView', 'NavBarView', 'NavParentItemView', 'NavChildItemView', 'FileUploadView'];
+  sirius_map_view_classes = ['MapNetworkModel', 'AppView', 'FileUploadView', 'LayersHandler', 'LayersHandlerItem', 'MapLinkView', 'MapMarkerView', 'MapNetworkView', 'MapNodeView', 'MapSensorView', 'MapControllerView', 'MapEventView', 'MapSignalView', 'Util', 'TreeView', 'TreeParentItemView', 'TreeChildItemView', 'NavBarView', 'NavParentItemView', 'NavChildItemView'];
 
   sirius_overlay_view_classes = ['ContextMenuItemView', 'ContextMenuView'];
 
@@ -19,6 +19,9 @@
       class_paths = class_paths.concat(_.flatten(_.map(sirius_map_view_classes, function(cname) {
         return "js/" + cname + ".js";
       })));
+      class_paths = class_paths.concat(_.flatten(_.map(sirius_overlay_view_classes, function(cname) {
+        return "js/" + cname + ".js";
+      })));
       class_paths = class_paths.concat(_.flatten(_.map(sirius_classes_with_extensions, function(cname) {
         return ["js/" + cname + ".js", "js/extensions/" + cname + ".js"];
       })));
@@ -27,19 +30,19 @@
     });
   };
 
-  window.load_context_menu_and_app_view = function() {
-    return head.js('js/LayersHandlerItem.js', 'js/LayersHandler.js', 'js/menu-data.js', 'js/ContextMenuItemView.js', 'js/ContextMenuView.js', function() {
-      window.sirius.broker = _.clone(Backbone.Events);
-      return new window.sirius.AppView();
+  window.load_sirius = function() {
+    return head.js("js/Sirius.js", 'js/menus.js', 'js/menu-data.js', function() {
+      return load_sirius_classes(function() {
+        window.sirius.broker = _.clone(Backbone.Events);
+        return new window.sirius.AppView();
+      });
     });
   };
 
   head.js('https://www.google.com/jsapi', '../libs/js/jquery-1.7.1.js', '../libs/js/jquery-ui-1.8.18.min.js', '../libs/js/underscore.js', '../libs/js/backbone.js', '../libs/js/bootstrap/js/bootstrap.js', function() {
-    return load_sirius_classes(function() {
-      return google.load("maps", "3", {
-        callback: "window.load_context_menu_and_app_view()",
-        other_params: "libraries=geometry,drawing&sensor=false"
-      });
+    return google.load("maps", "3", {
+      callback: "window.load_sirius()",
+      other_params: "libraries=geometry,drawing&sensor=false"
     });
   });
 

@@ -45,7 +45,9 @@ class window.sirius.MapMarkerView extends Backbone.View
   # Context Menu
   # Create the Marker Context Menu. This class is always called by it overridden subclass method.
   # The menu items are stored with their events in an array and
-  # can be configired in the menu-data.coffee file
+  # can be configired in the menu-data.coffee file. We create a dependency with the ContextMenuView
+  # here. There may a better way to do this. I also add the contextMenu itself to the model so the
+  # same menu can be added to the tree items for this node
   _contextMenu: (type, menuItems) ->
     @contextMenuOptions = {}
     @contextMenuOptions.class = 'context_menu'
@@ -58,7 +60,8 @@ class window.sirius.MapMarkerView extends Backbone.View
     @contextMenu = new $a.ContextMenuView(@contextMenuOptions)
     self = @
     google.maps.event.addListener(@marker, 'rightclick', (mouseEvent) -> self.contextMenu.show mouseEvent.latLng )
-
+    @model.set('contextMenu', @contextMenu)
+    
   # events used to move the marker and update its position
   dragMarker: =>
     @latLng = @marker.getPosition();
