@@ -3,21 +3,22 @@ class window.sirius.LayersMenuView extends Backbone.View
   
   initialize: (options) ->
     @menuItems = $a.layers_menu
+    console.log @menuItems
     
 
   createHTML: ->
-    menu = document.createElement('ul')
-    menu.className = 'dropdown-menu bottom-up'
-    menu.id = 'l_list'
+    @menu = document.createElement('ul')
+    @menu.className = 'dropdown-menu bottom-up'
+    @menu.id = 'l_list'
     parent = document.getElementById('lh')
     parent.href="#l_list"
-    
-   _.each(@menuItems, (item) ->
-        menuChild = new LayersMenuViewItem item
-        menu.appendChild(menuChild.menuItem)
+    self = @
+    _.each(self.menuItems, (item) ->
+        menuChild = new $a.LayersMenuViewItem item
+        self.menu.appendChild(menuChild.menuItem)
       )
-    parent.appendChild menu
-    @menu_ = menu;
+    parent.appendChild @menu
+    @menu_ = @menu;
     this
   
   clearMap: ->

@@ -15,7 +15,7 @@ class window.sirius.LayersMenuViewItem extends Backbone.View
       values.eventName != 'hideAllNodes' and
       values.eventName != 'showAllLinks' and
       values.eventName != 'hideAllLinks'
-        LayersHandlerItem.visible[values.label] = true
+        LayersMenuViewItem.visible[values.label] = true
         @check(true)
       
       if values.link
@@ -27,7 +27,7 @@ class window.sirius.LayersMenuViewItem extends Backbone.View
         a = 0
         b = menulink.length
         while a < b
-          subChild = new LayersHandlerItem(menulink[a])
+          subChild = new LayersMenuViewItem(menulink[a])
           submenu.appendChild(subChild.menuItem)
           a++
         @menuItem.appendChild submenu
@@ -48,7 +48,7 @@ class window.sirius.LayersMenuViewItem extends Backbone.View
     else
       @child.innerHTML = @values.label
   doEvent: ->
-    visible_ = LayersHandlerItem.visible
+    visible_ = LayersMenuViewItem.visible
     switch @values.eventName
       when 'showAllNodes'
         $a.broker.trigger('map:show_node_layer')

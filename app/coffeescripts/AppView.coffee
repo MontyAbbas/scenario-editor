@@ -14,7 +14,7 @@ class window.sirius.AppView extends Backbone.View
     @_initializeMap()
     @_navBar()
     @_contextMenu()
-    lmenu = new window.LayersHandler('lh')
+    lmenu = new $a.LayersMenuView('lh')
     lmenu.createHTML()
     lmenu.attachEvents()
     self = @
