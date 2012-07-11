@@ -18,7 +18,10 @@ class window.sirius.TreeChildItemView extends Backbone.View
     @$el.html(@template({text: displayName})) 
     $a.broker.on('app:child_trees', @render, @)
     self = @
-    _.each(self.targets, (target) -> $a.broker.on("app:tree_highlight:#{target.cid}", self.highlightOtherSelves, self)) if @targets?
+    _.each(self.targets, (target) -> 
+      $a.broker.on("app:tree_highlight:#{target.cid}", self.highlightOtherSelves, self)
+      $a.broker.on("app:tree_remove_highlight:#{target.cid}", self.removeHighlight, self)
+      ) if @targets?
     $a.broker.on('app:tree_remove_highlight', @removeHighlight, @)
     
 

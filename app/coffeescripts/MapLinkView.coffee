@@ -19,7 +19,9 @@ class window.sirius.MapLinkView extends Backbone.View
     $a.broker.on('map:hide_link_layer', @hideLink, @)
     $a.broker.on('map:show_link_layer', @showLink, @)
     $a.broker.on("map:select_item:#{@model.cid}", @linkSelect, @)
+    $a.broker.on("map:clear_item:#{@model.cid}", @clearSelected, @)
     $a.broker.on("map:select_neighbors:#{@model.cid}", @selectSelfandMyNodes, @)
+    $a.broker.on("map:clear_neighbors:#{@model.cid}", @clearSelfandMyNodes, @)
     google.maps.event.addListener(@link, 'click', (event) -> self.manageLinkSelect())
     $a.broker.on('map:clear_selected', @clearSelected, @)
   
@@ -59,9 +61,10 @@ class window.sirius.MapLinkView extends Backbone.View
   _contextMenu: () ->
     @contextMenuOptions = {}
     @contextMenuOptions.menuItems = []
-    #set this id for the select item so we know what event to call
     @contextMenuOptions.menuItems = $a.Util.copy($a.link_context_menu)
-    @contextMenuOptions.menuItems[0].id = "#{@model.cid}"
+    #set this id for the select item so we know what event to call
+    self = @
+    _.each(self.contextMenuOptions.menuItems, (item) -> item.id = "#{self.model.cid}")
     @contextMenuOptions.class = 'context_menu'
     @contextMenuOptions.id = "context-menu-link-#{@model.cid}"
     @contextMenu = new $a.ContextMenuView(@contextMenuOptions)
@@ -104,11 +107,26 @@ class window.sirius.MapLinkView extends Backbone.View
   clearSelected: () =>
     @link.setOptions(options: { strokeColor: MapLinkView.LINK_COLOR })
   
-  # This method is called from the context menu and selects itself and all the links nodes
+  # This method is called from the context menu and selects itself and all the links nodes as the higlighted tree items
   selectSelfandMyNodes: () ->
+    # First see if everthing should be de-selected -- if shift is down will not occur
+    @_triggerClearSelectEvents()
     @linkSelect()
+    $a.broker.trigger("app:tree_highlight:#{@model.cid}")
+    $a.broker.trigger("app:tree_highlight:#{@model.get("begin").get("node").cid}")
+    $a.broker.trigger("app:tree_highlight:#{@model.get("end").get("node").cid}")
     $a.broker.trigger("map:select_item:#{@model.get("begin").get("node").cid}")
     $a.broker.trigger("map:select_item:#{@model.get("end").get("node").cid}")
+
+  # called from the context menu as well. It clears itself and its nodes as well as the higlighted tree items
+  clearSelfandMyNodes: () ->
+    @clearSelected()
+    $a.broker.trigger("map:clear_item:#{@model.get("begin").get("node").cid}")
+    $a.broker.trigger("map:clear_item:#{@model.get("end").get("node").cid}")
+    $a.broker.trigger("app:tree_remove_highlight:#{@model.cid}")
+    $a.broker.trigger("app:tree_remove_highlight:#{@model.get("begin").get("node").cid}")
+    $a.broker.trigger("app:tree_remove_highlight:#{@model.get("end").get("node").cid}")
+
   
   ################# manually drawing arrow 
   # NOTE : I am removing this for now in favor of the v3 method of using symbol paths. 

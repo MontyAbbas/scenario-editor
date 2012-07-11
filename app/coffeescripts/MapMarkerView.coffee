@@ -11,6 +11,7 @@ class window.sirius.MapMarkerView extends Backbone.View
     google.maps.event.addListener(@marker, 'click', (event) -> self.manageMarkerSelect())
     $a.broker.on('map:clear_selected', @clearSelected, @)
     $a.broker.on("map:select_item:#{@model.cid}", @makeSelected, @)
+    $a.broker.on("map:clear_item:#{@model.cid}", @clearSelected, @)
     $a.broker.on('map:init', @render, @)
 
   render: =>
@@ -50,7 +51,10 @@ class window.sirius.MapMarkerView extends Backbone.View
     @contextMenuOptions.class = 'context_menu'
     @contextMenuOptions.id = "context-menu-#{type}-#{@model.id}"
     @contextMenuOptions.menuItems = $a.Util.copy(menuItems)
-    @contextMenuOptions.menuItems[0].id = "#{@model.cid}"
+    #set this id for the select item so we know what event to call
+    self = @
+    _.each(self.contextMenuOptions.menuItems, (item) -> item.id = "#{self.model.cid}")
+    
     @contextMenu = new $a.ContextMenuView(@contextMenuOptions)
     self = @
     google.maps.event.addListener(@marker, 'rightclick', (mouseEvent) -> self.contextMenu.show mouseEvent.latLng )
