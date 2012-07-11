@@ -18,8 +18,7 @@ class window.sirius.AppView extends Backbone.View
     lmenu.createHTML()
     lmenu.attachEvents()
     self = @
-    google.maps.event.addDomListener(window, 'keydown', (event) -> self._setShift(event))
-    google.maps.event.addDomListener(window, 'keyup', (event) -> self._setShift(event))
+    google.maps.event.addDomListener(window, 'keydown', (event) -> self._setKeyEvents(event))
     $a.broker.on('map:upload_complete', @_displayMap, @)
     @
 
@@ -62,7 +61,10 @@ class window.sirius.AppView extends Backbone.View
     new $a.MapNetworkModel()
     @mapView = new $a.MapNetworkView $a.models
 
-  _setShift: (e) ->
+  _setKeyEvents: (e) ->
+    # Open Local Network SHIFT-A
+    $("#uploadField").click() if e.type == 'keydown' and $a.SHIFT_DOWN and e.keyCode == 65
+    
+    # Set multi-select of map elements with the shift key
     $a.SHIFT_DOWN = false
     $a.SHIFT_DOWN = true if e.type == 'keydown' and e.keyCode == 16
-    
