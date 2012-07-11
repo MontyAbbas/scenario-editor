@@ -11,7 +11,7 @@ body { height: 100%; margin: 5px; padding: 0 }
   visibility:hidden; 
   position:absolute;
 }
-
+.alert-bottom {position:absolute; bottom:0; right:23%; max-width:200px}
 .container {position:absolute; z-index:1; width: 278px; margin-top:5px;margin-left:80px; background-color: #444444;}
 .ui-dialog {
   background-color: #fff;

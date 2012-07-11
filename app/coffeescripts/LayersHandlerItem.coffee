@@ -57,7 +57,7 @@ class window.LayersHandlerItem extends Backbone.View
       when 'showAllLinks'
         $a.broker.trigger('map:show_link_layer')
       when 'hideAllLinks'
-        $a.broker.trigger('map:hide_link_layer:freeway')
+        $a.broker.trigger('map:hide_link_layer')
       when 'showEvents'
         if visible_['Events']
           $a.broker.trigger('map:hide_event_layer')

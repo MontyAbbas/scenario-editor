@@ -121,8 +121,17 @@ class window.LayersHandler extends Backbone.View
     $a.MapSignalView.removeAll()
     $a.MapNetworkModel.removeAll()
   
+  
+  showAlert: ->
+    alertBox = document.createElement 'div'
+    alertBox.className = 'alert alert-bottom'
+    alertBox.innerHTML = 'Loaded map'
+    bod = document.getElementById 'body'
+    bod.appendChild alertBox
+    
   attachEvents: ->
     $a.broker.on("map:clearMap", @clearMap, @)
+    $a.broker.on("map:alert", @showAlert, @)
     
     $(".jdialog").dialog
       autoOpen: false
