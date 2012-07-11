@@ -57,5 +57,14 @@ class window.sirius.TreeChildItemView extends Backbone.View
     position = {}
     position.x = e.clientX - 5
     position.y = e.clientY - 5
-    @targets[0].get('contextMenu').show position
+    # some types have targetElements and other store the element in the model itself. 
+    # We check to see if there targets -- if empty then we know to use the model
+    item = null
+    if @targets?
+      item = @targets[0]
+    else
+      item = @model
+
+    # Events and controller do not have context menus yet and may never
+    item.get('contextMenu').show position if item.get('contextMenu')?
     false

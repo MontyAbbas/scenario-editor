@@ -57,7 +57,9 @@ class window.sirius.MapLinkView extends Backbone.View
     
   # Context Menu
   # Create the link Context Menu. The menu items are stored with their events in an array and
-  # con be configired in the menu-data.coffee file
+  # con be configired in the menu-data.coffee file.  We create a dependency with the ContextMenuView
+  # here. There may a better way to do this. I also add the contextMenu itself to the model so the
+  # same menu can be added to the tree items for this link
   _contextMenu: () ->
     @contextMenuOptions = {}
     @contextMenuOptions.menuItems = []
@@ -70,7 +72,7 @@ class window.sirius.MapLinkView extends Backbone.View
     @contextMenu = new $a.ContextMenuView(@contextMenuOptions)
     self = @
     google.maps.event.addListener(@link, 'rightclick', (mouseEvent) -> self.contextMenu.show mouseEvent.latLng )
-  
+    @model.set('contextMenu', @contextMenu)
 
   ################# The following handles the show and hide of link layers including the arrow heads
   hideLink: () ->
