@@ -35,6 +35,7 @@ class window.sirius.MapLinkView extends Backbone.View
 
   # Reset the static array
   removeAll: ->
+    #$a.broker.off('map:show_link_layer', @showLink, @)
     @link = null
     @view_links = []
 
