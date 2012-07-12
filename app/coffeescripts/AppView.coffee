@@ -14,8 +14,8 @@ class window.sirius.AppView extends Backbone.View
     @_initializeMap()
     @_navBar()
     @_contextMenu()
-    lmenu = new $a.LayersMenuView('lh')
-    lmenu.createHTML()
+    lmenu = new $a.LayersMenuView({className: 'dropdown-menu bottom-up', id : 'l_list', parentId: 'lh', menuItems: $a.layers_menu})
+    # lmenu.createHTML()
     lmenu.attachEvents()
     self = @
     google.maps.event.addDomListener(window, 'keydown', (event) -> self._setKeyEvents(event))

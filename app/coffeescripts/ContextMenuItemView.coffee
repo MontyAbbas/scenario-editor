@@ -9,7 +9,6 @@ class window.sirius.ContextMenuItemView extends Backbone.View
     @$el.html @template({text: values.label})  if values.label
     @$el.attr 'class', values.className if values.className
     @$el.attr 'id', values.id if values.id
-    self = @
     @events = {'click': values.event } if values.event
     @render()
   

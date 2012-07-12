@@ -1,67 +1,68 @@
 class window.sirius.LayersMenuViewItem extends Backbone.View
   $a = window.sirius
   @visible = {}
+  tagName : 'li'
+  isShowing: true
   
-  initialize: (values) ->
-    @values = values
-    if values.label
-      @menuItem = document.createElement 'li'
-      @child = document.createElement 'a'
-      @menuItem.appendChild @child
-      @child.innerHTML = values.label
+  initialize: (@parent, values) ->
+      @triggerShow= values.triggerShow
+      @triggerHide= values.triggerHide      
+      @template = _.template($('#child-item-menu-template').html())
+      @$el.html @template({text: values.label}) if values.label
+      @$el.attr 'class', values.className if values.className
+      @$el.attr 'href', values.href if values.href
+      @$el.attr 'id', values.link if values.link
+      @events = {'click': values.event } if values.event
+      @render()
+      @_createSubMenu values.items, values.link if values.link
+      @check(true) if values.triggerShow
       
-      if values.eventName and
-      values.eventName != 'showAllNodes' and
-      values.eventName != 'hideAllNodes' and
-      values.eventName != 'showAllLinks' and
-      values.eventName != 'hideAllLinks'
-        LayersMenuViewItem.visible[values.label] = true
-        @check(true)
+      # if values.eventName and
+      # values.eventName != 'showAllNodes' and
+      # values.eventName != 'hideAllNodes' and
+      # values.eventName != 'showAllLinks' and
+      # values.eventName != 'hideAllLinks'
+      #   LayersMenuViewItem.visible[values.label] = true
+      #   @check(true)
+
       
-      if values.link
-        submenu = document.createElement('ul')
-        submenu.className = 'dropdown-menu submenu-hide'
-        submenu.setAttribute('id', values.link)
-        
-        menulink = values.items
-        a = 0
-        b = menulink.length
-        while a < b
-          subChild = new LayersMenuViewItem(menulink[a])
-          submenu.appendChild(subChild.menuItem)
-          a++
-        @menuItem.appendChild submenu
-      
-      @menuItem.className = values.className if values.className
-      @menuItem.href = values.href if values.href
-      @menuItem.onclick = (e) ->
-        $a.broker.trigger("map:#{values.eventName}")
-        e.stopPropagation()
-      $a.broker.on("map:#{values.eventName}", @doEvent, @)
-    else
-      @menuItem = document.createElement 'div'
-      @menuItem.className = values.className
+      # @menuItem.onclick = (e) ->
+      #   $a.broker.trigger("map:#{values.eventName}")
+      #   e.stopPropagation()
+      # $a.broker.on("map:#{values.eventName}", @doEvent, @)
+
+
   
+  render: ->
+    $("##{@parent}").append(@el)
+    @
+  
+  _createSubMenu: (items, id) ->
+    new $a.LayersMenuView({className: 'dropdown-menu submenu-hide', id: "sub-#{id}", parentId: id, menuItems: items })
+
   check: (show) ->
     if show
-      @child.innerHTML = '<i class="icon-ok"></i> ' + @child.innerHTML
+      @$el.addClass "icon-ok"
     else
-      @child.innerHTML = @values.label
+      @$el.removeClass "icon-ok"
+  
+  toggleVisabilty: ->
+    if @isShowing
+      $a.broker.trigger(@triggerHide)
+      @isShowing = false
+      @check(false)
+    else
+      $a.broker.trigger(@triggerShow)
+      @isShowing = true
+      @check(true)
+      
   doEvent: ->
     visible_ = LayersMenuViewItem.visible
     switch @values.eventName
-      when 'showAllNodes'
-        $a.broker.trigger('map:show_node_layer')
-      when 'hideAllNodes'
-        $a.broker.trigger('map:hide_node_layer')
-      when 'showAllLinks'
-        $a.broker.trigger('map:show_link_layer')
-      when 'hideAllLinks'
-        $a.broker.trigger('map:hide_link_layer')
       when 'showEvents'
         if visible_['Events']
           $a.broker.trigger('map:hide_event_layer')
-          @check(false)
+
         else
           $a.broker.trigger('map:show_event_layer')
           @check(true)

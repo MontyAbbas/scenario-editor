@@ -73,39 +73,39 @@ $a.node_context_menu = [
 
 # Layers Menu
 $a.layers_node_type_list = [
-       { label: 'Freeway Nodes', eventName: 'freewayNodes' }
-       { label: 'Highway Nodes', eventName: 'highwayNodes' }
-       { label: 'Signalized Intersections', eventName: 'signalXing' }
-       { label: 'Stop Intersections', eventName: 'stopXing' }
-       { label: 'Terminals', eventName: 'terminals' }
-       { label: 'Other', eventName: 'otherNodes' }  
+       { label: 'Freeway Nodes', event: ((e) -> alert('Not Configured')) }
+       { label: 'Highway Nodes', event: ((e) -> alert('Not Configured')) }
+       { label: 'Signalized Intersections', event: ((e) -> alert('Not Configured')) }
+       { label: 'Stop Intersections', event: ((e) -> alert('Not Configured')) }
+       { label: 'Terminals', event: ((e) -> alert('Not Configured')) }
+       { label: 'Other', event: ((e) -> alert('Not Configured')) }  
      ]
 
 $a.layers_link_type_list = [
-      { label: 'Freeway mainlines', eventName: 'freelines' }
-      { label: 'Highway mainlines', eventName: 'highlines' }
-      { label: 'HOV lanes', eventName: 'hovlanes' }
-      { label: 'HOT lanes', eventName: 'hotlanes' }
-      { label: 'Heavy vehicle lanes', eventName: 'heavylanes' }
-      { label: 'Elec. toll coll. lanes', eventName: 'eleclanes' }
-      { label: 'On-ramps', eventName: 'onramps' }
-      { label: 'Off-ramps', eventName: 'offramps' }
-      { label: 'Interconnects', eventName: 'interconnects' }
-      { label: 'Streets', eventName: 'streets' }
-      { label: 'Dummy links', eventName: 'dummylinks' }
+      { label: 'Freeway mainlines', event: ((e) -> alert('Not Configured')) }
+      { label: 'Highway mainlines', event: ((e) -> alert('Not Configured')) }
+      { label: 'HOV lanes', event: ((e) -> alert('Not Configured')) }
+      { label: 'HOT lanes', event: ((e) -> alert('Not Configured')) }
+      { label: 'Heavy vehicle lanes', event: ((e) -> alert('Not Configured')) }
+      { label: 'Elec. toll coll. lanes', event: ((e) -> alert('Not Configured')) }
+      { label: 'On-ramps', event: ((e) -> alert('Not Configured')) }
+      { label: 'Off-ramps', event: ((e) -> alert('Not Configured')) }
+      { label: 'Interconnects', event: ((e) -> alert('Not Configured')) }
+      { label: 'Streets', event: ((e) -> alert('Not Configured')) }
+      { label: 'Dummy links', event: ((e) -> alert('Not Configured')) }
     ]
 
 $a.layers_menu = [
-  { label: 'Show all nodes', eventName: 'showAllNodes' }
-  { label: 'Hide all nodes', eventName: 'hideAllNodes' }
+  { label: 'Show all nodes', event: ((e) -> $a.broker.trigger('map:show_node_layer')) }
+  { label: 'Hide all nodes', event: ((e) -> $a.broker.trigger('map:hide_node_layer')) }
   { label: 'Nodes', className: 'dropdown submenu', link: 'nodeTypeList', href: '#nodeTypeList', items: $a.layers_node_type_list }
   { className: 'divider' }
-  { label: 'Show all links', eventName: 'showAllLinks' }
-  { label: 'Hide all links', eventName: 'hideAllLinks' }
+  { label: 'Show all links', event: ((e) -> $a.broker.trigger('map:show_link_layer')) }
+  { label: 'Hide all links', event: ((e) -> $a.broker.trigger('map:hide_link_layer')) }
   { label: 'Links', className: 'dropdown submenu', href: '#linkTypeList', link: 'linkTypeList', items: $a.layers_link_type_list }
   { className: 'divider' }
-  { label: 'Events', eventName: 'showEvents' }
-  { label: 'Controllers', eventName: 'showControllers' }
-  { label: 'Sensors', eventName: 'showSensors' }
+  { label: 'Events', event: 'toggleVisabilty', triggerShow: "map:show_event_layer", triggerHide: "map:hide_event_layer" }
+  { label: 'Controllers',  event: 'toggleVisabilty', triggerShow: "map:show_controller_layer", triggerHide: "map:hide_controller_layer" }
+  { label: 'Sensors', event: 'toggleVisabilty', triggerShow: "map:show_sensor_layer", triggerHide: "map:hide_sensor_layer" }
 ]
 
