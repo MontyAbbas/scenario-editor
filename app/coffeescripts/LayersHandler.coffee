@@ -124,7 +124,7 @@ class window.LayersHandler extends Backbone.View
   
   showAlert: (message) ->
     alertBox = document.createElement 'div'
-    alertBox.className = 'alert alert-bottom'
+    alertBox.className = 'alert alert-success alert-bottom'
     alertBox.innerHTML = message
     
     closeButton = document.createElement 'button'

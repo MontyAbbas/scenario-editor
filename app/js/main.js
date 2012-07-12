@@ -31,7 +31,7 @@
   };
 
   window.load_sirius = function() {
-    return head.js("js/Sirius.js", 'js/menus.js', 'js/menu-data.js', function() {
+    return head.js("js/Sirius.js", 'js/LayersHandlerItem.js', 'js/LayersHandler.js', 'js/menu-data.js', function() {
       return load_sirius_classes(function() {
         window.sirius.broker = _.clone(Backbone.Events);
         return new window.sirius.AppView();

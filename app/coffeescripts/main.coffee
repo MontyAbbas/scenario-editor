@@ -54,7 +54,8 @@ load_sirius_classes = (after) ->
 
 window.load_sirius = ->
     head.js "js/Sirius.js",
-            'js/menus.js',
+            'js/LayersHandlerItem.js',
+            'js/LayersHandler.js',
             'js/menu-data.js', ->
               load_sirius_classes ->
                   # static instance level event aggegator that most classes use to register their
