@@ -26,6 +26,7 @@ class window.sirius.LayersMenuView extends Backbone.View
     $("##{@options.parentId}").append(@el)
     @
   
+  #these open and close the Layers Menu itself
   displayOff: (e) =>
     @$el.removeClass "open"
     
@@ -38,7 +39,6 @@ class window.sirius.LayersMenuView extends Backbone.View
 
   hoverSubOff: (e) =>
     $("##{e.currentTarget.id}").children("ul").removeClass("submenu-show").addClass "submenu-hide"
-  
   attachEvents: ->
     
     $(".jdialog").dialog
