@@ -26,6 +26,7 @@ class window.sirius.LayersMenuView extends Backbone.View
     $("##{@options.parentId}").append(@el)
     @
   
+  #these open and close the Layers Menu itself
   displayOff: (e) =>
     @$el.removeClass "open"
     
