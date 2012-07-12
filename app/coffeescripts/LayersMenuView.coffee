@@ -8,7 +8,9 @@ class window.sirius.LayersMenuView extends Backbone.View
   # used to create hover effects on the submenus
   events : {
       "mouseenter .submenu"   : "hoverSubOn",
-      "mouseleave .submenu"   : "hoverSubOff"
+      "mouseleave .submenu"   : "hoverSubOff",
+      "mouseleave"            : "displayOff",
+      "mouseenter"            : "displayOn",
   }
   
   # crete itself, render it and then iterate to create its menu items
@@ -23,6 +25,12 @@ class window.sirius.LayersMenuView extends Backbone.View
   render: ->
     $("##{@options.parentId}").append(@el)
     @
+  
+  displayOff: (e) =>
+    @$el.removeClass "open"
+    
+  displayOn: (e) =>
+    @$el.addClass "open"
   
   # hover events that open and close submenus
   hoverSubOn: (e) =>
