@@ -8,7 +8,7 @@ class window.sirius.LayersMenuView extends Backbone.View
   # used to create hover effects on the submenus
   events : {
       "mouseenter .submenu"   : "hoverSubOn",
-      "mouseleave .submenu"   : "hoverSubOff",
+      "mouseleave .submenu"   : "hoverSubOff"
   }
   
   # crete itself, render it and then iterate to create its menu items
@@ -30,7 +30,7 @@ class window.sirius.LayersMenuView extends Backbone.View
 
   hoverSubOff: (e) =>
     $("##{e.currentTarget.id}").children("ul").removeClass("submenu-show").addClass "submenu-hide"
-  
+
   clearMap: ->
     $a.broker.trigger('map:hide_node_layer')
     $a.broker.trigger('map:hide_link_layer')

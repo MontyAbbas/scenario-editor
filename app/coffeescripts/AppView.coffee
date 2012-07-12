@@ -58,6 +58,7 @@ class window.sirius.AppView extends Backbone.View
     # we'll need to get rid of this call -- it is doing things that it shouldn't do to the modals, clear map, etc
     lmenu.attachEvents()
 
+    
   # displayMap takes the uploaded file data parses the xml into the model objects, and creates the MapNetworkView
   _displayMap: (fileText) ->
     try
