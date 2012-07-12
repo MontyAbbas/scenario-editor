@@ -18,6 +18,8 @@ class window.sirius.AppView extends Backbone.View
     self = @
     google.maps.event.addDomListener(window, 'keydown', (event) -> self._setKeyEvents(event))
     $a.broker.on('map:upload_complete', @_displayMap, @)
+    $a.broker.on("map:clearMap", @clearMap, @)
+    $a.broker.on("map:alert", @showAlert, @)
     @
 
   # create the landing map. The latitude and longitude our arbitarily pointing
@@ -79,3 +81,30 @@ class window.sirius.AppView extends Backbone.View
     # Set multi-select of map elements with the shift key
     $a.ALT_DOWN = false
     $a.ALT_DOWN = true if e.type == 'keydown' and e.keyCode == 18
+    
+  clearMap: ->
+    $a.broker.trigger('map:hide_node_layer')
+    $a.broker.trigger('map:hide_link_layer')
+    $a.broker.trigger('map:hide_event_layer')
+    $a.broker.trigger('map:hide_controller_layer')
+    $a.broker.trigger('map:hide_sensor_layer')
+    $a.broker.trigger('map:hide_signal_layer')
+    
+  showAlert: (message, type) ->
+    alertBox = document.createElement 'div'
+    alertBox.className = "alert #{type} alert-bottom"
+    alertBox.innerHTML = message
+
+    closeButton = document.createElement 'button'
+    closeButton.className = 'close'
+    closeButton.setAttribute('data-dismiss', 'alert')
+    closeButton.innerHTML = 'x'
+    closeButton.href = '#'
+
+    alertBox.appendChild closeButton
+    bod = document.getElementById 'body'
+    bod.appendChild alertBox
+
+    setTimeout( ->
+      closeButton.click()
+    , 2000)

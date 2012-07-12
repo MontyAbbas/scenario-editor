@@ -23,7 +23,8 @@ class window.sirius.MapSensorView extends window.sirius.MapMarkerView
     super MapSensorView.ICON
 
   # Reset the static array
-  @removeAll: ->
+  removeAll: ->
+    @removeMarker()
     @view_sensors = []
 
   # Context Menu

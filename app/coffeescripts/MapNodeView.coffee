@@ -33,7 +33,8 @@ class window.sirius.MapNodeView extends window.sirius.MapMarkerView
     super 'node', $a.node_context_menu
 
   # Reset the static array
-  @removeAll: ->
+  removeAll: ->
+    @removeMarker()
     @view_nodes = []
 
   ################# select events for marker

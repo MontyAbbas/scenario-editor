@@ -26,6 +26,7 @@ class window.sirius.MapLinkView extends Backbone.View
     $a.broker.on("map:clear_neighbors:#{@model.cid}", @clearSelfandMyNodes, @)
     google.maps.event.addListener(@link, 'click', (event) -> self.manageLinkSelect())
     $a.broker.on('map:clear_selected', @clearSelected, @)
+    $a.broker.on("map:clearMap", @removeAll, @)
   
   render: =>
     @link.setMap($a.map)
@@ -33,7 +34,8 @@ class window.sirius.MapLinkView extends Backbone.View
     @
 
   # Reset the static array
-  @removeAll: ->
+  removeAll: ->
+    @link = null
     @view_links = []
 
   #this method reads the path of points contained in the leg
