@@ -73,25 +73,25 @@ $a.node_context_menu = [
 
 # Layers Menu
 $a.layers_node_type_list = [
-       { label: 'Freeway Nodes', event: ((e) -> alert('Not Configured')) }
-       { label: 'Highway Nodes', event: ((e) -> alert('Not Configured')) }
-       { label: 'Signalized Intersections', event: ((e) -> alert('Not Configured')) }
-       { label: 'Stop Intersections', event: ((e) -> alert('Not Configured')) }
-       { label: 'Terminals', event: ((e) -> alert('Not Configured')) }
-       { label: 'Other', event: ((e) -> alert('Not Configured')) }  
+       { label: 'Freeway Nodes', event: 'toggleVisabilty', triggerShow: "map:nodes:show_freeway", triggerHide: "map:nodes:hide_freeway" }
+       { label: 'Highway Nodes',  event: ((e) -> alert('Not Configured'))  }
+       { label: 'Signalized Intersections', event: 'toggleVisabilty', triggerShow: "map:nodes:show_signalized_intersection", triggerHide: "map:nodes:hide_signalized_intersection"  }
+       { label: 'Stop Intersections',  event: ((e) -> alert('Not Configured')) }
+       { label: 'Terminals', event: 'toggleVisabilty', triggerShow: "map:nodes:show_terminal", triggerHide: "map:nodes:hide_terminal"  }
+       { label: 'Other', event: 'toggleVisabilty', triggerShow: "map:nodes:show_simple", triggerHide: "map:nodes:hide_simple"  }  
      ]
 
 $a.layers_link_type_list = [
-      { label: 'Freeway mainlines', event: ((e) -> alert('Not Configured')) }
-      { label: 'Highway mainlines', event: ((e) -> alert('Not Configured')) }
-      { label: 'HOV lanes', event: ((e) -> alert('Not Configured')) }
-      { label: 'HOT lanes', event: ((e) -> alert('Not Configured')) }
-      { label: 'Heavy vehicle lanes', event: ((e) -> alert('Not Configured')) }
-      { label: 'Elec. toll coll. lanes', event: ((e) -> alert('Not Configured')) }
-      { label: 'On-ramps', event: ((e) -> alert('Not Configured')) }
-      { label: 'Off-ramps', event: ((e) -> alert('Not Configured')) }
-      { label: 'Interconnects', event: ((e) -> alert('Not Configured')) }
-      { label: 'Streets', event: ((e) -> alert('Not Configured')) }
+      { label: 'Freeway mainlines', event: 'toggleVisabilty', triggerShow: "map:nodes:show_freeway", triggerHide: "map:nodes:hide_freeway"  }
+      { label: 'Highway mainlines', event: 'toggleVisabilty', triggerShow: "map:nodes:show_highway", triggerHide: "map:nodes:hide_highway"  }
+      { label: 'HOV lanes', event: 'toggleVisabilty', triggerShow: "map:nodes:show_hov", triggerHide: "map:nodes:hide_hov"  }
+      { label: 'HOT lanes', event: 'toggleVisabilty', triggerShow: "map:nodes:show_hot", triggerHide: "map:nodes:hide_hot"  }
+      { label: 'Heavy vehicle lanes', event: ((e) -> alert('Not Configured'))  }
+      { label: 'Elec. toll coll. lanes',  event: ((e) -> alert('Not Configured'))   }
+      { label: 'On-ramps', event: 'toggleVisabilty', triggerShow: "map:nodes:show_onramp", triggerHide: "map:nodes:hide_onramp"  }
+      { label: 'Off-ramps', event: 'toggleVisabilty', triggerShow: "map:nodes:show_offramp", triggerHide: "map:nodes:hide_offramp"  }
+      { label: 'Interconnects', event: 'toggleVisabilty', triggerShow: "map:nodes:show_freeway_connector", triggerHide: "map:nodes:hide_freeway_connector" }
+      { label: 'Streets', event: 'toggleVisabilty', triggerShow: "map:nodes:show_street", triggerHide: "map:nodes:hide_street"  }
       { label: 'Dummy links', event: ((e) -> alert('Not Configured')) }
     ]
 

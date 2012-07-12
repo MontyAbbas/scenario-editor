@@ -1,6 +1,10 @@
 class window.sirius.LayersMenuView extends Backbone.View
   $a = window.sirius
   tagName : 'ul'
+  events : {
+      "mouseenter .submenu"   : "hoverSubOn",
+      "mouseleave .submenu"   : "hoverSubOff",
+  }
   
   initialize: (@options) ->
     @menuItems = @options.menuItems
@@ -13,6 +17,12 @@ class window.sirius.LayersMenuView extends Backbone.View
   render: ->
     $("##{@options.parentId}").append(@el)
     @
+  
+  hoverSubOn: (e) =>
+    $("##{e.currentTarget.id}").children("ul").removeClass("submenu-hide").addClass "submenu-show"
+
+  hoverSubOff: (e) =>
+    $("##{e.currentTarget.id}").children("ul").removeClass("submenu-show").addClass "submenu-hide"
   
   clearMap: ->
     $a.broker.trigger('map:hide_node_layer')
@@ -36,6 +46,7 @@ class window.sirius.LayersMenuView extends Backbone.View
     alertBox.innerHTML = 'Loaded map'
     bod = document.getElementById 'body'
     bod.appendChild alertBox
+  
     
   attachEvents: ->
     $a.broker.on("map:clearMap", @clearMap, @)
@@ -53,11 +64,6 @@ class window.sirius.LayersMenuView extends Backbone.View
         direction: "right"
         duration: 200
 
-    $(".submenu").hover(->
-      $(this).children("ul").removeClass("submenu-hide").addClass "submenu-show"
-    , ->
-      $(this).children("ul").removeClass("submenu-show").addClass "submenu-hide"
-    ).find("a:first").append " &raquo; "
 
     $('.ui-dialog-titlebar-close').ready ->
       titlebar = $('.ui-dialog-titlebar-close')

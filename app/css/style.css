@@ -86,6 +86,13 @@ hr {
 .open {
   display:block;
 }
+.icon-ok {
+  height: auto;
+  display: block;
+}
+.icon-ok a {
+  width:130px;
+}
 .dropdown-menu a 
 {
   text-align:left;

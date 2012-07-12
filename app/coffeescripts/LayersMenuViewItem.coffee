@@ -1,6 +1,5 @@
 class window.sirius.LayersMenuViewItem extends Backbone.View
   $a = window.sirius
-  @visible = {}
   tagName : 'li'
   isShowing: true
   
@@ -8,31 +7,17 @@ class window.sirius.LayersMenuViewItem extends Backbone.View
       @triggerShow= values.triggerShow
       @triggerHide= values.triggerHide      
       @template = _.template($('#child-item-menu-template').html())
-      @$el.html @template({text: values.label}) if values.label
+      displayText = values.label
+      displayText = "#{values.label} &raquo; " if values.link
+      @$el.html @template({text: displayText}) if values.label
       @$el.attr 'class', values.className if values.className
       @$el.attr 'href', values.href if values.href
       @$el.attr 'id', values.link if values.link
       @events = {'click': values.event } if values.event
       @render()
       @_createSubMenu values.items, values.link if values.link
-      @check(true) if values.triggerShow
-      
-      # if values.eventName and
-      # values.eventName != 'showAllNodes' and
-      # values.eventName != 'hideAllNodes' and
-      # values.eventName != 'showAllLinks' and
-      # values.eventName != 'hideAllLinks'
-      #   LayersMenuViewItem.visible[values.label] = true
-      #   @check(true)
+      @check(true) if values.triggerShow      
 
-      
-      # @menuItem.onclick = (e) ->
-      #   $a.broker.trigger("map:#{values.eventName}")
-      #   e.stopPropagation()
-      # $a.broker.on("map:#{values.eventName}", @doEvent, @)
-
-
-  
   render: ->
     $("##{@parent}").append(@el)
     @
@@ -56,30 +41,3 @@ class window.sirius.LayersMenuViewItem extends Backbone.View
       @isShowing = true
       @check(true)
       
-  doEvent: ->
-    visible_ = LayersMenuViewItem.visible
-    switch @values.eventName
-      when 'showEvents'
-        if visible_['Events']
-          $a.broker.trigger('map:hide_event_layer')
-
-        else
-          $a.broker.trigger('map:show_event_layer')
-          @check(true)
-        visible_['Events'] = !visible_['Events']
-      when 'showControllers'
-        if visible_['Controllers']
-          $a.broker.trigger('map:hide_controller_layer')
-          @check(false)
-        else
-          $a.broker.trigger('map:show_controller_layer')
-          @check(true)
-        visible_['Controllers']  = !visible_['Controllers'] 
-      when 'showSensors'
-        if visible_['Sensors']
-          $a.broker.trigger('map:hide_sensor_layer')
-          @check(false)
-        else
-          $a.broker.trigger('map:show_sensor_layer')
-          @check(true)
-        visible_['Sensors'] = !visible_['Sensors']
