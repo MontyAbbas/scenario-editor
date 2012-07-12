@@ -18,6 +18,8 @@ class window.sirius.MapLinkView extends Backbone.View
     $a.broker.on('map:init', @render, @)
     $a.broker.on('map:hide_link_layer', @hideLink, @)
     $a.broker.on('map:show_link_layer', @showLink, @)
+    $a.broker.on("map:links:show_#{@model.get('type')}", @showLink, @)
+    $a.broker.on("map:links:hide_#{@model.get('type')}", @hideLink, @)
     $a.broker.on("map:select_item:#{@model.cid}", @linkSelect, @)
     $a.broker.on("map:clear_item:#{@model.cid}", @clearSelected, @)
     $a.broker.on("map:select_neighbors:#{@model.cid}", @selectSelfandMyNodes, @)

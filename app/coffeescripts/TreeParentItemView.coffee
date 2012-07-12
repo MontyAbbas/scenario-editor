@@ -4,8 +4,8 @@
 # child elements to be attached to.
 class window.sirius.TreeParentItemView extends Backbone.View
   $a = window.sirius
-  tagName: "li"
-  className: "tree-parent-node"
+  tagName: 'li'
+  className: 'tree-parent-node'
 
   initialize: (element) ->
     @template = _.template($("#parent-item-tree-template").html())
