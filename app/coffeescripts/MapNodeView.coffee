@@ -20,6 +20,9 @@ class window.sirius.MapNodeView extends window.sirius.MapMarkerView
     $a.broker.on("map:clear_neighbors:#{@model.cid}", @clearSelfandMyLinks, @)
     $a.broker.on('map:show_node_layer', @showMarker, @)
     $a.broker.on('map:hide_node_layer', @hideMarker, @)
+    $a.broker.on("map:nodes:show_#{@model.get('type')}", @showMarker, @)
+    $a.broker.on("map:nodes:hide_#{@model.get('type')}", @hideMarker, @)
+    
     
   getIcon: ->
     super @_getTypeIcon false

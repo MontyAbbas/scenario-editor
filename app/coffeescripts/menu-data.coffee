@@ -82,16 +82,16 @@ $a.layers_node_type_list = [
      ]
 
 $a.layers_link_type_list = [
-      { label: 'Freeway mainlines', event: 'toggleVisabilty', triggerShow: "map:nodes:show_freeway", triggerHide: "map:nodes:hide_freeway"  }
-      { label: 'Highway mainlines', event: 'toggleVisabilty', triggerShow: "map:nodes:show_highway", triggerHide: "map:nodes:hide_highway"  }
-      { label: 'HOV lanes', event: 'toggleVisabilty', triggerShow: "map:nodes:show_hov", triggerHide: "map:nodes:hide_hov"  }
-      { label: 'HOT lanes', event: 'toggleVisabilty', triggerShow: "map:nodes:show_hot", triggerHide: "map:nodes:hide_hot"  }
+      { label: 'Freeway mainlines', event: 'toggleVisabilty', triggerShow: "map:links:show_freeway", triggerHide: "map:links:hide_freeway"  }
+      { label: 'Highway mainlines', event: 'toggleVisabilty', triggerShow: "map:links:show_highway", triggerHide: "map:links:hide_highway"  }
+      { label: 'HOV lanes', event: 'toggleVisabilty', triggerShow: "map:links:show_hov", triggerHide: "map:links:hide_hov"  }
+      { label: 'HOT lanes', event: 'toggleVisabilty', triggerShow: "map:links:show_hot", triggerHide: "map:links:hide_hot"  }
       { label: 'Heavy vehicle lanes', event: ((e) -> alert('Not Configured'))  }
       { label: 'Elec. toll coll. lanes',  event: ((e) -> alert('Not Configured'))   }
-      { label: 'On-ramps', event: 'toggleVisabilty', triggerShow: "map:nodes:show_onramp", triggerHide: "map:nodes:hide_onramp"  }
-      { label: 'Off-ramps', event: 'toggleVisabilty', triggerShow: "map:nodes:show_offramp", triggerHide: "map:nodes:hide_offramp"  }
-      { label: 'Interconnects', event: 'toggleVisabilty', triggerShow: "map:nodes:show_freeway_connector", triggerHide: "map:nodes:hide_freeway_connector" }
-      { label: 'Streets', event: 'toggleVisabilty', triggerShow: "map:nodes:show_street", triggerHide: "map:nodes:hide_street"  }
+      { label: 'On-ramps', event: 'toggleVisabilty', triggerShow: "map:links:show_onramp", triggerHide: "map:links:hide_onramp"  }
+      { label: 'Off-ramps', event: 'toggleVisabilty', triggerShow: "map:links:show_offramp", triggerHide: "map:links:hide_offramp"  }
+      { label: 'Interconnects', event: 'toggleVisabilty', triggerShow: "map:links:show_freeway_connector", triggerHide: "map:links:hide_freeway_connector" }
+      { label: 'Streets', event: 'toggleVisabilty', triggerShow: "map:links:show_street", triggerHide: "map:links:hide_street"  }
       { label: 'Dummy links', event: ((e) -> alert('Not Configured')) }
     ]
 
