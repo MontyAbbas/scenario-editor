@@ -1,11 +1,17 @@
+# This class renders the Layers Menu. It's menu items can be found in
+# menu-data.coffee. In combination with LayersMenuViewItemit will
+# recursively render a menu and its submenus if they are defined
+# in the data file correctly.
 class window.sirius.LayersMenuView extends Backbone.View
   $a = window.sirius
   tagName : 'ul'
+  # used to create hover effects on the submenus
   events : {
       "mouseenter .submenu"   : "hoverSubOn",
       "mouseleave .submenu"   : "hoverSubOff",
   }
   
+  # crete itself, render it and then iterate to create its menu items
   initialize: (@options) ->
     @menuItems = @options.menuItems
     @$el.attr 'class', @options.className if @options.className
@@ -18,6 +24,7 @@ class window.sirius.LayersMenuView extends Backbone.View
     $("##{@options.parentId}").append(@el)
     @
   
+  # hover events that open and close submenus
   hoverSubOn: (e) =>
     $("##{e.currentTarget.id}").children("ul").removeClass("submenu-hide").addClass "submenu-show"
 

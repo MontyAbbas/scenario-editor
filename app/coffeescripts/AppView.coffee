@@ -14,9 +14,7 @@ class window.sirius.AppView extends Backbone.View
     @_initializeMap()
     @_navBar()
     @_contextMenu()
-    lmenu = new $a.LayersMenuView({className: 'dropdown-menu bottom-up', id : 'l_list', parentId: 'lh', menuItems: $a.layers_menu})
-    # lmenu.createHTML()
-    lmenu.attachEvents()
+    @_layersMenu()
     self = @
     google.maps.event.addDomListener(window, 'keydown', (event) -> self._setKeyEvents(event))
     $a.broker.on('map:upload_complete', @_displayMap, @)
@@ -53,6 +51,12 @@ class window.sirius.AppView extends Backbone.View
   _navBar: () ->
     new $a.FileUploadView({name: "localNetwork", id : "uploadField", attach: "#main-nav div"})
     new $a.NavBarView({menuItems: $a.nav_bar_menu_items, attach: "#main-nav div"})
+
+  # This creates the layers menu bar
+  _layersMenu: () ->
+    lmenu = new $a.LayersMenuView({className: 'dropdown-menu bottom-up', id : 'l_list', parentId: 'lh', menuItems: $a.layers_menu})
+    # we'll need to get rid of this call -- it is doing things that it shouldn't do to the modals, clear map, etc
+    lmenu.attachEvents()
 
   # displayMap takes the uploaded file data parses the xml into the model objects, and creates the MapNetworkView
   _displayMap: (fileText) ->
