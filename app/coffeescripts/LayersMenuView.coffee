@@ -38,14 +38,26 @@ class window.sirius.LayersMenuView extends Backbone.View
     $a.MapSensorView.removeAll()
     $a.MapSignalView.removeAll()
     $a.MapNetworkModel.removeAll()
-  
-  
-  showAlert: ->
+
+
+  showAlert: (message, type) ->
     alertBox = document.createElement 'div'
-    alertBox.className = 'alert alert-bottom'
-    alertBox.innerHTML = 'Loaded map'
+    alertBox.className = "alert #{type} alert-bottom"
+    alertBox.innerHTML = message
+
+    closeButton = document.createElement 'button'
+    closeButton.className = 'close'
+    closeButton.setAttribute('data-dismiss', 'alert')
+    closeButton.innerHTML = 'x'
+    closeButton.href = '#'
+
+    alertBox.appendChild closeButton
     bod = document.getElementById 'body'
     bod.appendChild alertBox
+
+    setTimeout( ->
+      closeButton.click()
+    , 2000)
   
     
   attachEvents: ->
