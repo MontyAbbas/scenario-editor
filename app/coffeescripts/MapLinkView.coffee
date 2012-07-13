@@ -6,14 +6,12 @@ class window.sirius.MapLinkView extends Backbone.View
   @LINK_COLOR: 'blue'
   @SELECTED_LINK_COLOR: 'red'
   
-  @view_links = []
   $a = window.sirius
 
   initialize: (@model, @legs) ->
     self = @
     @drawLink @legs
     #@drawArrow @leg
-    MapLinkView.view_links.push @
     @_contextMenu()
     $a.broker.on('map:init', @render, @)
     $a.broker.on('map:hide_link_layer', @hideLink, @)
@@ -26,18 +24,27 @@ class window.sirius.MapLinkView extends Backbone.View
     $a.broker.on("map:clear_neighbors:#{@model.cid}", @clearSelfandMyNodes, @)
     google.maps.event.addListener(@link, 'click', (event) -> self.manageLinkSelect())
     $a.broker.on('map:clear_selected', @clearSelected, @)
-    $a.broker.on("map:clearMap", @removeAll, @)
+    $a.broker.on("map:clear_map", @removeLink, @)
   
   render: =>
     @link.setMap($a.map)
     #@arrow.setMap($a.map) if @arrow?
     @
 
-  # Reset the static array
-  removeAll: ->
-    #$a.broker.off('map:show_link_layer', @showLink, @)
+  # in order to remove an element you need to unpublish the events, hide the marker
+  # and set it to null
+  removeLink: ->
+    $a.broker.off('map:init')
+    $a.broker.off('map:hide_link_layer')
+    $a.broker.off('map:show_link_layer')
+    $a.broker.off("map:links:show_#{@model.get('type')}",)
+    $a.broker.off("map:links:hide_#{@model.get('type')}")
+    $a.broker.off("map:select_item:#{@model.cid}")
+    $a.broker.off("map:clear_item:#{@model.cid}")
+    $a.broker.off("map:select_neighbors:#{@model.cid}")
+    $a.broker.off("map:clear_neighbors:#{@model.cid}")
+    @hideLink() if @link
     @link = null
-    @view_links = []
 
   # this method reads the path of points contained in the leg
   # and converts it into a polyline object to be drawn on the map

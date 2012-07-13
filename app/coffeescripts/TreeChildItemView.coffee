@@ -29,6 +29,8 @@ class window.sirius.TreeChildItemView extends Backbone.View
       $a.broker.on("app:tree_remove_highlight:#{target.cid}", self.removeHighlight, self)
       ) if @targets?
     $a.broker.on('app:tree_remove_highlight', @removeHighlight, @)
+    $a.broker.on('app:tree_clear', @removeItem, @)
+
   
   render: =>
     self = @
@@ -57,6 +59,19 @@ class window.sirius.TreeChildItemView extends Backbone.View
   
   removeHighlight: =>
     $(@el).removeClass "highlight"
+  
+  # in order to remove an element you need to unpublish the events, and remove it from the DOM
+  removeItem: =>
+    $(@el).remove()
+    $a.broker.off('app:child_trees')
+    self = @
+    _.each(self.targets, (target) -> 
+      $a.broker.off("app:tree_highlight:#{target.cid}")
+      $a.broker.off("app:tree_remove_highlight:#{target.cid}")
+      ) if @targets?
+    $a.broker.off('app:tree_remove_highlight')
+    $a.broker.off('app:tree_clear')
+    
   
   # This method adds either the node or links context menu to the tree item.
   # We offset the x and y by 5 in order to make sure the window stays open 

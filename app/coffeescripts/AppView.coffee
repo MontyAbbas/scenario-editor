@@ -73,7 +73,9 @@ class window.sirius.AppView extends Backbone.View
 
   _setKeyEvents: (e) ->
     # Open Local Network ALT-A
-    $("#uploadField").click() if e.type == 'keydown' and $a.ALT_DOWN and e.keyCode == 65
+    if e.type == 'keydown' and $a.ALT_DOWN and e.keyCode == 65
+      @clearMap()
+      $("#uploadField").click() 
     
     # Set multi-select of map elements with the shift key
     $a.SHIFT_DOWN = false
@@ -84,12 +86,8 @@ class window.sirius.AppView extends Backbone.View
     $a.ALT_DOWN = true if e.type == 'keydown' and e.keyCode == 18
     
   clearMap: ->
-    $a.broker.trigger('map:hide_node_layer')
-    $a.broker.trigger('map:hide_link_layer')
-    $a.broker.trigger('map:hide_event_layer')
-    $a.broker.trigger('map:hide_controller_layer')
-    $a.broker.trigger('map:hide_sensor_layer')
-    $a.broker.trigger('map:hide_signal_layer')
+    $a.broker.trigger('map:clear_map')
+    $a.broker.trigger('app:tree_clear')
     
   showAlert: (message, type) ->
     alertBox = document.createElement 'div'

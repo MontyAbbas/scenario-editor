@@ -39,6 +39,7 @@ class window.sirius.LayersMenuView extends Backbone.View
 
   hoverSubOff: (e) =>
     $("##{e.currentTarget.id}").children("ul").removeClass("submenu-show").addClass "submenu-hide"
+  
   attachEvents: ->
     
     $(".jdialog").dialog

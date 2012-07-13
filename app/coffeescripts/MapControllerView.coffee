@@ -4,24 +4,24 @@
 class window.sirius.MapControllerView extends window.sirius.MapMarkerView
   @ICON: 'controller-deselected'
   @SELECTED_ICON: 'controller-selected'
-  @view_controllers = []
   $a = window.sirius
 
   initialize: (model) ->
     super  model
     @model.scenElements = @model.get('targetelements').get('scenarioelement')
     @model.links = @_getLinks()
-    MapControllerView.view_controllers.push @
     $a.broker.on('map:hide_controller_layer', @hideMarker, @)
     $a.broker.on('map:show_controller_layer', @showMarker, @)
 
   getIcon: ->
     super MapControllerView.ICON
 
-  # Reset the static array
-  removeAll: ->
-    @removeMarker()
-    @view_controllers = []
+  # This method overrides MapMarkerView to unpublish specific events to this type
+  # and then calls super to set itself to null, unpublish the general events, and hide itself
+  removeElement: =>
+    $a.broker.off('map:hide_controller_layer')
+    $a.broker.off('map:show_controller_layer')
+    super
 
   ################# select events for marker
   # Callback for the markers click event
