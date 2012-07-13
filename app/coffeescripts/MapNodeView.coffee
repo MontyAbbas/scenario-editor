@@ -10,8 +10,8 @@ class window.sirius.MapNodeView extends window.sirius.MapMarkerView
   @view_nodes: []
   $a = window.sirius
 
-  initialize: (model, lat_lng) ->
-    super model, lat_lng
+  initialize: (model) ->
+    super model
     MapNodeView.view_nodes.push @
     @_contextMenu()
     $a.broker.on("map:select_neighbors:#{@model.cid}", @selectSelfandMyLinks, @)

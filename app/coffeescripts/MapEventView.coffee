@@ -7,8 +7,8 @@ class window.sirius.MapEventView extends window.sirius.MapMarkerView
   @view_events = []
   $a = window.sirius
 
-  initialize: (model, lat_lng) ->
-    super model, lat_lng
+  initialize: (model) ->
+    super model
     @model.scenElements = @model.get('targetelements').get('scenarioelement')
     @model.links = @_getLinks()
     MapEventView.view_events.push @

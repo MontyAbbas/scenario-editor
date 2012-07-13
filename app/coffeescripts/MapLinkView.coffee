@@ -36,9 +36,9 @@ class window.sirius.MapLinkView extends Backbone.View
   @removeAll: ->
     @view_links = []
 
-  #this method reads the path of points contained in the leg
-  #and converts it into a polyline object to be drawn on the map
-  #The Polyline map attribute will be null until render is called
+  # this method reads the path of points contained in the leg
+  # and converts it into a polyline object to be drawn on the map
+  # The Polyline map attribute will be null until render is called
   drawLink: (legs) ->
     sm_path = []
     for leg in legs
