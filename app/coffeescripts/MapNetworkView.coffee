@@ -26,12 +26,13 @@ class window.sirius.MapNetworkView extends Backbone.View
   # instantiate the various elements of the network
   _drawNetwork: ->
     $a.map.setCenter($a.Util.getLatLng(@network))
+    @_drawRoute()
     @_drawNodes @network.get('nodelist').get('node') if @network.get('nodelist')
     @_drawSensors @scenario.get('sensorlist').get('sensor') if @scenario.get('sensorlist')
     @_drawControllers @scenario.get('controllerset').get('controller') if @scenario.get('controllerset')
     @_drawEvents  @scenario.get('eventset').get('event') if @scenario.get('eventset')
     @_drawSignals @scenario.get('signallist').get('signal') if @scenario.get('signallist')
-    @_drawRoute()
+
 
   # _drawRoute uses the Google Direction's api to get the data used to render the route.
   _drawRoute: ->
@@ -82,18 +83,18 @@ class window.sirius.MapNetworkView extends Backbone.View
     new $a.MapLinkView(linkModel, legs)
 
   _drawNodes: (nodes) ->
-    _.each(nodes, (i) ->  new $a.MapNodeView(i, $a.Util.getLatLng(i)) if $a.Util.getLatLng(i)?)
+    _.each(nodes, (i) ->  new $a.MapNodeView(i))
 
   _drawSensors: (sensors) ->
-    _.each(sensors, (i) ->  new $a.MapSensorView(i, $a.Util.getLatLng(i), $a.MapNetworkModel.LINKS) if $a.Util.getLatLng(i)?)
+    _.each(sensors, (i) ->  new $a.MapSensorView(i))
 
   _drawEvents: (events) ->
-    _.each(events, (i) ->  new $a.MapEventView(i, $a.Util.getLatLng(i)) if $a.Util.getLatLng(i)?)
+    _.each(events, (i) ->  new $a.MapEventView(i))
 
   _drawControllers: (controllers) ->
-    _.each(controllers, (i) -> new $a.MapControllerView(i, $a.Util.getLatLng(i)) if $a.Util.getLatLng(i)?)
+    _.each(controllers, (i) -> new $a.MapControllerView(i))
 
   _drawSignals: (signals) ->
-    _.each(signals, (i) ->  new $a.MapSignalView(i, $a.Util.getLatLng(i)) if $a.Util.getLatLng(i)?)
+    _.each(signals, (i) ->  new $a.MapSignalView(i) if $a.Util.getLatLng(i)?)
 
     

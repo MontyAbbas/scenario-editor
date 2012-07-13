@@ -7,8 +7,8 @@ class window.sirius.MapControllerView extends window.sirius.MapMarkerView
   @view_controllers = []
   $a = window.sirius
 
-  initialize: (model,lat_lng) ->
-    super  model, lat_lng
+  initialize: (model) ->
+    super  model
     @model.scenElements = @model.get('targetelements').get('scenarioelement')
     @model.links = @_getLinks()
     MapControllerView.view_controllers.push @

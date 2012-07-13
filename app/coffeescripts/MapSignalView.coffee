@@ -7,8 +7,8 @@ class window.sirius.MapSignalView extends window.sirius.MapMarkerView
   @view_signals = []
   $a = window.sirius
 
-  initialize: (model, lat_lng) ->
-    super  model, lat_lng
+  initialize: (model) ->
+    super  model
     MapSignalView.view_signals.push @
     $a.broker.on('map:hide_signal_layer', @hideMarker, @)
     $a.broker.on('map:show_signal_layer', @showMarker, @)

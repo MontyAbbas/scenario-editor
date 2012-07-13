@@ -4,9 +4,12 @@ class window.sirius.MapMarkerView extends Backbone.View
   @IMAGE_PATH: '../libs/data/img/'
   $a = window.sirius
   
-  initialize: (@model, @latLng) ->
+  initialize: (@model) ->
     self = @
-    @draw()
+    # get the position, we only draw if the position is defined
+    # TODO deal with getting a position if it is not defined
+    @latLng = $a.Util.getLatLng(model)
+    @draw() 
     google.maps.event.addListener(@marker, 'dragend', @dragMarker())
     google.maps.event.addListener(@marker, 'click', (event) -> self.manageMarkerSelect())
     $a.broker.on('map:clear_selected', @clearSelected, @)

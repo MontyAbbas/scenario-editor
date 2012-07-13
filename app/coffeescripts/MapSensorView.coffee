@@ -9,8 +9,8 @@ class window.sirius.MapSensorView extends window.sirius.MapMarkerView
   
   # we pass in the network links so the sensors can figure out which link they 
   # belong too 
-  initialize: (model, lat_lng, links) ->
-    super model, lat_lng
+  initialize: (model, links) ->
+    super model
     @model.links = links
     MapSensorView.view_sensors.push @
     @_contextMenu()
@@ -30,7 +30,7 @@ class window.sirius.MapSensorView extends window.sirius.MapMarkerView
   # Create the Sensor Context Menu. Call the super class method to create the context menu
   _contextMenu: () ->
     super 'sensor', $a.sensor_context_menu
-  
+
   # Callback for the markers click event. It decided whether we are selecting or de-selecting and triggers appropriately 
   manageMarkerSelect: () =>
     iconName = MapSensorView.__super__._getIconName.apply(@, []) 
