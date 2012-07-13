@@ -33,8 +33,18 @@ class window.sirius.MapLinkView extends Backbone.View
     #@arrow.setMap($a.map) if @arrow?
     @
 
-  # Reset the static array
+  # in order to remove an element you need to unpublish the events, hide the marker
+  # and set it to null
   removeLink: ->
+    $a.broker.off('map:init')
+    $a.broker.off('map:hide_link_layer')
+    $a.broker.off('map:show_link_layer')
+    $a.broker.off("map:links:show_#{@model.get('type')}",)
+    $a.broker.off("map:links:hide_#{@model.get('type')}")
+    $a.broker.off("map:select_item:#{@model.cid}")
+    $a.broker.off("map:clear_item:#{@model.cid}")
+    $a.broker.off("map:select_neighbors:#{@model.cid}")
+    $a.broker.off("map:clear_neighbors:#{@model.cid}")
     @hideLink() if @link
     @link = null
 

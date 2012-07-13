@@ -46,7 +46,15 @@ class window.sirius.MapMarkerView extends Backbone.View
       new google.maps.Point(16, 16)
     );
   
-  removeElement: ->
+  # in order to remove an element you need to unpublish the events, hide the marker
+  # and set it to null
+  removeElement: =>
+    $a.broker.off('map:init')
+    $a.broker.off('map:clear_selected')
+    $a.broker.off("map:select_item:#{@model.cid}")
+    $a.broker.off("map:clear_item:#{@model.cid}")
+    $a.broker.off('map:init')
+    $a.broker.off('map:clear_map')
     @hideMarker() if @marker?
     @marker = null
 

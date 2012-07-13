@@ -19,5 +19,9 @@ class window.sirius.TreeParentItemView extends Backbone.View
     $("#tree").append(self.el)
     @ 
 
+  # in order to remove an element you need to unpublish the events, and remove it from the DOM
   removeItem: =>
     $(@el).remove()
+    $a.broker.off('app:parent_tree')
+    $a.broker.off('app:tree_clear')
+    
