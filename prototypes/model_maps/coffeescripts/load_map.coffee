@@ -18,10 +18,10 @@ window.main_stuff.init = ->
 			style: google.maps.ZoomControlStyle.DEFAULT,
 			position: google.maps.ControlPosition.TOP_LEFT
 		}
-	window.map = new google.maps.Map(document.getElementById("map_canvas"),myOptions)
+	$a.map = new google.maps.Map(document.getElementById("map_canvas"),myOptions)
 	
 	renderer_options =
-		map: window.map
+		map: $a.map
 
 	directionsDisplay = new google.maps.DirectionsRenderer(renderer_options);
 	directionsService = new google.maps.DirectionsService();
@@ -30,7 +30,7 @@ window.main_stuff.display = ->
 	node_markers = {}
 	broker = _.clone( Backbone.Events)
 	network = window.textarea_scenario.get('network')
-	window.map.setCenter(new google.maps.LatLng(getLat(network), getLng(network)))
+	$a.map.setCenter(new google.maps.LatLng(getLat(network), getLng(network)))
 	drawNodes network.get('nodelist').get('node'), broker
 	broker.trigger('map:init')
 	#drawSensors(network.get('sensorlist').get('sensor'))
@@ -40,7 +40,7 @@ window.main_stuff.display = ->
   # node.lng = window.textarea_scenario.get('network').get('nodelist').get('node')[0].get('position').get('point')[0].get('lng')
   # node1.lat = window.textarea_scenario.get('network').get('nodelist').get('node')[1].get('position').get('point')[0].get('lat')
   # node1.lng = window.textarea_scenario.get('network').get('nodelist').get('node')[1].get('position').get('point')[0].get('lng')
-  # window.map.setCenter(new google.maps.LatLng(node.lat, node.lng))
+  # $a.map.setCenter(new google.maps.LatLng(node.lat, node.lng))
   # marker = getMarker(new google.maps.LatLng(node.lat, node.lng))
   # marker1 = getMarker(new google.maps.LatLng(node1.lat, node1.lng))
   # getPolyLine(marker,marker1)
@@ -69,7 +69,7 @@ drawPolyLine = (marker1, marker2) ->
 	    strokeColor: "#240489",
 	    strokeOpacity: 0.6,
 	    strokeWeight: 10,
-			map: window.map
+			map: $a.map
 	  });
 
 
@@ -87,7 +87,7 @@ drawRoute = (start, end) ->
 getMarker = (elem,type) ->
 	new google.maps.Marker({
 					position: new google.maps.LatLng(getLat(elem), getLng(elem)),
-					map: window.map,
+					map: $a.map,
 					draggable: true,
 					clickable: true,
 					hasShadow: false,

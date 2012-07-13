@@ -1,4 +1,5 @@
 prototypes/*/js/**
 .DS_Store
-prototypes/.DS_Store
-prototypes/using-aurora/.DS_Store
+*/.DS_Store
+*/*/.DS_Store
+app/js/**
