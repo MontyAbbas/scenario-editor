@@ -15,11 +15,11 @@ class window.sirius.AppView extends Backbone.View
     @_navBar()
     @_contextMenu()
     @_layersMenu()
+    @_messagePanel()
     self = @
     google.maps.event.addDomListener(window, 'keydown', (event) -> self._setKeyEvents(event))
     $a.broker.on('map:upload_complete', @_displayMap, @)
-    $a.broker.on("map:clearMap", @clearMap, @)
-    $a.broker.on("map:alert", @showAlert, @)
+    $a.broker.on("app:clear_map", @clearMap, @)
     @
 
   # create the landing map. The latitude and longitude our arbitarily pointing
@@ -66,7 +66,7 @@ class window.sirius.AppView extends Backbone.View
     try
       xml = $.parseXML(fileText)
     catch error
-      $a.broker.trigger("map:alert", error, "alert-error")
+      $a.broker.trigger("app:show_message", error, "alert-error")
     $a.models = $a.Scenario.from_xml($(xml).children())
     new $a.MapNetworkModel()
     @mapView = new $a.MapNetworkView $a.models
@@ -88,22 +88,24 @@ class window.sirius.AppView extends Backbone.View
   clearMap: ->
     $a.broker.trigger('map:clear_map')
     $a.broker.trigger('app:tree_clear')
+    $a.broker.trigger('app:show_message', 'Cleared map', 'alert-success')
     
-  showAlert: (message, type) ->
-    alertBox = document.createElement 'div'
-    alertBox.className = "alert #{type} alert-bottom"
-    alertBox.innerHTML = message
-
-    closeButton = document.createElement 'button'
-    closeButton.className = 'close'
-    closeButton.setAttribute('data-dismiss', 'alert')
-    closeButton.innerHTML = 'x'
-    closeButton.href = '#'
-
-    alertBox.appendChild closeButton
-    bod = document.getElementById 'body'
-    bod.appendChild alertBox
-
-    setTimeout( ->
-      closeButton.click()
-    , 2000)
+  _messagePanel: ->
+    new $a.MessagePanelView()
+    # alertBox = document.createElement 'div'
+    # alertBox.className = "alert #{type} alert-bottom"
+    # alertBox.innerHTML = message
+    # 
+    # closeButton = document.createElement 'button'
+    # closeButton.className = 'close'
+    # closeButton.setAttribute('data-dismiss', 'alert')
+    # closeButton.innerHTML = 'x'
+    # closeButton.href = '#'
+    # 
+    # alertBox.appendChild closeButton
+    # bod = document.getElementById 'body'
+    # bod.appendChild alertBox
+    # 
+    # setTimeout( ->
+    #   closeButton.click()
+    # , 2000)

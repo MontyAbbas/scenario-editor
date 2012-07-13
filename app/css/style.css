@@ -87,6 +87,10 @@ hr {
 .open {
   display:block;
 }
+.close {
+  display:none;
+}
+
 .icon-ok {
   height: auto;
   display: block;
