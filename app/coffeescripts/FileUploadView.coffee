@@ -23,11 +23,12 @@ class window.sirius.FileUploadView extends Backbone.View
   # an event indicating the upload is complete
   handleFiles : ->
     reader = new FileReader()
-    self = @
     reader.onloadend = (e) ->
       fileText = e.target.result
       $a.broker.trigger("map:upload_complete", fileText)
       $a.broker.trigger("map:alert", "Loaded map successfully", "alert-success")
-
+      
     reader.readAsText(@el.files[0])
+    $(@el).attr('value', '')
+  
  

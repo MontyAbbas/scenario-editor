@@ -26,7 +26,7 @@ class window.sirius.MapLinkView extends Backbone.View
     $a.broker.on("map:clear_neighbors:#{@model.cid}", @clearSelfandMyNodes, @)
     google.maps.event.addListener(@link, 'click', (event) -> self.manageLinkSelect())
     $a.broker.on('map:clear_selected', @clearSelected, @)
-    $a.broker.on("map:clearMap", @removeAll, @)
+    $a.broker.on("map:clear_map", @removeLink, @)
   
   render: =>
     @link.setMap($a.map)
@@ -34,10 +34,9 @@ class window.sirius.MapLinkView extends Backbone.View
     @
 
   # Reset the static array
-  removeAll: ->
-    #$a.broker.off('map:show_link_layer', @showLink, @)
+  removeLink: ->
+    @hideLink() if @link
     @link = null
-    @view_links = []
 
   # this method reads the path of points contained in the leg
   # and converts it into a polyline object to be drawn on the map
