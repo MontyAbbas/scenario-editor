@@ -7,12 +7,10 @@ class window.sirius.MapNodeView extends window.sirius.MapMarkerView
   @TERMINAL_ICON: 'square'
   @SELECTED_TERMINAL_ICON: 'red-square'
   @TERMINAL_TYPE: 'terminal'
-  @view_nodes: []
   $a = window.sirius
 
   initialize: (model) ->
     super model
-    MapNodeView.view_nodes.push @
     @_contextMenu()
     $a.broker.on("map:select_neighbors:#{@model.cid}", @selectSelfandMyLinks, @)
     $a.broker.on("map:select_neighbors_outgoing:#{@model.cid}", @selectMyLinks, @)
@@ -32,10 +30,18 @@ class window.sirius.MapNodeView extends window.sirius.MapMarkerView
   _contextMenu: () ->
     super 'node', $a.node_context_menu
 
-  # Reset the static array
-  removeAll: ->
-    @removeMarker()
-    @view_nodes = []
+  # This method overrides MapMarkerView to unpublish specific events to this type
+  # and then calls super to set itself to null, unpublish the general events, and hide itself
+  removeElement: =>
+    $a.broker.off("map:select_neighbors:#{@model.cid}")
+    $a.broker.off("map:select_neighbors_outgoing:#{@model.cid}")
+    $a.broker.off("map:select_neighbors_incoming:#{@model.cid}")
+    $a.broker.off("map:clear_neighbors:#{@model.cid}")
+    $a.broker.off('map:show_node_layer')
+    $a.broker.off('map:hide_node_layer')
+    $a.broker.off("map:nodes:show_#{@model.get('type')}")
+    $a.broker.off("map:nodes:hide_#{@model.get('type')}")
+    super
 
   ################# select events for marker
   # Callback for the markers click event. It decided whether we are selecting or de-selecting and triggers appropriately 

@@ -4,7 +4,6 @@
 class window.sirius.MapSensorView extends window.sirius.MapMarkerView
   @ICON: 'camera-orig'
   @SELECTED_ICON: 'camera-selected'
-  @view_sensors = []
   $a = window.sirius
   
   # we pass in the network links so the sensors can figure out which link they 
@@ -12,7 +11,6 @@ class window.sirius.MapSensorView extends window.sirius.MapMarkerView
   initialize: (model, links) ->
     super model
     @model.links = links
-    MapSensorView.view_sensors.push @
     @_contextMenu()
     $a.broker.on("map:select_neighbors:#{@model.cid}", @selectSelfandMyLinks, @)
     $a.broker.on("map:clear_neighbors:#{@model.cid}", @clearSelfandMyLinks, @)
@@ -22,10 +20,14 @@ class window.sirius.MapSensorView extends window.sirius.MapMarkerView
   getIcon: ->
     super MapSensorView.ICON
 
-  # Reset the static array
-  removeAll: ->
-    @removeMarker()
-    @view_sensors = []
+  # This method overrides MapMarkerView to unpublish specific events to this type
+  # and then calls super to set itself to null, unpublish the general events, and hide itself
+  removeElement: =>
+    $a.broker.off("map:select_neighbors:#{@model.cid}")
+    $a.broker.off("map:clear_neighbors:#{@model.cid}")
+    $a.broker.off('map:hide_sensor_layer')
+    $a.broker.off('map:show_sensor_layer')
+    super
 
   # Context Menu
   # Create the Sensor Context Menu. Call the super class method to create the context menu

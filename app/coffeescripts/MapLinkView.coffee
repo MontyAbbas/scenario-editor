@@ -6,14 +6,12 @@ class window.sirius.MapLinkView extends Backbone.View
   @LINK_COLOR: 'blue'
   @SELECTED_LINK_COLOR: 'red'
   
-  @view_links = []
   $a = window.sirius
 
   initialize: (@model, @legs) ->
     self = @
     @drawLink @legs
     #@drawArrow @leg
-    MapLinkView.view_links.push @
     @_contextMenu()
     $a.broker.on('map:init', @render, @)
     $a.broker.on('map:hide_link_layer', @hideLink, @)
