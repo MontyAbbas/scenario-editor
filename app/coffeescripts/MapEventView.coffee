@@ -19,7 +19,8 @@ class window.sirius.MapEventView extends window.sirius.MapMarkerView
     super MapEventView.ICON
   
   # Reset the static array
-  @removeAll: ->
+  removeAll: ->
+    @removeMarker()
     @view_events = []
 
   ################# select events for marker

@@ -16,6 +16,7 @@ class window.sirius.MapMarkerView extends Backbone.View
     $a.broker.on("map:select_item:#{@model.cid}", @makeSelected, @)
     $a.broker.on("map:clear_item:#{@model.cid}", @clearSelected, @)
     $a.broker.on('map:init', @render, @)
+    $a.broker.on('map:clearMap', @removeAll, @)
     
   render: =>
     @marker.setMap($a.map)
@@ -44,6 +45,12 @@ class window.sirius.MapMarkerView extends Backbone.View
       new google.maps.Point(0,0),
       new google.maps.Point(16, 16)
     );
+  
+  removeMarker: ->
+  	@marker = null
+  	
+  removeAll: ->
+  	@removeMarker()
 
   # Context Menu
   # Create the Marker Context Menu. This class is always called by it overridden subclass method.
