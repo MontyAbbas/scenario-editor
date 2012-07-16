@@ -25,8 +25,7 @@ class window.sirius.FileUploadView extends Backbone.View
     reader = new FileReader()
     reader.onloadend = (e) ->
       fileText = e.target.result
-      $a.broker.trigger("map:upload_complete", fileText)
-      $a.broker.trigger("map:alert", "Loaded map successfully", "alert-success")
+      $a.broker.trigger('map:upload_complete', fileText)
       
     reader.readAsText(@el.files[0])
     # if you don't reset the value to '' on the input file tag it won't register
