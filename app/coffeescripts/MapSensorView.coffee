@@ -36,7 +36,7 @@ class window.sirius.MapSensorView extends window.sirius.MapMarkerView
 
   # Callback for the markers click event. It decided whether we are selecting or de-selecting and triggers appropriately 
   manageMarkerSelect: () =>
-    iconName = MapSensorView.__super__._getIconName.apply(@, []) 
+    iconName = MapSensorView.__super__._getIconName.apply(@, [])
     if iconName == "#{MapSensorView.ICON}.png"
       @_triggerClearSelectEvents()
       target = $a.Util.getElement(@model.get('link_reference').get('id'), @model.links)

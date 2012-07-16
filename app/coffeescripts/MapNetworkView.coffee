@@ -86,7 +86,7 @@ class window.sirius.MapNetworkView extends Backbone.View
     _.each(nodes, (i) ->  new $a.MapNodeView(i))
 
   _drawSensors: (sensors) ->
-    _.each(sensors, (i) ->  new $a.MapSensorView(i))
+    _.each(sensors, (i) ->  new $a.MapSensorView(i, $a.MapNetworkModel.LINKS))
 
   _drawEvents: (events) ->
     _.each(events, (i) ->  new $a.MapEventView(i))
