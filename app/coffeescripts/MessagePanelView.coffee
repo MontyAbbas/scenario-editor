@@ -15,5 +15,6 @@ class window.sirius.MessagePanelView extends Backbone.View
     self = @
     @$el.addClass "#{type}"
     @$el.html(@template({message: message})) 
-    @$el.fadeIn(4000, () -> self.$el.fadeOut(4000))
+    @$el.fadeIn(4000)
+    #@$el.fadeIn(4000, () -> self.$el.fadeOut(4000))
     
