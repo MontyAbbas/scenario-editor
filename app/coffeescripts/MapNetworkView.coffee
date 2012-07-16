@@ -59,6 +59,9 @@ class window.sirius.MapNetworkView extends Backbone.View
       # below
       @_directionsRequest(request, link, 0)
       @_requestLink(indexOfLink - 1)
+    else
+      $a.broker.trigger('app:show_message:success', 'Loaded map successfully')
+    
   
   # _directionsRequest makes the actual route request to google. if we recieve OVER_QUERY_LIMIT error, this method
   # will wait 3 seconds and then call itself again with the same request object but montior the number of attempts.
@@ -68,14 +71,12 @@ class window.sirius.MapNetworkView extends Backbone.View
     self = @
     @directionsService.route(request, (response, status) ->
       if (status == google.maps.DirectionsStatus.OK)
-        warnings = $("#warnings_panel")
-        warnings.innerHTML = "" + response.routes[0].warnings + ""
+        $a.broker.trigger('app:show_message:info', "Directions API Warning(s): #{response.routes[0].warnings}") if response.routes[0].warnings.length > 
         self._drawLink linkModel, response.routes[0].legs
       else if status == google.maps.DirectionsStatus.OVER_QUERY_LIMIT and attempts < 3
         setTimeout (() -> self._directionsRequest(request, linkModel, attempts + 1)), 3000
       else #TODO configure into html
-        warnings = $("#warnings_panel")
-        warnings.innerHTML = "Directions API Error: Could not render link : " + status + ""
+        $a.broker.trigger('app:show_message:error', "Directions API Error: Could not render link : #{status}")
     )
 
   # These methods instantiate each elements view instance in the map

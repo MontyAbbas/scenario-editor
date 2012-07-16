@@ -83,10 +83,19 @@ hr {
 #lh{position:fixed; left:20px; bottom:25px; z-index: 2}
 #mh{position:fixed; left:75px; bottom:25px; z-index: 2}
 .bottom-up{bottom:100%; max-width:80px}
-/* submenu */
+/* message panel */
 .open {
   display:block;
 }
+.close {
+  display:none;
+  opacity:1;
+  font-size:16px;
+}
+.alert {
+  padding: 8px 14px;
+}
+/* submenu */
 .icon-ok {
   height: auto;
   display: block;

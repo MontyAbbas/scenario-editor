@@ -15,11 +15,11 @@ class window.sirius.AppView extends Backbone.View
     @_navBar()
     @_contextMenu()
     @_layersMenu()
+    @_messagePanel()
     self = @
     google.maps.event.addDomListener(window, 'keydown', (event) -> self._setKeyEvents(event))
     $a.broker.on('map:upload_complete', @_displayMap, @)
-    $a.broker.on("map:clearMap", @clearMap, @)
-    $a.broker.on("map:alert", @showAlert, @)
+    $a.broker.on("app:clear_map", @clearMap, @)
     @
 
   # create the landing map. The latitude and longitude our arbitarily pointing
@@ -62,11 +62,11 @@ class window.sirius.AppView extends Backbone.View
 
     
   # displayMap takes the uploaded file data parses the xml into the model objects, and creates the MapNetworkView
-  _displayMap: (fileText) ->
+  _displayMap: (fileText) =>
     try
       xml = $.parseXML(fileText)
     catch error
-      $a.broker.trigger("map:alert", error, "alert-error")
+      $a.broker.trigger("app:show_message:error", error)
     $a.models = $a.Scenario.from_xml($(xml).children())
     new $a.MapNetworkModel()
     @mapView = new $a.MapNetworkView $a.models
@@ -85,25 +85,11 @@ class window.sirius.AppView extends Backbone.View
     $a.ALT_DOWN = false
     $a.ALT_DOWN = true if e.type == 'keydown' and e.keyCode == 18
     
-  clearMap: ->
+  clearMap: =>
     $a.broker.trigger('map:clear_map')
     $a.broker.trigger('app:tree_clear')
+    $a.broker.trigger('app:show_message:success', 'Cleared map')
     
-  showAlert: (message, type) ->
-    alertBox = document.createElement 'div'
-    alertBox.className = "alert #{type} alert-bottom"
-    alertBox.innerHTML = message
+  _messagePanel: ->
+    new $a.MessagePanelView()
 
-    closeButton = document.createElement 'button'
-    closeButton.className = 'close'
-    closeButton.setAttribute('data-dismiss', 'alert')
-    closeButton.innerHTML = 'x'
-    closeButton.href = '#'
-
-    alertBox.appendChild closeButton
-    bod = document.getElementById 'body'
-    bod.appendChild alertBox
-
-    setTimeout( ->
-      closeButton.click()
-    , 2000)
